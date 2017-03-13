@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/03/12/搭建hexo遇到的问题及解决办法/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="#搭建hexo过程中遇到的问题及解决办法问题一： ERROR Deployer not found : git 解决办法： 输入下述命令：$ npm install hexo-deployer-git --save 问题二：hexo已部署到github但是出现404 解决办法：在github搭建repository时，注意教程yourname.github.io，这里的yourname一定务必是自">
-<meta property="og:updated_time" content="2017-03-13T02:50:10.000Z">
+<meta property="og:updated_time" content="2017-03-13T02:52:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建hexo过程中遇到的问题及解决办法">
 <meta name="twitter:description" content="#搭建hexo过程中遇到的问题及解决办法问题一： ERROR Deployer not found : git 解决办法： 输入下述命令：$ npm install hexo-deployer-git --save 问题二：hexo已部署到github但是出现404 解决办法：在github搭建repository时，注意教程yourname.github.io，这里的yourname一定务必是自">
@@ -334,7 +334,11 @@
       
 
       
-        <h2 id="搭建hexo过程中遇到的问题及解决办法"><a href="#搭建hexo过程中遇到的问题及解决办法" class="headerlink" title="#搭建hexo过程中遇到的问题及解决办法"></a>#搭建hexo过程中遇到的问题及解决办法</h2><p><strong>问题一：</strong><br> <code>ERROR Deployer not found : git</code><br> <br><br><strong>解决办法：</strong><br> <br><br>输入下述命令：<code>$ npm install hexo-deployer-git --save</code><br> <br><br><br><strong>问题二：</strong><br>hexo已部署到github但是出现404<br> <br><br><strong>解决办法：</strong><br>在github搭建repository时，注意教程<strong>yourname</strong>.github.io，这里的<strong>yourname</strong>一定务必是自己github的用户名<br><br><br><br><strong>问题三：</strong><br>如何在hexo中使用本地图片上传?<br><br><br>(<strong>放在根目录：</strong>早期大部分的方案是把图片放在<code>source/img</code>下，然后markdown里写<code>![img](source.img/img.png)</code>)。显然这样在本地的编辑器里完全不能正确识别图片的位置。)<br><br><br><strong>解决办法：</strong><br><em>asser-image</em>一个新的语法来插入本地图片<br><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">CodeFalling/hexo-asset-image</a><br><br><br>首先确认<code>_config.yml</code>中有<code>post_asset_folder:true</code>。<br>在hexo目录，执行<br><code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code><br>假设在<br><br>MacGesture2-Publish<br><br>├── apppicker.jpg<br><br>├── logo.jpg<br><br>└── rules.jpg<br><br>MacGesture2-Publish.md<br>这样的目录结构（目录名和文章名一致），只要使用 <code>![logo](MacGesture2-Publish/logo.jpg)</code>就可以插入图片。</p>
+        <h2 id="搭建hexo过程中遇到的问题及解决办法"><a href="#搭建hexo过程中遇到的问题及解决办法" class="headerlink" title="#搭建hexo过程中遇到的问题及解决办法"></a>#搭建hexo过程中遇到的问题及解决办法</h2><p><strong>问题一：</strong><br> <code>ERROR Deployer not found : git</code><br> <br><br><strong>解决办法：</strong><br> <br><br>输入下述命令：<code>$ npm install hexo-deployer-git --save</code><br> <br><br><br><strong>问题二：</strong><br>hexo已部署到github但是出现404<br> <br><br><strong>解决办法：</strong><br>在github搭建repository时，注意教程<strong>yourname</strong>.github.io，这里的<strong>yourname</strong>一定务必是自己github的用户名<br><br><br><br><strong>问题三：</strong><br>如何在hexo中使用本地图片上传?<br><br><br>(<strong>放在根目录：</strong>早期大部分的方案是把图片放在<code>source/img</code>下，然后markdown里写<code>![img](source.img/img.png)</code>)。显然这样在本地的编辑器里完全不能正确识别图片的位置。)<br><br><br><strong>解决办法：</strong><br><em>asser-image</em>一个新的语法来插入本地图片<br><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">CodeFalling/hexo-asset-image</a><br><br><br>首先确认<code>_config.yml</code>中有<code>post_asset_folder:true</code>。<br>在hexo目录，执行<br><code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code><br>假设在<br><br><code>MacGesture2-Publish
+├── apppicker.jpg
+├── logo.jpg
+└── rules.jpg
+MacGesture2-Publish.md</code><br>这样的目录结构（目录名和文章名一致），只要使用 <code>![logo](MacGesture2-Publish/logo.jpg)</code>就可以插入图片。</p>
 
       
     </div>
