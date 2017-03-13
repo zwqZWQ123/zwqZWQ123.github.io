@@ -603,11 +603,8 @@
       
         
           
-            <h2 id="搭建hexo过程中遇到的问题及解决办法"><a href="#搭建hexo过程中遇到的问题及解决办法" class="headerlink" title="#搭建hexo过程中遇到的问题及解决办法"></a>#搭建hexo过程中遇到的问题及解决办法</h2><p><strong>问题一：</strong><br> <code>ERROR Deployer not found : git</code><br> <br><br><strong>解决办法：</strong><br> <br><br>输入下述命令：<code>$ npm install hexo-deployer-git --save</code><br> <br><br><br><strong>问题二：</strong><br>hexo已部署到github但是出现404<br> <br><br><strong>解决办法：</strong><br>在github搭建repository时，注意教程<strong>yourname</strong>.github.io，这里的<strong>yourname</strong>一定务必是自己github的用户名<br><br><br><br><strong>问题三：</strong><br>如何在hexo中使用本地图片上传?<br><br><br>(<strong>放在根目录：</strong>早期大部分的方案是把图片放在<code>source/img</code>下，然后markdown里写<code>![img](source.img/img.png)</code>)。显然这样在本地的编辑器里完全不能正确识别图片的位置。)<br><br><br><strong>解决办法：</strong><br><em>asser-image</em>一个新的语法来插入本地图片<br><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">CodeFalling/hexo-asset-image</a><br><br><br>首先确认<code>_config.yml</code>中有<code>post_asset_folder:true</code>。<br>在hexo目录，执行<br><code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code><br>假设在<br><br><code>MacGesture2-Publish
-├── apppicker.jpg
-├── logo.jpg
-└── rules.jpg
-MacGesture2-Publish.md</code><br>这样的目录结构（目录名和文章名一致），只要使用 <code>![logo](MacGesture2-Publish/logo.jpg)</code>就可以插入图片。</p>
+            <h2 id="搭建hexo过程中遇到的问题及解决办法"><a href="#搭建hexo过程中遇到的问题及解决办法" class="headerlink" title="#搭建hexo过程中遇到的问题及解决办法"></a>#搭建hexo过程中遇到的问题及解决办法</h2><p><strong>问题一：</strong><br> <code>ERROR Deployer not found : git</code><br> <br><br><strong>解决办法：</strong><br> <br><br>输入下述命令：<code>$ npm install hexo-deployer-git --save</code><br> <br><br><br><strong>问题二：</strong><br>hexo已部署到github但是出现404<br> <br><br><strong>解决办法：</strong><br>在github搭建repository时，注意教程<strong>yourname</strong>.github.io，这里的<strong>yourname</strong>一定务必是自己github的用户名<br><br><br><br><strong>问题三：</strong><br>如何在hexo中使用本地图片上传?<br><br><br>(<strong>放在根目录：</strong>早期大部分的方案是把图片放在<code>source/img</code>下，然后markdown里写<code>![img](source.img/img.png)</code>)。显然这样在本地的编辑器里完全不能正确识别图片的位置。)<br><br><br><strong>解决办法：</strong><br><em>asser-image</em>一个新的语法来插入本地图片<br><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">CodeFalling/hexo-asset-image</a><br><br><br>首先确认<code>_config.yml</code>中有<code>post_asset_folder:true</code>。<br>在hexo目录，执行<br><code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code><br>假设在<br></p>
+<p><pre>MacGesture2-Publish<br>├── apppicker.jpg<br>├── logo.jpg<br>└── rules.jpg<br>MacGesture2-Publish.md</pre><br>这样的目录结构（目录名和文章名一致），只要使用 <code>![logo](MacGesture2-Publish/logo.jpg)</code>就可以插入图片。</p>
 
           
         
