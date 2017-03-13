@@ -76,6 +76,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
 
@@ -104,7 +106,10 @@
 文档水平（document-level）反向索引（或者反向档案索引）包含每个引用单词的文档的列表。
 单词水平（word-level）反">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/iis.png">
-<meta property="og:updated_time" content="2017-03-13T14:50:20.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/layout.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text2.png">
+<meta property="og:updated_time" content="2017-03-13T15:31:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="倒排索引（Inverted-Index）">
 <meta name="twitter:description" content="倒排索引（Inverted Index）引言
@@ -364,6 +369,23 @@
 <li><strong>记录（posting）</strong>主要是记录term所在的文档（docID），term在文档中出现的次数，以及在文档中的位置，文档长度等信息。<br>$posting:<docid,f_{d,t},<position1,\cdots positionf_{d,t}="">&gt;$<br>下图是简单的倒排索引结构例子：<br><img src="/2017/03/13/Inverted-Index/iis.png" alt="iis"></docid,f_{d,t},<position1,\cdots></li>
 </ul>
 <hr>
+<h2 id="倒排文件（Inverted-Files）"><a href="#倒排文件（Inverted-Files）" class="headerlink" title="倒排文件（Inverted Files）"></a>倒排文件（Inverted Files）</h2><p><strong>定义：</strong>一个倒排文件是针对下标一个文本集的一种面向单词的机制，来加速查询任务。<br><strong>倒排文件结构：</strong></p>
+<ul>
+<li><strong>字典（Vocabulary):</strong>在一个文本中全部不同的单词的集合</li>
+<li><strong>事件（Occurrences):</strong>列表，包含了字典每个单词所有必要的信息（文本位置，词频，单词出现的文件，等等）</li>
+</ul>
+<hr>
+<h3 id="倒排文件的布局（layout）"><a href="#倒排文件的布局（layout）" class="headerlink" title="倒排文件的布局（layout）"></a>倒排文件的布局（layout）</h3><p><img src="/2017/03/13/Inverted-Index/layout.png" alt="layout"></p>
+<h4 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h4><ul>
+<li>Text:<br><img src="/2017/03/13/Inverted-Index/text.png" alt="text"></li>
+<li>Inverted File<br>Vocabulary | Occurrences<br>———–|————-<br>beautiful|70<br>flowers|45,58<br>garden|18,29<br>house|6<h3 id="块寻址（block-addressing）"><a href="#块寻址（block-addressing）" class="headerlink" title="块寻址（block addressing）"></a>块寻址（block addressing）</h3></li>
+<li>文本被划分成区块</li>
+<li>事件指向单词出现的区块</li>
+<li>好处：指针数量比位置更少；一个单词在一个单独区块的全部事件被收缩到一个引用</li>
+<li>缺点：如果确切的位置被需求时，内连查询超过受限区块<h4 id="举个栗子-1"><a href="#举个栗子-1" class="headerlink" title="举个栗子"></a>举个栗子</h4></li>
+<li>Text:<br><img src="/2017/03/13/Inverted-Index/text2.png" alt="text2"></li>
+<li>Inverted File<br>Vocabulary | Occurrences<br>—|—<br>beautiful|4<br>flowers|3<br>garden|2<br>house|1</li>
+</ul>
 
       
     </div>
@@ -529,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#倒排索引（Inverted-Index）"><span class="nav-number">1.</span> <span class="nav-text">倒排索引（Inverted Index）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.2.</span> <span class="nav-text">主要内容</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#倒排索引（Inverted-Index）"><span class="nav-number">1.</span> <span class="nav-text">倒排索引（Inverted Index）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.2.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒排文件（Inverted-Files）"><span class="nav-number">1.3.</span> <span class="nav-text">倒排文件（Inverted Files）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#倒排文件的布局（layout）"><span class="nav-number">1.3.1.</span> <span class="nav-text">倒排文件的布局（layout）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块寻址（block-addressing）"><span class="nav-number">1.3.2.</span> <span class="nav-text">块寻址（block addressing）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
