@@ -249,6 +249,146 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/13/Product-Quantization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/13/Product-Quantization/" itemprop="url">
+                  近似最近邻之乘积量化（Product Quantization）<br>
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-13T11:39:49+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/13/Product-Quantization/" class="leancloud_visitors" data-flag-title="近似最近邻之乘积量化（Product Quantization）<br>">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#简介<br> </p><p>product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《<strong>Product Quantization for Nearest Neighbor Search</strong>》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于<strong>ANN（approximate nearest neighbor)</strong>算法。与它相关的算法有E2LSH(Euclidean Locality-Sensitive Hashing),KD-trees,K-means。</p> <p></p>
+<p>#主要思想<br><strong>Product Quantizer</strong>翻译过来是乘积量化器，包括过程：<br></p>
+<ul>
+<li>将原始数据向量分解成低维的子向量段<br></li>
+<li>对子向量段分别量化<br></li>
+<li>原始的向量可用子向量段的索引的笛卡尔积进行表示<br></li>
+<li>向量间的距离，可以用表示的值进行估计<br><br><br>现在的方法如KD-tree对于高维数据并不是很有效，甚至已经退化为穷尽搜索了。<br><br>解决的办法：近似最近邻搜索<br><br><strong>1.</strong> 对原始向量直接处理，<em>randomized KD-tree</em>和<em>层次k均值</em>(hierarchical k-means)（这两个方法都被<strong>FLANN</strong>(fast library for approximate nearest neighbor search)采用）<br><br><strong>2.</strong> binary coding,如<em>SH</em>(spectral hashing)，<em>RBM</em>(restricted Boltzmann machine),<em>boosting</em>和<em>LSH</em>等方法，它们对原始的特征向量进行二值压缩。<br><br><br>乘积量化（PQ）属于第一类。主要有两个优点：<br></li>
+</ul>
+<ol>
+<li>提出搜索结果的距离选择多样，而Binary coding的方法结果选择的距离可选择性很少。<br></li>
+<li>结果能对向量间的L2度量进行估计，这在eps近邻搜索中很有用。<br></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/13/Markdown使用随记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -673,7 +813,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -686,7 +826,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
