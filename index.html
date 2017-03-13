@@ -351,6 +351,18 @@
 </ol>
 <p><img src="/2017/03/13/Product-Quantization/ADC&amp;SDC.png" alt="ADC&amp;SDC"><br>Symmetric distance computation(SDC):<br>$\hat d(x,y) = d(q(x),q(y))    = \sqrt{\sum_jd(q(x),q(y))^2}$<br>Asymmetric distance computation(ADC):<br>$\hat d(x,y) = d(x,q(y)) = \sqrt{\sum_jd(u_j(x),q_j(u_j(y))^2}$</p>
 <p><strong>距离估计</strong>（distance approximation）<br>Asymmetric distance computation(ADC):<br>$\hat e(x,y) = \hat d(x,y)^2 + \sum_j\xi_j(x) + \sum_k\xi_k(y)$<br><strong>距离估计偏差</strong>（distance approximate error）<br><img src="/2017/03/13/Product-Quantization/dae.png" alt="dae"><br>从上图中可见，整体距离估计偏小于真实距离，而其中SDC比ADC更偏小。所以在乘积量化中采取ADC进行距离估计。</p>
+<p>解决<strong>穷尽搜索</strong>的问题：</p>
+<ul>
+<li><strong>倒排文件</strong>（inverted file system），索引相同的点组成一个队列。首先学习一个字典（codebook），进行<em>粗分类</em>，通过<em>k-means</em>方法，进行初步量化，建立倒排文件。</li>
+<li>计算<strong>残差向量</strong> Product Quantization $\Longrightarrow$ $r(y) = y -q_c(y)$<br>$\ddot y = q_c(y) + q_p(y - q_c(y))$</li>
+</ul>
+<p><strong>PQ实验结构</strong><br><img src="/2017/03/13/Product-Quantization/inverted_file.png" alt="inverted_file"><br><em>索引算法：</em><br><strong>Indexing</strong> a vector $y$ proceeds as follows: </p>
+<ol>
+<li>quantize $y$ to $q_c(y)$ </li>
+<li>compute the residual $r(y) = y - q_c(y)$</li>
+<li>quantize $r(y)$ to $q_p(r(y))$,which,for the product quantizer,amounts to assigning $u_j(y)$ to $q_j(u_j(y))$,for $j = 1 \cdots m$.</li>
+<li>add a new entry to the inverted list corresponding to $q_c(y)$. It contains the vector (or image) identifier and the binary code(the product quantizer’s indexes).</li>
+</ol>
 
           
         
