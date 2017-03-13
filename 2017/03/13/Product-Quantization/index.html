@@ -97,7 +97,7 @@
 <meta property="og:description" content="#简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于A">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/ADC&SDC.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/dae.png">
-<meta property="og:updated_time" content="2017-03-13T08:25:47.000Z">
+<meta property="og:updated_time" content="2017-03-13T08:27:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="近似最近邻之乘积量化（Product Quantization）<br>">
 <meta name="twitter:description" content="#简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于A">
@@ -350,7 +350,7 @@
 <li>结果能对向量间的L2度量进行估计，这在eps近邻搜索中很有用。<br></li>
 </ol>
 <p><img src="/2017/03/13/Product-Quantization/ADC&amp;SDC.png" alt="ADC&amp;SDC"><br>Symmetric distance computation(SDC):<br>$\hat d(x,y) = d(q(x),q(y))    = \sqrt{\sum_jd(q(x),q(y))^2}$<br>Asymmetric distance computation(ADC):<br>$\hat d(x,y) = d(x,q(y)) = \sqrt{\sum_jd(u_j(x),q_j(u_j(y))^2}$</p>
-<p><strong>距离估计</strong>（distance approximation）<br>Asymmetric distance computation(ADC):<br>$\hat e(x,y) = \hat d(x,y)^2 + \sum_j\xi<em>j(x) + \sum</em>\dot j\xi_\dot j(y)$</p>
+<p><strong>距离估计</strong>（distance approximation）<br>Asymmetric distance computation(ADC):<br>$\hat e(x,y) = \hat d(x,y)^2 + \sum_j\xi_j(x) + \sum_j\xi_j(y)$</p>
 <p><strong>距离估计偏差</strong>（distance approximate error）<br><img src="/2017/03/13/Product-Quantization/dae.png" alt="dae"><br>从上图中可见，整体距离估计偏小于真实距离，而其中SDC比ADC更偏小。所以在乘积量化中采取ADC进行距离估计。</p>
 
       
