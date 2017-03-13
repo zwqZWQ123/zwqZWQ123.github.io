@@ -1699,7 +1699,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #473653;
+  background: #74638c;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2868,5 +2868,5 @@ pre .javascript .function {
   }
 }
 body {
-  background: url("/images/spurs.jpg");
+  background: url("/images/background.jpg");
 }
