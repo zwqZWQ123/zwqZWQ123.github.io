@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/ADC&SDC.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/dae.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/inverted_file.png">
-<meta property="og:updated_time" content="2017-03-13T09:39:58.000Z">
+<meta property="og:updated_time" content="2017-03-13T10:05:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="近似最近邻之乘积量化（Product Quantization）<br>">
 <meta name="twitter:description" content="#简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于A">
@@ -364,7 +364,7 @@
 <li>quantize $r(y)$ to $q_p(r(y))$,which,for the product quantizer,amounts to assigning $u_j(y)$ to $q_j(u_j(y))$,for $j = 1 \cdots m$.</li>
 <li>add a new entry to the inverted list corresponding to $q_c(y)$. It contains the vector (or image) identifier and the binary code(the product quantizer’s indexes).</li>
 </ol>
-<p>符号解释：<br>$q_c$ $\Longrightarrow$ 稀疏量化器(coarse quantizer)<br>$q_p$ $\Longrightarrow$ 乘积量化器(product quantization)</p>
+<p>符号解释：<br>$q_c$ $\Longrightarrow$ 稀疏量化器(coarse quantizer)<br>$q_p$ $\Longrightarrow$ 乘积量化器(product quantization)<br>$L_i$ $\Longrightarrow$ 倒排表（inverted list)<br>$x$ $\Longrightarrow$ 查询向量<br>$y$ $\Longrightarrow$ 数据库向量，从中查找出最近<br>$\ddot y$ $\Longrightarrow$ 向量y的评估值</p>
 
       
     </div>
