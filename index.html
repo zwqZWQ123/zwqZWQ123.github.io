@@ -249,6 +249,171 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/13/Vector-Quantization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/13/Vector-Quantization/" itemprop="url">
+                  （矢量量化）vector-Quantization
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-13T20:06:59+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/13/Vector-Quantization/" class="leancloud_visitors" data-flag-title="（矢量量化）vector-Quantization">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用矢量量化对图像压缩进行高效的码本设计"><a href="#使用矢量量化对图像压缩进行高效的码本设计" class="headerlink" title="使用矢量量化对图像压缩进行高效的码本设计"></a>使用矢量量化对图像压缩进行高效的码本设计</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>数据压缩是对数据进行编码的一个过程，比未压缩数据使用更少的存储空间和传输时间。</li>
+<li>数据压缩是以压缩形式表示信息的艺术或科学。</li>
+<li>因为真实世界大部分数据是非常冗余的，所以压缩是可能的<h2 id="压缩技术"><a href="#压缩技术" class="headerlink" title="压缩技术"></a>压缩技术</h2>主要有<strong>两类</strong>压缩技术：</li>
+</ul>
+<ol>
+<li>无损压缩</li>
+</ol>
+<ul>
+<li>字典码<br>  —Zip(文件格式)</li>
+<li>熵编码<br>  —霍夫曼编码（简单的熵编码）</li>
+<li>游长编码（Run-length coding）</li>
+</ul>
+<ol>
+<li>有损压缩</li>
+</ol>
+<ul>
+<li>标量编码（Scalar Quantization）<br>最常见的量化类型。典型地标记成$y = Q(x)$是使用量化函数$Q()$的过程，把一个标量输入值$x$映射成标量输出值$y$</li>
+<li>矢量量化（Vector Quantization）<br>一个矢量量化器把矢量空间$R^k$的k维矢量映射成一个矢量有穷集$Y = {y_i:i = 1,2, \cdots ,N}$。每个矢量$y_i$称为一个码向量或一个码字（codeword）。全部码字的集合称为一个码本（codebook）</li>
+</ul>
+<h2 id="矢量量化"><a href="#矢量量化" class="headerlink" title="矢量量化"></a>矢量量化</h2><p>假设我们有一个尺寸为k的码书和L维的输入矢量。我们需要使用$[\log_2 k]$位来制定被选中的码矢。</p>
+<h3 id="矢量量化编码"><a href="#矢量量化编码" class="headerlink" title="矢量量化编码"></a>矢量量化编码</h3><p><img src="/2017/03/13/Vector-Quantization/vector_quantization.png" alt="vector_quantization"></p>
+<ul>
+<li>VQ首次被提出是Gray在1984年</li>
+<li>首先构造由码矢组成的码本</li>
+<li>对于一个将要编码的矢量，发现在码本中最近的矢量（由欧氏距离决定）</li>
+<li>用码本中的下标来替换矢量</li>
+<li>当解码时，通过码本中的下标发现相应的矢量<h3 id="LBG算法"><a href="#LBG算法" class="headerlink" title="LBG算法"></a>LBG算法</h3></li>
+<li>由Linde,Buzo,Gray提出</li>
+<li>基本想法是划分矢量组。从一组中发现一个最具代表性的矢量。然后将这些矢量聚集在一起组成一个码本。<br><strong>算法具体过程：</strong></li>
+</ul>
+<ol>
+<li>把图像划分成区块。然后我们把一个区块视作k维矢量。例如：区块：4x4 ,设想512x512的图像,可能被划分成（512x512）/(4x4)=16384个区块。每个区块被视作16维矢量。</li>
+<li>任意选择一个初始化码本。</li>
+<li>把这些初始化码本设作聚心（centroids）。其他矢量被聚集。当矢量在同一组时，它们有相同的近似聚心。</li>
+<li>再一次，发现每组新的聚心。得到一个新的码本。重复2，3步,直到每组的聚心收敛。<h3 id="树结构矢量量化（Tree-structured-VQ）"><a href="#树结构矢量量化（Tree-structured-VQ）" class="headerlink" title="树结构矢量量化（Tree structured VQ）"></a>树结构矢量量化（Tree structured VQ）</h3></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/13/Product-Quantization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -828,7 +993,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
