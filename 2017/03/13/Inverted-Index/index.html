@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/layout.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text2.png">
-<meta property="og:updated_time" content="2017-03-13T15:35:21.000Z">
+<meta property="og:updated_time" content="2017-03-13T16:03:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="倒排索引（Inverted-Index）">
 <meta name="twitter:description" content="倒排索引（Inverted Index）引言
@@ -384,7 +384,35 @@
 <li>Text:<br><img src="/2017/03/13/Inverted-Index/text2.png" alt="text2"></li>
 <li>Inverted File<br>Vocabulary | Occurrences<br>—|—<br>beautiful|4<br>flowers|3<br>garden|2<br>house|1</li>
 </ul>
-
+<h3 id="查询-Searching"><a href="#查询-Searching" class="headerlink" title="查询(Searching)"></a>查询(Searching)</h3><p>在一个倒排列表上的查询算法遵循三步：</p>
+<ol>
+<li>字典查询：在查询中出现的单词在字典中定位</li>
+<li>检索事件：检索全部被发现的查询词出现的列表</li>
+<li>事件操作：事件被处理来解决查询</li>
+</ol>
+<hr>
+<ul>
+<li>查询倒排文件以一个字典开始</li>
+<li><ul>
+<li>在一个独立的文件中存储字典</li>
+</ul>
+</li>
+<li>用来存储字典的结构</li>
+<li><ul>
+<li>哈希（Hashing）：$O(1)$lookup，不支持范围查询</li>
+</ul>
+</li>
+<li><ul>
+<li>Tries:$O(c)$lookup，$c = length(word)$</li>
+</ul>
+</li>
+<li><ul>
+<li>B-trees:$O(\log v)$lookup</li>
+</ul>
+</li>
+<li>另一个方式是以字典顺序简单地存储单词</li>
+</ul>
+<h3 id="构建（Construction）"><a href="#构建（Construction）" class="headerlink" title="构建（Construction）"></a>构建（Construction）</h3><h4 id="字典构建"><a href="#字典构建" class="headerlink" title="字典构建"></a>字典构建</h4><h4 id="倒排文件构建"><a href="#倒排文件构建" class="headerlink" title="倒排文件构建"></a>倒排文件构建</h4><h4 id="更快更大的索引构建"><a href="#更快更大的索引构建" class="headerlink" title="更快更大的索引构建"></a>更快更大的索引构建</h4>
       
     </div>
 
@@ -549,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#倒排索引（Inverted-Index）"><span class="nav-number">1.</span> <span class="nav-text">倒排索引（Inverted Index）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.2.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒排文件（Inverted-Files）"><span class="nav-number">1.3.</span> <span class="nav-text">倒排文件（Inverted Files）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#倒排文件的布局（layout）"><span class="nav-number">1.3.1.</span> <span class="nav-text">倒排文件的布局（layout）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块寻址（block-addressing）"><span class="nav-number">1.3.2.</span> <span class="nav-text">块寻址（block addressing）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#倒排索引（Inverted-Index）"><span class="nav-number">1.</span> <span class="nav-text">倒排索引（Inverted Index）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.2.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒排文件（Inverted-Files）"><span class="nav-number">1.3.</span> <span class="nav-text">倒排文件（Inverted Files）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#倒排文件的布局（layout）"><span class="nav-number">1.3.1.</span> <span class="nav-text">倒排文件的布局（layout）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块寻址（block-addressing）"><span class="nav-number">1.3.2.</span> <span class="nav-text">块寻址（block addressing）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询-Searching"><span class="nav-number">1.3.3.</span> <span class="nav-text">查询(Searching)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建（Construction）"><span class="nav-number">1.3.4.</span> <span class="nav-text">构建（Construction）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字典构建"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">字典构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#倒排文件构建"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">倒排文件构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更快更大的索引构建"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">更快更大的索引构建</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

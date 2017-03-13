@@ -370,7 +370,35 @@
 <li>Text:<br><img src="/2017/03/13/Inverted-Index/text2.png" alt="text2"></li>
 <li>Inverted File<br>Vocabulary | Occurrences<br>—|—<br>beautiful|4<br>flowers|3<br>garden|2<br>house|1</li>
 </ul>
-
+<h3 id="查询-Searching"><a href="#查询-Searching" class="headerlink" title="查询(Searching)"></a>查询(Searching)</h3><p>在一个倒排列表上的查询算法遵循三步：</p>
+<ol>
+<li>字典查询：在查询中出现的单词在字典中定位</li>
+<li>检索事件：检索全部被发现的查询词出现的列表</li>
+<li>事件操作：事件被处理来解决查询</li>
+</ol>
+<hr>
+<ul>
+<li>查询倒排文件以一个字典开始</li>
+<li><ul>
+<li>在一个独立的文件中存储字典</li>
+</ul>
+</li>
+<li>用来存储字典的结构</li>
+<li><ul>
+<li>哈希（Hashing）：$O(1)$lookup，不支持范围查询</li>
+</ul>
+</li>
+<li><ul>
+<li>Tries:$O(c)$lookup，$c = length(word)$</li>
+</ul>
+</li>
+<li><ul>
+<li>B-trees:$O(\log v)$lookup</li>
+</ul>
+</li>
+<li>另一个方式是以字典顺序简单地存储单词</li>
+</ul>
+<h3 id="构建（Construction）"><a href="#构建（Construction）" class="headerlink" title="构建（Construction）"></a>构建（Construction）</h3><h4 id="字典构建"><a href="#字典构建" class="headerlink" title="字典构建"></a>字典构建</h4><h4 id="倒排文件构建"><a href="#倒排文件构建" class="headerlink" title="倒排文件构建"></a>倒排文件构建</h4><h4 id="更快更大的索引构建"><a href="#更快更大的索引构建" class="headerlink" title="更快更大的索引构建"></a>更快更大的索引构建</h4>
           
         
       
