@@ -362,13 +362,13 @@
 <h3 id="倒排文件的布局（layout）"><a href="#倒排文件的布局（layout）" class="headerlink" title="倒排文件的布局（layout）"></a>倒排文件的布局（layout）</h3><p><img src="/2017/03/13/Inverted-Index/layout.png" alt="layout"></p>
 <h4 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h4><ul>
 <li>Text:<br><img src="/2017/03/13/Inverted-Index/text.png" alt="text"></li>
-<li>Inverted File<br>| Vocabulary | Occurrences |<br>|:———-|:———–<br>| beautiful | 70 |<br>| flowers   | 45,58 |<br>| garden    | 18,29 |<br>| house     | 6 |<h3 id="块寻址（block-addressing）"><a href="#块寻址（block-addressing）" class="headerlink" title="块寻址（block addressing）"></a>块寻址（block addressing）</h3></li>
+<li>Inverted File<br>| Vocabulary | Occurrences |<br>|:—-|:—-|<br>| beautiful | 70 |<br>| flowers   | 45,58 |<br>| garden    | 18,29 |<br>| house     | 6 |<h3 id="块寻址（block-addressing）"><a href="#块寻址（block-addressing）" class="headerlink" title="块寻址（block addressing）"></a>块寻址（block addressing）</h3></li>
 <li>文本被划分成区块</li>
 <li>事件指向单词出现的区块</li>
 <li>好处：指针数量比位置更少；一个单词在一个单独区块的全部事件被收缩到一个引用</li>
 <li>缺点：如果确切的位置被需求时，内连查询超过受限区块<h4 id="举个栗子-1"><a href="#举个栗子-1" class="headerlink" title="举个栗子"></a>举个栗子</h4></li>
 <li>Text:<br><img src="/2017/03/13/Inverted-Index/text2.png" alt="text2"></li>
-<li>Inverted File<br>| Vocabulary | Occurrences|<br>|:———-|:———–<br>| beautiful | 4 |<br>| flowers | 3 |<br>| garden | 2 |<br>| house | 1 |</li>
+<li>Inverted File<br>| Vocabulary | Occurrences|<br>|:———-|:———–|<br>| beautiful | 4 |<br>| flowers | 3 |<br>| garden | 2 |<br>| house | 1 |</li>
 </ul>
 <h3 id="查询-Searching"><a href="#查询-Searching" class="headerlink" title="查询(Searching)"></a>查询(Searching)</h3><p>在一个倒排列表上的查询算法遵循三步：</p>
 <ol>
