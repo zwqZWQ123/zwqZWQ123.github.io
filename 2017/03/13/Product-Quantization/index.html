@@ -89,19 +89,19 @@
 
 
 
-<meta name="description" content="#简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于A">
+<meta name="description" content="简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于AN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="近似最近邻之乘积量化（Product Quantization）<br>">
 <meta property="og:url" content="http://yoursite.com/2017/03/13/Product-Quantization/index.html">
 <meta property="og:site_name" content="缘来是你">
-<meta property="og:description" content="#简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于A">
+<meta property="og:description" content="简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于AN">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/ADC&SDC.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/dae.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Product-Quantization/inverted_file.png">
-<meta property="og:updated_time" content="2017-03-13T13:38:14.000Z">
+<meta property="og:updated_time" content="2017-03-14T01:18:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="近似最近邻之乘积量化（Product Quantization）<br>">
-<meta name="twitter:description" content="#简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于A">
+<meta name="twitter:description" content="简介 product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《Product Quantization for Nearest Neighbor Search》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于AN">
 <meta name="twitter:image" content="http://yoursite.com/2017/03/13/Product-Quantization/ADC&SDC.png">
 
 
@@ -338,14 +338,16 @@
       
 
       
-        <p>#简介<br> </p><p>product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《<strong>Product Quantization for Nearest Neighbor Search</strong>》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于<strong>ANN（approximate nearest neighbor)</strong>算法。与它相关的算法有E2LSH(Euclidean Locality-Sensitive Hashing),KD-trees,K-means。</p> <p></p>
-<p>#主要思想<br><strong>Product Quantizer</strong>翻译过来是乘积量化器，包括过程：<br></p>
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p> </p><p>product quantizer是由Herve Jegou等人2011年在IEEE上发表的论文《<strong>Product Quantization for Nearest Neighbor Search</strong>》中提出来的。它的提出是为了在内存和效率之间求得一个平衡，既保证图像索引结构需要的内存足够，又使得检索质量和速度比较好。对于任何基于固定维数特征的事物，它可以应用到其索引结构的建立及检索上。它属于<strong>ANN（approximate nearest neighbor)</strong>算法。与它相关的算法有E2LSH(Euclidean Locality-Sensitive Hashing),KD-trees,K-means。</p> <p></p>
+<h1 id="主要思想"><a href="#主要思想" class="headerlink" title="主要思想"></a>主要思想</h1><p><strong>Product Quantizer</strong>翻译过来是乘积量化器，包括过程：<br></p>
 <ul>
 <li>将原始数据向量分解成低维的子向量段<br></li>
 <li>对子向量段分别量化<br></li>
 <li>原始的向量可用子向量段的索引的笛卡尔积进行表示<br></li>
-<li>向量间的距离，可以用表示的值进行估计<br><br><br>现在的方法如KD-tree对于高维数据并不是很有效，甚至已经退化为穷尽搜索了。<br><br>解决的办法：近似最近邻搜索<br><br><strong>1.</strong> 对原始向量直接处理，<em>randomized KD-tree</em>和<em>层次k均值</em>(hierarchical k-means)（这两个方法都被<strong>FLANN</strong>(fast library for approximate nearest neighbor search)采用）<br><br><strong>2.</strong> binary coding,如<em>SH</em>(spectral hashing)，<em>RBM</em>(restricted Boltzmann machine),<em>boosting</em>和<em>LSH</em>等方法，它们对原始的特征向量进行二值压缩。<br><br><br>乘积量化（PQ）属于第一类。主要有两个优点：<br></li>
+<li>向量间的距离，可以用表示的值进行估计<br><br></li>
 </ul>
+<hr>
+<p>现在的方法如KD-tree对于高维数据并不是很有效，甚至已经退化为穷尽搜索了。<br><br>解决的办法：近似最近邻搜索<br><br><strong>1.</strong> 对原始向量直接处理，<em>randomized KD-tree</em>和<em>层次k均值</em>(hierarchical k-means)（这两个方法都被<strong>FLANN</strong>(fast library for approximate nearest neighbor search)采用）<br><br><strong>2.</strong> binary coding,如<em>SH</em>(spectral hashing)，<em>RBM</em>(restricted Boltzmann machine),<em>boosting</em>和<em>LSH</em>等方法，它们对原始的特征向量进行二值压缩。<br><br><br>乘积量化（PQ）属于第一类。主要有两个优点：<br></p>
 <ol>
 <li>提出搜索结果的距离选择多样，而Binary coding的方法结果选择的距离可选择性很少。<br></li>
 <li>结果能对向量间的L2度量进行估计，这在eps近邻搜索中很有用。<br></li>
@@ -460,8 +462,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/yourname.jpeg"
@@ -521,6 +532,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主要思想"><span class="nav-number">2.</span> <span class="nav-text">主要思想</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
