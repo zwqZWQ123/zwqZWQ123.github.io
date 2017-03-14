@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/layout.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text2.png">
-<meta property="og:updated_time" content="2017-03-14T01:31:07.000Z">
+<meta property="og:updated_time" content="2017-03-14T01:32:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="倒排索引（Inverted-Index）">
 <meta name="twitter:description" content="倒排索引（Inverted Index）引言
@@ -390,6 +390,76 @@
 <li>检索事件：检索全部被发现的查询词出现的列表</li>
 <li>事件操作：事件被处理来解决查询</li>
 </ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">排序方法</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最好情况</th>
+<th style="text-align:left">最坏情况</th>
+<th style="text-align:left">辅助空间</th>
+<th style="text-align:left">稳定性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">冒泡排序</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">稳定</td>
+</tr>
+<tr>
+<td style="text-align:left">简单选择</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">稳定</td>
+</tr>
+<tr>
+<td style="text-align:left">直接插入</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">稳定</td>
+</tr>
+<tr>
+<td style="text-align:left">希尔排序</td>
+<td style="text-align:left">O(nlogn)~O(n²)</td>
+<td style="text-align:left">O(n^1.3)</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">不稳定</td>
+</tr>
+<tr>
+<td style="text-align:left">堆排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">不稳定</td>
+</tr>
+<tr>
+<td style="text-align:left">归并排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">不稳定</td>
+</tr>
+<tr>
+<td style="text-align:left">快速排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(n²)</td>
+<td style="text-align:left">O(nlogn)~O(n)</td>
+<td style="text-align:left">不稳定</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <ul>
 <li>查询倒排文件以一个字典开始</li>
