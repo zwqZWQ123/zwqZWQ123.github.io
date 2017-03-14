@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/layout.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/13/Inverted-Index/text2.png">
-<meta property="og:updated_time" content="2017-03-14T01:54:47.000Z">
+<meta property="og:updated_time" content="2017-03-14T01:55:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="倒排索引（Inverted-Index）">
 <meta name="twitter:description" content="倒排索引（Inverted Index）引言
@@ -364,8 +364,9 @@
 <ul>
 <li>倒排索引由<strong>字典文件（dictionary）</strong>和<strong>记录文件（postings file）</strong>两部分组成。</li>
 <li><strong>字典（dictionary）</strong>主要是由term,termID，包含该term的文档数目$f_t$，以及指向该记录表（postings list）的指针组成。<br>$ dictionary:&lt; term,termID,f_t,pointer &gt; $ $ \longrightarrow $ $ [postings list] $</li>
-<li><strong>记录（posting）</strong>主要是记录term所在的文档（docID），term在文档中出现的次数，以及在文档中的位置，文档长度等信息。<br>$ posting:&lt; docID , f<em>{d,t} , &lt; position1 ,positionf</em>{d,t} &gt; &gt; $<br>下图是简单的倒排索引结构例子：<br><img src="/2017/03/13/Inverted-Index/iis.png" alt="iis"></li>
+<li><strong>记录（posting）</strong>主要是记录term所在的文档（docID），term在文档中出现的次数，以及在文档中的位置，文档长度等信息。<br>$ posting:&lt; docID , f<em>{d,t} ,position1 , \cdots ,positionf</em>{d,t}&gt; $</li>
 </ul>
+<p>下图是简单的倒排索引结构例子：<br><img src="/2017/03/13/Inverted-Index/iis.png" alt="iis"></p>
 <hr>
 <h2 id="倒排文件（Inverted-Files）"><a href="#倒排文件（Inverted-Files）" class="headerlink" title="倒排文件（Inverted Files）"></a>倒排文件（Inverted Files）</h2><p><strong>定义：</strong>一个倒排文件是针对下标一个文本集的一种面向单词的机制，来加速查询任务。<br><strong>倒排文件结构：</strong></p>
 <ul>
