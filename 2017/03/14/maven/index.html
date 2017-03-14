@@ -71,10 +71,12 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="maven," />
 
 
 
+
+  
 
 
   <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
@@ -91,14 +93,29 @@
 
 <meta name="description" content="从简介、安装配置、eclipse搭建、Nexus详细介绍等四个方面来简单了解Maven">
 <meta property="og:type" content="article">
-<meta property="og:title" content="\[项目管理和构建\]——Maven">
+<meta property="og:title" content="项目管理和构建——Maven">
 <meta property="og:url" content="http://yoursite.com/2017/03/14/maven/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="从简介、安装配置、eclipse搭建、Nexus详细介绍等四个方面来简单了解Maven">
-<meta property="og:updated_time" content="2017-03-14T14:51:36.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/install_maven1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/install_maven2.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/install_maven3.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/repository.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/repository_change.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/eclipse_maven.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/config1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/config2.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/config3.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/create1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/create2.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/create3.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/complete1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/complete2.jpeg">
+<meta property="og:updated_time" content="2017-03-14T15:45:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="\[项目管理和构建\]——Maven">
+<meta name="twitter:title" content="项目管理和构建——Maven">
 <meta name="twitter:description" content="从简介、安装配置、eclipse搭建、Nexus详细介绍等四个方面来简单了解Maven">
+<meta name="twitter:image" content="http://yoursite.com/2017/03/14/maven/install_maven1.jpeg">
 
 
 
@@ -132,7 +149,7 @@
 
 
 
-  <title> \[项目管理和构建\]——Maven | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 项目管理和构建——Maven | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +289,7 @@
             
             
               
-                \[项目管理和构建\]——Maven
+                项目管理和构建——Maven
               
             
           </h1>
@@ -305,7 +322,7 @@
 
           
           
-             <span id="/2017/03/14/maven/" class="leancloud_visitors" data-flag-title="\[项目管理和构建\]——Maven">
+             <span id="/2017/03/14/maven/" class="leancloud_visitors" data-flag-title="项目管理和构建——Maven">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -348,6 +365,40 @@
 <p>Maven, a Yiddish word meaning accumulator of knowledge, was originally started as an attempt to simplify the build processes in the Jakarta Turbine project. There were several projects each with their own Ant build files that were all slightly different and JARs were checked into CVS. We wanted a standard way to build the projects, a clear definition of what the project consisted of, an easy way to publish project information and a way to share JARs across several projects.<br>The result is a tool that can now be used for building and managing any Java-based project. We hope that we have created something that will make the day-to-day work of Java developers easier and generally help with the comprehension of any Java-based project.  </p>
 </blockquote>
 <p>翻译：<strong>Maven</strong>这个单词来自于意第绪语，意为知识的积累，最早在Jakata Turbine项目中它开始被用来试图简化构建过程。当时有很多项目，它们的Ant build文件仅有细微的差别，而JAR文件都由CVS来维护。于是Maven创始者想要更加标准的方式构建项目，该项目的清晰定义包括：<em>一种很方便的方式来发布项目信息，以及一种在多个项目中共享JAR的方式</em>。<br>     现在，<strong>Maven</strong>成为了一种被用于构建和管理任何基于Java项目的工具。<strong>Maven</strong>创始者希望能够更多的让Java开发人员的日常工作更加容易，帮助理解任何基于Java项目。</p>
+<h2 id="Maven的目标"><a href="#Maven的目标" class="headerlink" title="Maven的目标"></a>Maven的目标</h2><blockquote>
+<p>Maven’s primary goal is to allow a developer to comprehend the complete state of a development effort in the shortest period of time. In order to attain this goal there are several areas of concern that Maven attempts to deal with:<br>1、Making the build process easy<br>2、Providing a uniform build system<br>3、Providing quality project information<br>4、Providing guidelines for best practices development<br>5、Allowing transparent migration to new features  </p>
+</blockquote>
+<p>翻译：<strong>Maven</strong>的主要目标是为了使开发人员在最短的时间内领会项目的所有状态。为了达到这一目标，<strong>Maven</strong>考虑一下<em>五个方面</em>的内容：<br>1、使得构建过程更加容易，方便编译，打包，发布<br>2、为每个项目提供统一的配置<br>3、提供优质项目信息<br>4、最佳开发实践<br>5、安装和更新第三插件透明化</p>
+<p>目前Apache下绝大多数项目都已经采用Maven进行管理。而Maven本身还支持多种插件，可以方便更灵活的控制项目。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>安装maven超级简单，总共分四步：</p>
+<ol>
+<li>下载 Maven ，其实就是一个压缩包，解压一下<br><img src="/2017/03/14/maven/install_maven1.jpeg" alt="install_maven1"></li>
+<li>配置一下环境变量,有两个环境变量可以配置：</li>
+</ol>
+<ul>
+<li>MAVEN_HOME = D:\maven\apache-maven-3.2.3</li>
+<li>MAVEN_OPTS = -Xms128m -Xmx512m(可选)</li>
+</ul>
+<ol>
+<li>在path变量末尾加入“%MAVEN_HOME%\bin;”,以上M2_HOME 是必须要配置的，如果想让 Maven 跑得更快点，可以根据自己的情况来设置 MAVEN_OPTS。<br><img src="/2017/03/14/maven/install_maven2.jpeg" alt="install_maven2"></li>
+<li>最后，验证是否安装成功<br>现在我们打开 cmd，输入：<br>mvn -v<br>我想您一定会看到一些信息，如下图所示：<br><img src="/2017/03/14/maven/install_maven3.jpeg" alt="install_maven3"><br>恭喜您<strong>Maven</strong>安装成功！<br>在使用<strong>Maven</strong>之前，我们必须要了解一下 Maven 到底是怎样管理 jar 包的，这就是 Maven 仓库要干的活了。<h2 id="修改本地仓库的地址"><a href="#修改本地仓库的地址" class="headerlink" title="修改本地仓库的地址"></a>修改本地仓库的地址</h2>使用<strong>Maven</strong>给我们带来的最直接的好处，就是统一管理jar包，那么这些jar包存放在哪里呢？它们就在您的本地仓库中，默认地址位于<em>C:\Users\用户名.m2</em>目录下（当然也可以修改这个默认地址），下面我们就修改一下这个默认地址。</li>
+</ol>
+<ul>
+<li>本地仓库可以理解为“缓存”，目的是存放jar包。开发项目时项目首先会从本地仓库中获取jar 包，当无法获取指定jar包的时候，本地仓库会从 远程仓库（或中央仓库）中下载jar包，并“缓存”到本地仓库中以备将来使用。</li>
+<li>远程仓库（中央仓库）是<strong>Maven</strong>官方提供的，可通过 <a href="http://search.maven.org/" target="_blank" rel="external">http://search.maven.org/</a> 来访问。这样一来，本地仓库会随着项目的积累越来越大。通过下面这张图可以清晰地表达项目、本地仓库、远程仓库之间的关系。<br><img src="/2017/03/14/maven/repository.png" alt="repository"><br>既然<strong>Maven</strong>安装了，那么本地仓库也就有了，默认路径在我们C盘目录下，对于专业人士来说C盘很危险，下面我们修改一下默认配置。</li>
+</ul>
+<p>Maven会将下载的类库（jar包）放置到本地的一个目录下，如果想重新定义这个目录的位置就需要修改Maven本地仓库的配置：<br>修改文件：<em>D:\maven\apache-maven-3.2.3\conf\setting.xml</em><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">settings</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/SETTINGS/1.0.0"</span> </span></div><div class="line">              <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> </div><div class="line">              <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"</span>&gt;</div><div class="line">      <span class="comment">&lt;!-- localRepository</span></div><div class="line">       | The path to the local repository maven will use to store artifacts.</div><div class="line">       |</div><div class="line">       | Default: $&#123;user.home&#125;/.m2/repository</div><div class="line">      &lt;localRepository&gt;/path/to/local/repo&lt;/localRepository&gt;</div><div class="line">      --&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:\maven\repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>依据该配置，Maven就会将下载的类库保存到D:\maven\repository中。<br>实验一下我们刚才做的事情产生作用没有，控制台输入：<br><em>mvn help:system</em><br>如图所示效果：<br><img src="/2017/03/14/maven/repository_change.jpeg" alt="repository_change"><br>如果没有任何问题，执行完该命令之后，在<em>D:\maven\repository</em>下面就会多出很多文件，这些文件就是maven从中央仓库下载到本地仓库的文件，maven已经开始为我们工作了。</p>
+<h1 id="Eclipse配置maven-创建maven项目"><a href="#Eclipse配置maven-创建maven项目" class="headerlink" title="Eclipse配置maven+创建maven项目"></a>Eclipse配置maven+创建maven项目</h1><h2 id="Eclipse配置maven"><a href="#Eclipse配置maven" class="headerlink" title="Eclipse配置maven"></a>Eclipse配置maven</h2><p>检查eclipse的maven插件是否安装成功，如图：<br><img src="/2017/03/14/maven/eclipse_maven.jpeg" alt="eclipse_maven"><br>若没有安装maven插件，我们需要先安装maven插件。若没有安装，请自行百度😄<br><strong>配置Maven</strong></p>
+<ol>
+<li>配置maven安装目录<br>依次打开Window –&gt; Perferences –&gt; Maven ，展开Maven的配置界面，如下图：<br><img src="/2017/03/14/maven/config1.jpeg" alt="config1"><br>然后点击Installations –&gt; add 选择maven安装目录，这里我的Maven安装目录为<strong>D:\maven\apache-maven-3.2.3</strong>，选择你的Maven安装目录，并点击确定, 之后可以点击Apply,点击OK，即可完成<br><img src="/2017/03/14/maven/config2.jpeg" alt="config2"></li>
+<li>在Maven的配置界面，设置<strong>User Settings</strong><br>Global Settings选择maven 安装目录下conf文件夹下的settings.xml，这里我的Maven安装目录为<strong>D:\maven\apache-maven-3.2.3\conf\settings.xml</strong>，选择你的Maven安装目录，检查Local Repository 项，如果为<strong>D:/maven/repository</strong>则配置成功，否则重新配置上一步。<br><img src="/2017/03/14/maven/config3.jpeg" alt="config3"><br>恭喜你，现在我们已经配置好了eclipse，下面，我们可以创建maven项目了。<h2 id="创建maven项目"><a href="#创建maven项目" class="headerlink" title="创建maven项目"></a>创建maven项目</h2></li>
+<li>我们在Eclipse菜单栏中点击<strong>File-&gt;New-&gt;Other-&gt;Maven</strong>,在弹出的对话框中会看到，如下图所示：<br><img src="/2017/03/14/maven/create1.jpeg" alt="create1"></li>
+<li>选择Maven Project，请选中Create a simple project(skip archetype selection),之后点击Next<br><img src="/2017/03/14/maven/create2.jpeg" alt="create2"></li>
+<li>填写Group id和Artifact id， Version默认，Packaging默认为jar,Name，Description选填，其他的不填<br><img src="/2017/03/14/maven/create3.jpeg" alt="create3"><br>之后点击Finish即可，如图所示：<br><img src="/2017/03/14/maven/complete1.jpeg" alt="complete1"></li>
+<li>前三步就可以创建一个简单的maven项目，如果我们想创建一个Maven的web项目，把第三步的Packaging的类型改为war，之后点击Finish即可，如图所示：<br><img src="/2017/03/14/maven/complete2.jpeg" alt="complete2"></li>
+</ol>
+<p>恭喜你<strong>Maven</strong>项目也创建完成了 </p>
 
       
     </div>
@@ -368,6 +419,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag"># maven</a>
+          
+        </div>
       
 
       
@@ -471,7 +528,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -513,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Maven"><span class="nav-number">1.2.</span> <span class="nav-text">什么是Maven</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Maven"><span class="nav-number">1.2.</span> <span class="nav-text">什么是Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven的目标"><span class="nav-number">1.3.</span> <span class="nav-text">Maven的目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改本地仓库的地址"><span class="nav-number">2.1.</span> <span class="nav-text">修改本地仓库的地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eclipse配置maven-创建maven项目"><span class="nav-number">3.</span> <span class="nav-text">Eclipse配置maven+创建maven项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eclipse配置maven"><span class="nav-number">3.1.</span> <span class="nav-text">Eclipse配置maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建maven项目"><span class="nav-number">3.2.</span> <span class="nav-text">创建maven项目</span></a></li></ol></li></ol></div>
             
 
           </div>
