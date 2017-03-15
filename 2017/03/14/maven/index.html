@@ -76,8 +76,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
 
@@ -113,7 +111,24 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/14/maven/complete2.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/03/14/maven/nexus_structure.jpeg">
 <meta property="og:image" content="http://yoursite.com/2017/03/14/maven/nexus.jpeg">
-<meta property="og:updated_time" content="2017-03-14T16:26:25.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle2.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle3.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle4.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle5.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle6.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle7.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle8.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle9.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle10.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle11.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle12.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle13.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle14.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle15.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle16.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/14/maven/war.jpg">
+<meta property="og:updated_time" content="2017-03-15T13:52:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目管理和构建——Maven">
 <meta name="twitter:description" content="从简介、安装配置、eclipse搭建、Nexus详细介绍等四个方面来简单了解Maven">
@@ -407,8 +422,41 @@
 <li><strong>加速Maven构建</strong><br><br>不停地连接请求外部仓库十分的耗时，Maven在执行构建的时候不停地检查远程仓库的数据。利用私服，Maven只检查局域网的数据，提高构建的速度。</li>
 <li><strong>部署第三方构件</strong><br><br>当某个构件无法从任何一个外部远程仓库获得。建立私服之后，便可以将这些构件部署到私服，供内部的Maven项目使用。</li>
 <li><strong>提高稳定性，增强控制</strong><br><br>Maven构建高度依赖于远程仓库，因此，当网络不稳定的时候，Maven构建也会变得不稳定，甚至无法构建。私服缓存了大量构建，即使暂时没有网络，Maven也可以正常的运行。</li>
-<li><strong>降低中央仓库的负荷</strong><br><br>使用私服可以避免很多对中央仓库的重复下载，降低中央仓库的压力。<h2 id="安装Nexus"><a href="#安装Nexus" class="headerlink" title="安装Nexus"></a>安装Nexus</h2>Nexus专业版是需要付费的，我们使用的开源版Nexus OSS。Nexus提供了两种安装方式，一种是内嵌Jetty的bundle，只要你有JRE就能直接运行。第二种方式是不包含容器的WAR包，你只须简单的将其发布到web容器中即可使用。<h3 id="Nexus下载"><a href="#Nexus下载" class="headerlink" title="Nexus下载"></a>Nexus下载</h3>下载地址：<a href="http://www.sonatype.org/nexus/go" target="_blank" rel="external">http://www.sonatype.org/nexus/go</a> ，下载最新版本的Nexus，我使用的是nexus-2.14.3-bundle。（即下载2.x版本，下载3.x版本文件内部结构不同于2.x）</li>
+<li><strong>降低中央仓库的负荷</strong><br><br>使用私服可以避免很多对中央仓库的重复下载，降低中央仓库的压力。</li>
 </ol>
+<h2 id="安装Nexus"><a href="#安装Nexus" class="headerlink" title="安装Nexus"></a>安装Nexus</h2><p>Nexus专业版是需要付费的，我们使用的开源版Nexus OSS。Nexus提供了两种安装方式，一种是内嵌Jetty的bundle，只要你有JRE就能直接运行。第二种方式是不包含容器的WAR包，你只须简单的将其发布到web容器中即可使用。</p>
+<h3 id="Nexus下载"><a href="#Nexus下载" class="headerlink" title="Nexus下载"></a>Nexus下载</h3><p>下载地址：<a href="http://www.sonatype.org/nexus/go" target="_blank" rel="external">http://www.sonatype.org/nexus/go</a> ，下载最新版本的Nexus，我使用的是nexus-2.14.3-bundle。（即下载2.x版本，下载3.x版本文件内部结构不同于2.x）</p>
+<h3 id="Bundle方式安装"><a href="#Bundle方式安装" class="headerlink" title="Bundle方式安装"></a>Bundle方式安装</h3><ol>
+<li><p>将nexus-2.14.3-bundle.zip解压至任意目录，如：<em>D:\tools\maven</em>。这是会得到如下两个目录：<br><img src="/2017/03/14/maven/bundle1.jpeg" alt="bundle1"><br>nexus-2.14.3-02:该目录包含了Nexus运行所需要的文件，如启动脚本、依赖jar包等。<br> 打开目录\nexus-2.14.3-02\bin\jsw这个目录下面你会发现有很多系统版本的nexus环境，如下图：<br><img src="/2017/03/14/maven/bundle2.jpeg" alt="bundle2"><br>我的电脑是windows的系统，我打开一个文件夹，文件夹包含是nexus的命令，如下图：<br><img src="/2017/03/14/maven/bundle3.jpeg" alt="bundle3"><br><strong>sonatype-work</strong>：该目录包含Nexus生成的配置文件、日志文件、仓库文件。该目录不是必须得，Nexus会在运行的时候动态的创建，不再过多的介绍。</p>
+</li>
+<li><p>为方便启动和退出Nexus，将bin添加到环境变量。<br><img src="/2017/03/14/maven/bundle4.jpeg" alt="bundle4"></p>
+</li>
+<li><p>使用命令nexus install将nexus安装到windows的服务中。(<strong>注意:</strong>此处启动控制台需要使用管理员方式)<br><img src="/2017/03/14/maven/bundle5.jpeg" alt="bundle5"><br>Nexus启动成功了，然后打开浏览器，访问<a href="http://localhost:8081/nexus" target="_blank" rel="external">http://localhost:8081/nexus</a> ，你会看到如下的页面：<br><img src="/2017/03/14/maven/bundle6.jpeg" alt="bundle6"><br>要停止Nexus，Ctrl+C即可，也可以使用stop命令。<br>点击右上角 Log In，使用用户名：admin ，密码：admin123 登录，可使用更多功能：<br><img src="/2017/03/14/maven/bundle7.png" alt="bundle7"></p>
+</li>
+<li><p>Nexus预置的仓库<br>点击左侧 Repositories 链接，查看 Nexus 内置的仓库：<br><img src="/2017/03/14/maven/bundle8.png" alt="bundle8"><br><strong>Nexus</strong>的仓库分为这么几类：</p>
+</li>
+</ol>
+<ul>
+<li><em>hosted 宿主仓库</em>：主要用于部署无法从公共仓库获取的构件（如 oracle 的 JDBC 驱动）以及自己或第三方的项目构件；</li>
+<li><em>proxy 代理仓库</em>：代理公共的远程仓库；</li>
+<li><em>virtual 虚拟仓库</em>：用于适配 Maven 1；</li>
+<li><em>group 仓库组</em>：Nexus 通过仓库组的概念统一管理多个仓库，这样我们在项目中直接请求仓库组即可请求到仓库组管理的多个仓库。</li>
+</ul>
+<p><img src="/2017/03/14/maven/bundle9.png" alt="bundle9"></p>
+<ol>
+<li>添加代理仓库<br>以 Sonatype 为例，添加一个代理仓库，用于代理 Sonatype 的公共远程仓库。点击菜单 Add - Proxy Repository ：<br><img src="/2017/03/14/maven/bundle10.png" alt="bundle10"><br>填写Repository ID - sonatype；Repository Name - Sonatype Repository；<br>Remote Storage Location - <a href="http://repository.sonatype.org/content/groups/public/" target="_blank" rel="external">http://repository.sonatype.org/content/groups/public/</a> ，save 保存：<br><img src="/2017/03/14/maven/bundle11.png" alt="bundle11"><br>将添加的 Sonatype 代理仓库加入 Public Repositories 仓库组。选中 Public Repositories，在 Configuration 选项卡中，将 Sonatype Repository 从右侧 Available Repositories 移到左侧 Ordered Group Repositories，save 保存：</li>
+</ol>
+<p><img src="/2017/03/14/maven/bundle12.png" alt="bundle12"></p>
+<ol>
+<li>搜索构件<br>为了更好的使用 Nexus 的搜索，我们可以设置所有 proxy 仓库的 Download Remote Indexes 为 true，即允许下载远程仓库索引。<br><img src="/2017/03/14/maven/bundle13.png" alt="bundle13"><br>索引下载成功之后，在 Browse Index 选项卡下，可以浏览到所有已被索引的构件信息，包括坐标、格式、Maven 依赖的 xml 代码：<br><img src="/2017/03/14/maven/bundle14.png" alt="bundle14"><br>有了索引，我们就可以搜索了：</li>
+</ol>
+<p><img src="/2017/03/14/maven/bundle15.png" alt="bundle15"></p>
+<ol>
+<li>配置Maven使用私服<br>私服搭建成功，我们就可以配置 Maven 使用私服，以后下载构件、部署构件，都通过私服来管理。<br>在 settings.xml 文件中，为所有仓库配置一个镜像仓库，镜像仓库的地址即私服的地址（这儿我们使用私服公共仓库组 Public Repositories 的地址）:<br><img src="/2017/03/14/maven/bundle16.png" alt="bundle16"><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span> <span class="comment">&lt;!-- * 表示让所有仓库使用该镜像--&gt;</span> </div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>central-mirror<span class="tag">&lt;/<span class="name">name</span>&gt;</span> </div><div class="line">                <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="WAR方式安装"><a href="#WAR方式安装" class="headerlink" title="WAR方式安装"></a>WAR方式安装</h3><p>需要有一个能运行的webapp的容器，这里以Tomcat为例，加入Tomcat的安装目录位于D:\tools\apache-tomcat-6.0.18 ，首先我们将下载的nexus-webapp-1.3.0.war 重命名为nexus.war ，然后复制到D:\tools\apache-tomcat-6.0.18\webapps\nexus.war ，然后启动CMD，cd到D:\tools\apache-tomcat-6.0.18\bin\ 目录，运行startup.bat 。一切OK，现在可以打开浏览器访问<a href="http://127.0.0.1:8080/nexus" target="_blank" rel="external">http://127.0.0.1:8080/nexus</a> ，你会得到和上图一样的界面。</p>
+<p>备注：本人安装过程中出现无法访问现象如下图：<br><img src="/2017/03/14/maven/war.jpg" alt="war"><br>解决办法：<a href="http://www.myexception.cn/open-source/1299355.html" target="_blank" rel="external">http://www.myexception.cn/open-source/1299355.html</a></p>
 
       
     </div>
@@ -580,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Maven"><span class="nav-number">1.2.</span> <span class="nav-text">什么是Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven的目标"><span class="nav-number">1.3.</span> <span class="nav-text">Maven的目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改本地仓库的地址"><span class="nav-number">2.1.</span> <span class="nav-text">修改本地仓库的地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eclipse配置maven-创建maven项目"><span class="nav-number">3.</span> <span class="nav-text">Eclipse配置maven+创建maven项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eclipse配置maven"><span class="nav-number">3.1.</span> <span class="nav-text">Eclipse配置maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建maven项目"><span class="nav-number">3.2.</span> <span class="nav-text">创建maven项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nexus的详细介绍以及安装"><span class="nav-number">4.</span> <span class="nav-text">Nexus的详细介绍以及安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Nexus"><span class="nav-number">4.2.</span> <span class="nav-text">为什么使用Nexus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Nexus"><span class="nav-number">4.3.</span> <span class="nav-text">安装Nexus</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nexus下载"><span class="nav-number">4.3.1.</span> <span class="nav-text">Nexus下载</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Maven"><span class="nav-number">1.2.</span> <span class="nav-text">什么是Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven的目标"><span class="nav-number">1.3.</span> <span class="nav-text">Maven的目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改本地仓库的地址"><span class="nav-number">2.1.</span> <span class="nav-text">修改本地仓库的地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eclipse配置maven-创建maven项目"><span class="nav-number">3.</span> <span class="nav-text">Eclipse配置maven+创建maven项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eclipse配置maven"><span class="nav-number">3.1.</span> <span class="nav-text">Eclipse配置maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建maven项目"><span class="nav-number">3.2.</span> <span class="nav-text">创建maven项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nexus的详细介绍以及安装"><span class="nav-number">4.</span> <span class="nav-text">Nexus的详细介绍以及安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Nexus"><span class="nav-number">4.2.</span> <span class="nav-text">为什么使用Nexus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Nexus"><span class="nav-number">4.3.</span> <span class="nav-text">安装Nexus</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nexus下载"><span class="nav-number">4.3.1.</span> <span class="nav-text">Nexus下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bundle方式安装"><span class="nav-number">4.3.2.</span> <span class="nav-text">Bundle方式安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WAR方式安装"><span class="nav-number">4.3.3.</span> <span class="nav-text">WAR方式安装</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
