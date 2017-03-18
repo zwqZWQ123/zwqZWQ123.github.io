@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/03/18/struts-xml配置文件详解/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="struts.xml是开发中利用率最高的文件，也是Struts2中最重要的配置文件。">
-<meta property="og:updated_time" content="2017-03-18T05:26:33.000Z">
+<meta property="og:updated_time" content="2017-03-18T07:58:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="struts_xml配置文件详解">
 <meta name="twitter:description" content="struts.xml是开发中利用率最高的文件，也是Struts2中最重要的配置文件。">
@@ -339,6 +339,154 @@
 
       
         <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd" &gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- include节点是struts2中组件化的方式 可以将每个功能模块独立到一个xml配置文件中 然后用include节点引用 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">"struts-default.xml"</span>&gt;</span><span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">&lt;!-- package提供了将多个Action组织为一个模块的方式</span></div><div class="line">        package的名字必须是唯一的 package可以扩展 当一个package扩展自</div><div class="line">        另一个package时该package会在本身配置的基础上加入扩展的package</div><div class="line">        的配置 父package必须在子package前配置 </div><div class="line">        name：package名称</div><div class="line">        extends:继承的父package名称</div><div class="line">        abstract:设置package的属性为抽象的 抽象的package不能定义action 值true:false</div><div class="line">        namespace:定义package命名空间 该命名空间影响到url的地址，例如此命名空间为/test那么访问是的地址为http://localhost:8080/struts2/test/XX.action</div><div class="line">     --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"com.kay.struts2"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span> <span class="attr">namespace</span>=<span class="string">"/test"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">interceptors</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!-- 定义拦截器 </span></div><div class="line">                name:拦截器名称</div><div class="line">                class:拦截器类路径</div><div class="line">             --&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"timer"</span> <span class="attr">class</span>=<span class="string">"com.kay.timer"</span>&gt;</span><span class="tag">&lt;/<span class="name">interceptor</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"logger"</span> <span class="attr">class</span>=<span class="string">"com.kay.logger"</span>&gt;</span><span class="tag">&lt;/<span class="name">interceptor</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!-- 定义拦截器栈 --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">interceptor-stack</span> <span class="attr">name</span>=<span class="string">"mystack"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">interceptor-ref</span> <span class="attr">name</span>=<span class="string">"timer"</span>&gt;</span><span class="tag">&lt;/<span class="name">interceptor-ref</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">interceptor-ref</span> <span class="attr">name</span>=<span class="string">"logger"</span>&gt;</span><span class="tag">&lt;/<span class="name">interceptor-ref</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">interceptor-stack</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">interceptors</span>&gt;</span></div><div class="line">        </div><div class="line">        <span class="comment">&lt;!-- 定义默认的拦截器 每个Action都会自动引用</span></div><div class="line">         如果Action中引用了其它的拦截器 默认的拦截器将无效 --&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">default-interceptor-ref</span> <span class="attr">name</span>=<span class="string">"mystack"</span>&gt;</span><span class="tag">&lt;/<span class="name">default-interceptor-ref</span>&gt;</span></div><div class="line">        </div><div class="line">        </div><div class="line">        <span class="comment">&lt;!-- 全局results配置 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">global-results</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"input"</span>&gt;</span>/error.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">global-results</span>&gt;</span></div><div class="line">        </div><div class="line">        <span class="comment">&lt;!-- Action配置 一个Action可以被多次映射(只要action配置中的name不同)</span></div><div class="line">             name：action名称</div><div class="line">             class: 对应的类的路径</div><div class="line">             method: 调用Action中的方法名</div><div class="line">        --&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"hello"</span> <span class="attr">class</span>=<span class="string">"com.kay.struts2.Action.LoginAction"</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!-- 引用拦截器</span></div><div class="line">                name:拦截器名称或拦截器栈名称</div><div class="line">             --&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">interceptor-ref</span> <span class="attr">name</span>=<span class="string">"timer"</span>&gt;</span><span class="tag">&lt;/<span class="name">interceptor-ref</span>&gt;</span></div><div class="line">        </div><div class="line">            <span class="comment">&lt;!-- 节点配置</span></div><div class="line">                name : result名称 和Action中返回的值相同</div><div class="line">                type : result类型 不写则选用superpackage的type struts-default.xml中的默认为dispatcher</div><div class="line">             --&gt;</div><div class="line">         <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"success"</span> <span class="attr">type</span>=<span class="string">"dispatcher"</span>&gt;</span>/talk.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">         <span class="comment">&lt;!-- 参数设置 </span></div><div class="line">             name：对应Action中的get/set方法 </div><div class="line">         --&gt;</div><div class="line">         <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"url"</span>&gt;</span>http://www.sina.com<span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>以下分别介绍几个struts.xml中常用到的标签：</p>
+<h2 id="1、-lt-include-gt"><a href="#1、-lt-include-gt" class="headerlink" title="1、&lt; include &gt;"></a>1、&lt; include &gt;</h2><p>&ensp;&emsp;&emsp;利用include标签，可以将一个struts.xml配置文件分割成多个配置文件，然后在struts.xml中使用<include>标签引入其他配置文件。<br>&ensp;&emsp;&emsp;比如一个网上购物程序，可以把用户配置、商品配置、订单配置分别放在3个配置文件user.xml、goods.xml和order.xml中，然后在struts.xml中将这3个配置文件引入：<br>struts.xml:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt; </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">"user.xml"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">"goods.xml"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">"order.xml"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure></include></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt;</div><div class="line">  </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"wwfy"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"login"</span> <span class="attr">class</span>=<span class="string">"wwfy.user.LoginAction"</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--省略Action其他配置--&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"logout"</span> <span class="attr">class</span>=<span class="string">"wwfy.user.LogoutAction"</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--省略Action其他配置--&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="2、-lt-constant-gt"><a href="#2、-lt-constant-gt" class="headerlink" title="2、&lt; constant &gt;"></a>2、&lt; constant &gt;</h2><p>&ensp;&emsp;&emsp;在之前提到struts.properties配置文件的介绍中，我们曾经提到所有在struts.properties文件中定义的属性，都可以配置在struts.xml文件中。而在struts.xml中，是通过<constant>标签来进行配置的：</constant></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt;</div><div class="line">  </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--设置开发模式--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.devMode"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!--设置编码形式为GB2312--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.i18n.encoding"</span> <span class="attr">value</span>=<span class="string">"GB2312"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!--省略其他配置信息--&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="3、-lt-package"><a href="#3、-lt-package" class="headerlink" title="3、&lt; package >"></a>3、&lt; package ></h2><p>1、 包属性介绍<br>&ensp;&emsp;&emsp;在Struts2框架中是通过包来管理<strong>action、result、interceptor、interceptor-stack</strong>等配置信息的。包属性如下：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>是否必需</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>包名，作为其它包应用本包的标记</td>
+</tr>
+<tr>
+<td>extends</td>
+<td>否</td>
+<td>设置本包继承其它包</td>
+</tr>
+<tr>
+<td>namespace</td>
+<td>否</td>
+<td>设置包的命名空间</td>
+</tr>
+<tr>
+<td>abstract</td>
+<td>否</td>
+<td>设置为抽象包</td>
+</tr>
+</tbody>
+</table>
+<p>2、 extends属性的详解</p>
+<ul>
+<li>当一个包通过配置extends属性继承了另一个包的时候，该包将会继承父包中所有的配置，包括action、result、interceptor等。</li>
+<li>由于包信息的获取是按照配置文件的先后顺序进行的，所以父包必须在子包之前被定义。</li>
+<li>通常我们配置struts.xml的时候，都继承一个名为“struts-default.xml”的包，这是struts2中内置的包。</li>
+</ul>
+<p>3、namespace的详解<br>&ensp;&emsp;&emsp;namespace主要是针对大型项目中Action的管理，更重要的是解决Action重名问题，因为不在同一个命名空间的Action可以使用相同的Action名的。<br>1）<strong>如果使用命名空间则URL将改变</strong><br>比如我们有一个配置文件<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"wwfy"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"login"</span> <span class="attr">class</span>=<span class="string">"wwfy.action.LoginAction"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">result</span>&gt;</span>/success.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>则此配置下的Action的URL为<a href="http://localhost:8080/login.action" target="_blank" rel="external">http://localhost:8080/login.action</a><br>假如为这个包指定了命名空间：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"wwfy"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span> <span class="attr">namespace</span>=<span class="string">"/user"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"login"</span> <span class="attr">class</span>=<span class="string">"wwfy.action.LoginAction"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">result</span>&gt;</span>/success.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>则此配置下的Action的URL为<a href="http://localhost:8080/user/login.action" target="_blank" rel="external">http://localhost:8080/user/login.action</a><br>2) <strong>默认命名空间</strong><br>&ensp;&emsp;&emsp;Struts2中如果没有为某个包指定命名空间,该包使用默认的命名空间,默认的命名空间总是””。<br>3）<strong>指定根命名空间</strong><br>&ensp;&emsp;&emsp;当设置了命名空间为“/”，即指定了包的命名空间为根命名空间时，此时所有根路径下的Action请求都会去这个包中查找对应的资源信息。<br>&ensp;&emsp;&emsp;假若前例中路径为<a href="http://localhost:8080/login.action" target="_blank" rel="external">http://localhost:8080/login.action</a> ，则所有<a href="http://localhost:8080/*.action" target="_blank" rel="external">http://localhost:8080/*.action</a> 都会到设置为根命名空间的包中寻找资源。<br>4、 &lt; action >与&lt; result ><br>1）&lt; action >属性介绍 </p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>是否必须</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>请求的Action名称</td>
+</tr>
+<tr>
+<td>class</td>
+<td>否</td>
+<td>Action处理类对应具体路径</td>
+</tr>
+<tr>
+<td>method</td>
+<td>否</td>
+<td>指定Action中的方法名</td>
+</tr>
+<tr>
+<td>converter</td>
+<td>否</td>
+<td>指定Action使用的类型转换器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>如果没有指定method则默认执行Action中的execute方法。</strong><br>2） &lt; result >属性介绍</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>是否必须</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>否</td>
+<td>对应Action返回逻辑视图名称，默认为success</td>
+</tr>
+<tr>
+<td>type</td>
+<td>否</td>
+<td>返回结果类型，默认为dispatcher</td>
+</tr>
+</tbody>
+</table>
+<p>3）通配符的使用<br>&ensp;&emsp;&emsp;随着result的增加，struts.xml文件也会随之变得越来越复杂。那么就可以使用通配符来简化配置：<br>例如下面这个案例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test1</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"result1"</span>;</div><div class="line">    &#125;          </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test2</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"result2"</span>;</div><div class="line">    &#125;      </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test3</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"result3"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>struts.xml中配置为</p>
+<hr>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"wwfy"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"test*"</span> <span class="attr">class</span>=<span class="string">"wwfy.action.test&#123;1&#125;"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"result&#123;1&#125;"</span>&gt;</span>/result&#123;1&#125;.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="4、访问Action方法的另一种实现方式"><a href="#4、访问Action方法的另一种实现方式" class="headerlink" title="4、访问Action方法的另一种实现方式"></a>4、访问Action方法的另一种实现方式</h2><p>&ensp;&emsp;&emsp;在Struts2中如果要访问Action中的指定方法，还可以通过改变URL请求来实现，将原本的“Action名称.action”改为“Action名称！方法名称.action”在struts.xml中就不需要指定方法名了。</p>
+<h2 id="5、-lt-exception-mapping-gt-与-lt-global-exception-mapping-gt"><a href="#5、-lt-exception-mapping-gt-与-lt-global-exception-mapping-gt" class="headerlink" title="5、&lt; exception-mapping &gt;与&lt; global-exception-mapping &gt;"></a>5、&lt; exception-mapping &gt;与&lt; global-exception-mapping &gt;</h2><p>&ensp;&emsp;&emsp;这两个标签都是用来配置发生异常时对应的视图信息的,只不过一个是Action范围的,一个是包范围的,当同一类型异常在两个范围都被配置时,Action范围的优先级要高于包范围的优先级.这两个标签包含的属性也是一样的:</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>是否必须</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>否</td>
+<td>用来表示该异常配置信息</td>
+</tr>
+<tr>
+<td>result</td>
+<td>是</td>
+<td>指定发生异常时显示的视图信息，这里要配置为逻辑视图</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>是</td>
+<td>指定异常类型</td>
+</tr>
+</tbody>
+</table>
+<p>两个标签的示例代码为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt;</div><div class="line">  </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"default"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">global-exception-mappings</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exception-mapping</span> <span class="attr">result</span>=<span class="string">"逻辑视图"</span> <span class="attr">exception</span>=<span class="string">"异常类型"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">global-exception-mappings</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"Action名称"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exception-mapping</span> <span class="attr">result</span>=<span class="string">"逻辑视图"</span> <span class="attr">exception</span>=<span class="string">"异常类型"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="6、-lt-default-class-ref-gt"><a href="#6、-lt-default-class-ref-gt" class="headerlink" title="6、&lt; default-class-ref &gt;"></a>6、&lt; default-class-ref &gt;</h2><p>&ensp;&emsp;&emsp;当我们在配置Action的时候，如果没有为某个Action指定具体的class值时，系统将自动引用<default-class-ref>标签中所指定的类。在Struts2框架中，系统默认的class为ActionSupport，该配置我们可以在xwork的核心包下的xwork-default.xml文件中找到。<br>有特殊需要时，可以手动指定默认的class</default-class-ref></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> wwfy.action;</div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultClassRef</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"默认class开始执行……"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在struts.xml中配置</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt;</div><div class="line">  </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"wwfy"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- 指定默认class为Test --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">default-class-ref</span> <span class="attr">class</span>=<span class="string">"wwfy.action.DefaultClassRef"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"test1"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span>&gt;</span>/index.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="7、-lt-default-action-ref-gt"><a href="#7、-lt-default-action-ref-gt" class="headerlink" title="7、&lt; default-action-ref &gt;"></a>7、&lt; default-action-ref &gt;</h2><p>&ensp;&emsp;&emsp;如果在请求一个没有定义过的Action资源时，系统就会抛出404错误。这种错误不可避免，但这样的页面并不友好。我们可以使用<default-action-ref>来指定一个默认的Action，如果系统没有找到指定的Action，就会指定来调用这个默认的Action。</default-action-ref></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt;</div><div class="line">  </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">packagename="wwfy"extends="struts-default"</span>&gt;</span></div><div class="line">          </div><div class="line">        <span class="tag">&lt;<span class="name">default-action-ref</span> <span class="attr">name</span>=<span class="string">"acctionError"</span>&gt;</span><span class="tag">&lt;/<span class="name">default-action-ref</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"acctionError"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span>&gt;</span>/jsp/actionError.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="8、-lt-default-interceptor-ref-gt"><a href="#8、-lt-default-interceptor-ref-gt" class="headerlink" title="8、&lt; default-interceptor-ref &gt;"></a>8、&lt; default-interceptor-ref &gt;</h2><p>&ensp;&emsp;&emsp;该标签用来设置整个包范围内所有Action所要应用的默认拦截器信息。事实上我们的包继承了struts-default包以后，使用的是Struts的默认设置。我们可以在struts-default.xml中找到相关配置：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">default-interceptor-ref</span> <span class="attr">name</span>=<span class="string">"defaultStack"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="9、-lt-interceptors-gt"><a href="#9、-lt-interceptors-gt" class="headerlink" title="9、&lt; interceptors &gt;"></a>9、&lt; interceptors &gt;</h2><p>&ensp;&emsp;&emsp;通过该标签可以向Struts2框架中注册拦截器或者拦截器栈，一般多用于自定义拦截器或拦截器栈的注册。该标签使用方法如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">interceptors</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">interceptor</span> <span class="attr">name</span>=<span class="string">"拦截器名"</span> <span class="attr">class</span>=<span class="string">"拦截器类"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">interceptor-stack</span> <span class="attr">name</span>=<span class="string">"拦截器栈名"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">interceptor-ref</span> <span class="attr">name</span>=<span class="string">"拦截器名"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">interceptor-stack</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">interceptors</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="10、-lt-interceptor-ref-gt"><a href="#10、-lt-interceptor-ref-gt" class="headerlink" title="10、&lt; interceptor-ref &gt;"></a>10、&lt; interceptor-ref &gt;</h2><p>&ensp;&emsp;&emsp;通过该标签可以为其所在的Action添加拦截器功能。当为某个Action单独添加拦截器功能后，<default-interceptor-ref>中所指定的拦截器将不再对这个Action起作用。</default-interceptor-ref></p>
+<h2 id="11、-lt-global-gt"><a href="#11、-lt-global-gt" class="headerlink" title="11、&lt; global &gt;"></a>11、&lt; global &gt;</h2><p>&ensp;&emsp;&emsp;该标签用于设置包范围内的全局结果集。在多个Action返回相同逻辑视图的情况下，可以通过<global-results>标签统一配置这些物理视图所对应的逻辑视图。</global-results></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC</span></div><div class="line">    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"</div><div class="line">    "http://struts.apache.org/dtds/struts-2.0.dtd"&gt;</div><div class="line">  </div><div class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"wwfy"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">global-results</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"test"</span>&gt;</span>/index.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">global-results</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">package</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -430,8 +578,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/yourname.jpeg"
@@ -492,6 +649,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、-lt-include-gt"><span class="nav-number">1.</span> <span class="nav-text">1、< include ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、-lt-constant-gt"><span class="nav-number">2.</span> <span class="nav-text">2、< constant ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、-lt-package"><span class="nav-number">3.</span> <span class="nav-text">3、< package ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、访问Action方法的另一种实现方式"><span class="nav-number">4.</span> <span class="nav-text">4、访问Action方法的另一种实现方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、-lt-exception-mapping-gt-与-lt-global-exception-mapping-gt"><span class="nav-number">5.</span> <span class="nav-text">5、< exception-mapping >与< global-exception-mapping ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、-lt-default-class-ref-gt"><span class="nav-number">6.</span> <span class="nav-text">6、< default-class-ref ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、-lt-default-action-ref-gt"><span class="nav-number">7.</span> <span class="nav-text">7、< default-action-ref ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、-lt-default-interceptor-ref-gt"><span class="nav-number">8.</span> <span class="nav-text">8、< default-interceptor-ref ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9、-lt-interceptors-gt"><span class="nav-number">9.</span> <span class="nav-text">9、< interceptors ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10、-lt-interceptor-ref-gt"><span class="nav-number">10.</span> <span class="nav-text">10、< interceptor-ref ></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11、-lt-global-gt"><span class="nav-number">11.</span> <span class="nav-text">11、< global ></span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
