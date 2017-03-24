@@ -97,7 +97,7 @@
 <meta property="og:description" content="领域模型及其四大类">
 <meta property="og:image" content="http://yoursite.com/2017/03/24/充血模型与贫血模型/anemia.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/24/充血模型与贫血模型/hyperemia.png">
-<meta property="og:updated_time" content="2017-03-24T09:12:30.000Z">
+<meta property="og:updated_time" content="2017-03-24T09:14:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="领域模型、失血、贫血、充血、胀血模型">
 <meta name="twitter:description" content="领域模型及其四大类">
@@ -363,12 +363,15 @@
       
 
       
-        <h1 id="领域模型"><a href="#领域模型" class="headerlink" title="领域模型"></a>领域模型</h1><p>&ensp;&emsp;&emsp;<strong>领域模型</strong>是对领域内的概念类或现实世界中对象的可视化表示。又称概念模型、领域对象模型、分析对象模型。它专注于分析问题领域本身，发掘重要的业务领域概念，并建立业务领域概念之间的关系。<br>&ensp;&emsp;&emsp;<strong>业务对象模型（也叫领域模型 domain model）</strong>是描述业务用例实现的对象模型。它是对业务角色和业务实体之间应该如何联系和协作以执行业务的一种抽象。业务对象模型从业务角色内部的观点定义了业务用例。该模型为产生预期效果确定了业务人员以及他们处理和使用的对象（“业务类和对象”）之间应该具有的静态和动态关系。它注重业务中承担的角色及其当前职责。这些模型类的对象组合在一起可以执行所有的业务用例。</p>
-<h1 id="失血模式"><a href="#失血模式" class="headerlink" title="失血模式"></a>失血模式</h1><p>领域模型分为4大类：</p>
-<p>1，失血模型<br>2，贫血模型<br>3，充血模型<br>4，胀血模型</p>
-<p>那么让我们看看究竟有这些领域模型的具体内容，以及他们的优缺点： </p>
-<p>一、失血模型 </p>
-<p>&ensp;&emsp;&emsp;<strong>失血模型</strong>简单来说，就是domain object只有属性的getter/setter方法的纯数据类，所有的业务逻辑完全由business object来完成(又称TransactionScript)，这种模型下的domain object被Martin Fowler称之为“贫血的domain object”。</p>
+        <h1 id="领域模型"><a href="#领域模型" class="headerlink" title="领域模型"></a>领域模型</h1><p>&ensp;&emsp;&emsp;<strong>领域模型</strong>是对领域内的概念类或现实世界中对象的可视化表示。又称概念模型、领域对象模型、分析对象模型。它专注于分析问题领域本身，发掘重要的业务领域概念，并建立业务领域概念之间的关系。<br>&ensp;&emsp;&emsp;<strong>业务对象模型（也叫领域模型 domain model）</strong>是描述业务用例实现的对象模型。它是对业务角色和业务实体之间应该如何联系和协作以执行业务的一种抽象。业务对象模型从业务角色内部的观点定义了业务用例。该模型为产生预期效果确定了业务人员以及他们处理和使用的对象（“业务类和对象”）之间应该具有的静态和动态关系。它注重业务中承担的角色及其当前职责。这些模型类的对象组合在一起可以执行所有的业务用例。<br><strong>领域模型</strong>分为4大类：</p>
+<ol>
+<li>失血模型</li>
+<li>贫血模型</li>
+<li>充血模型</li>
+<li>胀血模型</li>
+</ol>
+<p>那么让我们看看究竟有这些领域模型的具体内容，以及他们的优缺点：</p>
+<h1 id="失血模式"><a href="#失血模式" class="headerlink" title="失血模式"></a>失血模式</h1><p>&ensp;&emsp;&emsp;<strong>失血模型</strong>简单来说，就是domain object只有属性的getter/setter方法的纯数据类，所有的业务逻辑完全由business object来完成(又称TransactionScript)，这种模型下的domain object被Martin Fowler称之为“贫血的domain object”。</p>
 <h1 id="贫血模型"><a href="#贫血模型" class="headerlink" title="贫血模型"></a>贫血模型</h1><p>&ensp;&emsp;&emsp;<strong>贫血模型</strong>是指领域对象里只有get和set方法（POJO），所有的业务逻辑都不包含在内而是放在Business Logic层。<br><img src="/2017/03/24/充血模型与贫血模型/anemia.png" alt="anemia"></p>
 <ul>
 <li><strong>优点</strong>：系统的层次结构清楚，各层之间单向依赖，<em>Client-&gt;（Business Facade）-&gt;Business Logic-&gt;Data Access Object</em>。可见，领域对象几乎只作传输介质之用，不会影响到层次的划分。 </li>
