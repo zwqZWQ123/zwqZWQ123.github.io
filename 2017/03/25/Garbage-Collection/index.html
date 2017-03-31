@@ -76,8 +76,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
 
@@ -105,7 +103,9 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/MARK_COMPACT_GC.gif">
 <meta property="og:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/Copying-Collector.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/COPY_GC.gif">
-<meta property="og:updated_time" content="2017-03-31T13:16:17.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/Generational-Collector.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/Generation-Collector.png">
+<meta property="og:updated_time" content="2017-03-31T13:49:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垃圾回收（Garbage Collection）">
 <meta name="twitter:description" content="在Java语言中，垃圾回收（Garbage Collection,GC）是一个非常重要的概念，它的主要作用是回收程序中不再使用的内存。">
@@ -389,6 +389,60 @@
 <h2 id="compacting算法-或-标记-整理算法"><a href="#compacting算法-或-标记-整理算法" class="headerlink" title="compacting算法 或 标记-整理算法"></a>compacting算法 或 标记-整理算法</h2><p><img src="/2017/03/25/Garbage-Collection/Compacting-Collector.png" alt="Compacting-Collector"><br>3.1 <strong>算法分析</strong><br>&ensp;&emsp;&emsp;标记-整理算法采用标记-清除算法一样的方式进行对象的标记，但在清除时不同，在回收不存活的对象占用的空间后，会将所有的存活对象往左端空闲空间移动，并更新对应的指针。<br>3.2 <strong>优缺点</strong><br>优点：<br>&ensp;&emsp;&emsp;解决了内存碎片的问题。<br>缺点：<br>&ensp;&emsp;&emsp;在标记-清除算法的基础上，又进行了对象的移动，因此成本更高。</p>
 <p>&ensp;&emsp;&emsp;在之前的动画里，对象不会发生移动。一旦对象分配到了内存，它就会待在原地不动，即使内存出现了很多碎片。后面的两个算法将会改变这种状况，它们使用不同的方式来实现回收。<br><img src="/2017/03/25/Garbage-Collection/MARK_COMPACT_GC.gif" alt="MARK_COMPACT_GC"><br>&ensp;&emsp;&emsp;标记整理是一种复杂的算法，需要多次遍历所有分配到内存的对象。从动画里我们可以看到，在红色闪烁之后，在计算对象的目标地址时发生了很多读写操作，然后对象被移动到目标地址上，对象的引用也被指向新的地址。这种复杂性所带来的主要好处就是极低的内存开销。Oracle的Hotspot虚拟机使用了多种垃圾回收算法，其中老年代空间使用的是标记整理算法。<br>在基于Compacting算法的收集器的实现中，一般增加句柄和句柄表。</p>
 <h2 id="copying算法（Copying-Collector）"><a href="#copying算法（Copying-Collector）" class="headerlink" title="copying算法（Copying Collector）"></a>copying算法（Copying Collector）</h2><p><img src="/2017/03/25/Garbage-Collection/Copying-Collector.png" alt="Copying-Collector"><br>&ensp;&emsp;&emsp;最后一种算法是大部分高性能垃圾回收系统的基础。它有点类似标记整理算法，不过相比之下要简单很多。它把内存分为两个部分，然后在这两个内存空间之间移动对象。在实际应用当中，一般会有多个内存空间，每个空间分配给不同年代的对象。先是在其中一个内存空间创建新对象，如果它们存活下来，就把它们复制到另一个内存空间。最后，如果这些对象的寿命足够长，它们会被复制到老年代空间。如果一个垃圾回收器被贴上分代或者朝生夕灭的标签，那它极有可能是多空间的复制回收器。<br>&ensp;&emsp;&emsp;除了简单性和灵活性，这种算法的最大优势在于，它只处理存活的对象。这种算法并不存在标记阶段，存活的对象直接被复制到新的地址上，对象引用也随之指向新的地址。<br><img src="/2017/03/25/Garbage-Collection/COPY_GC.gif" alt="COPY_GC"><br>&ensp;&emsp;&emsp;从动画中我们可以看到，有些对象集合几乎是整块地被复制到另一个内存空间里，这是比较糟糕的情况，这也就是为什么我们需要对垃圾回收器进行调优。如果我们能够通过调整内存大小和控制内存分配，确保大部分对象在垃圾回收开始之前死亡，那么，我们就得到了函数式编程和高性能的一个完美组合。</p>
+<h2 id="generation算法-Generational-Collector"><a href="#generation算法-Generational-Collector" class="headerlink" title="generation算法(Generational Collector)"></a>generation算法(Generational Collector)</h2><p><img src="/2017/03/25/Garbage-Collection/Generational-Collector.png" alt="Generational-Collector"><br>&ensp;&emsp;&emsp;分代的垃圾回收策略，是基于这样一个事实：不同的对象的生命周期是不一样的。因此，不同生命周期的对象可以采取不同的回收算法，以便提高回收效率。</p>
+<h3 id="年轻代（Young-Generation）"><a href="#年轻代（Young-Generation）" class="headerlink" title="年轻代（Young Generation）"></a>年轻代（Young Generation）</h3><ol>
+<li><p>所有新生成的对象首先都是放在年轻代的。年轻代的目标就是尽可能快速的收集掉那些生命周期短的对象。</p>
+</li>
+<li><p>新生代内存按照8:1:1的比例分为一个eden区和两个survivor(survivor0,survivor1)区。一个Eden区，两个 Survivor区(一般而言)。大部分对象在Eden区中生成。回收时先将eden区存活对象复制到一个survivor0区，然后清空eden区，当这个survivor0区也存放满了时，则将eden区和survivor0区存活对象复制到另一个survivor1区，然后清空eden和这个survivor0区，此时survivor0区是空的，然后将survivor0区和survivor1区交换，即保持survivor1区为空， 如此往复。</p>
+</li>
+<li><p>当survivor1区不足以存放 eden和survivor0的存活对象时，就将存活对象直接存放到老年代。若是老年代也满了就会触发一次Full GC，也就是新生代、老年代都进行回收</p>
+</li>
+<li><p>新生代发生的GC也叫做Minor GC，MinorGC发生频率比较高(不一定等Eden区满了才触发)</p>
+</li>
+</ol>
+<h3 id="年老代（Old-Generation"><a href="#年老代（Old-Generation" class="headerlink" title="年老代（Old Generation)"></a>年老代（Old Generation)</h3><ol>
+<li><p>在年轻代中经历了N次垃圾回收后仍然存活的对象，就会被放到年老代中。因此，可以认为年老代中存放的都是一些生命周期较长的对象。</p>
+</li>
+<li><p>内存比新生代也大很多(大概比例是1:2)，当老年代内存满时触发Major GC即Full GC，Full GC发生频率比较低，老年代对象存活时间比较长，存活率标记高。</p>
+</li>
+</ol>
+<h3 id="持久代（Permanent-Generation）"><a href="#持久代（Permanent-Generation）" class="headerlink" title="持久代（Permanent Generation）"></a>持久代（Permanent Generation）</h3><p>&ensp;&emsp;&emsp;用于存放静态文件，如Java类、方法等。持久代对垃圾回收没有显著影响，但是有些应用可能动态生成或者调用一些class，例如Hibernate 等，在这种时候需要设置一个比较大的持久代空间来存放这些运行过程中新增的类。</p>
+<h1 id="GC（垃圾收集器）"><a href="#GC（垃圾收集器）" class="headerlink" title="GC（垃圾收集器）"></a>GC（垃圾收集器）</h1><p><strong>新生代</strong>收集器使用的收集器：Serial、PraNew、Parallel Scavenge</p>
+<p><strong>老年代</strong>收集器使用的收集器：Serial Old、<br>Parallel Old、CMS<br><img src="/2017/03/25/Garbage-Collection/Generation-Collector.png" alt="Generation-Collector"></p>
+<p><strong>Serial收集器（复制算法)</strong></p>
+<p>新生代单线程收集器，标记和清理都是单线程，优点是简单高效。</p>
+<p><strong>Serial Old收集器(标记-整理算法)</strong></p>
+<p>老年代单线程收集器，Serial收集器的老年代版本。</p>
+<p><strong>ParNew收集器(停止-复制算法)</strong>　</p>
+<p>新生代收集器，可以认为是Serial收集器的多线程版本,在多核CPU环境下有着比Serial更好的表现。</p>
+<p><strong>Parallel Scavenge收集器(停止-复制算法)</strong></p>
+<p>并行收集器，追求高吞吐量，高效利用CPU。吞吐量一般为99%， 吞吐量= 用户线程时间/(用户线程时间+GC线程时间)。适合后台应用等对交互相应要求不高的场景。</p>
+<p><strong>Parallel Old收集器(停止-复制算法)</strong></p>
+<p>Parallel Scavenge收集器的老年代版本，并行收集器，吞吐量优先</p>
+<p><strong>CMS(Concurrent Mark Sweep)收集器（标记-清理算法）</strong></p>
+<p>高并发、低停顿，追求最短GC回收停顿时间，cpu占用比较高，响应时间快，停顿时间短，多核cpu 追求高响应时间的选择</p>
+<h1 id="GC的执行机制"><a href="#GC的执行机制" class="headerlink" title="GC的执行机制"></a>GC的执行机制</h1><p>由于对象进行了分代处理，因此垃圾回收区域、时间也不一样。GC有两种类型：<strong>Scavenge GC</strong>和<strong>Full GC</strong>。</p>
+<p><strong>Scavenge GC</strong></p>
+<p>&ensp;&emsp;&emsp;一般情况下，当新对象生成，并且在Eden申请空间失败时，就会触发Scavenge GC，对Eden区域进行GC，清除非存活对象，并且把尚且存活的对象移动到Survivor区。然后整理Survivor的两个区。这种方式的GC是对年轻代的Eden区进行，不会影响到年老代。因为大部分对象都是从Eden区开始的，同时Eden区不会分配的很大，所以Eden区的GC会频繁进行。因而，一般在这里需要使用速度快、效率高的算法，使Eden去能尽快空闲出来。</p>
+<p><strong>Full GC</strong></p>
+<p>&ensp;&emsp;&emsp;对整个堆进行整理，包括Young、Tenured和Perm。Full GC因为需要对整个堆进行回收，所以比Scavenge GC要慢，因此应该尽可能减少Full GC的次数。在对JVM调优的过程中，很大一部分工作就是对于FullGC的调节。<br>有如下原因可能导致Full GC：</p>
+<ol>
+<li><p>年老代（Tenured）被写满</p>
+</li>
+<li><p>持久代（Perm）被写满</p>
+</li>
+<li><p>System.gc()被显示调用</p>
+</li>
+<li><p>上一次GC之后Heap的各域分配策略动态变化</p>
+</li>
+</ol>
+<h1 id="Java有了GC同样会出现内存泄露问题"><a href="#Java有了GC同样会出现内存泄露问题" class="headerlink" title="Java有了GC同样会出现内存泄露问题"></a>Java有了GC同样会出现内存泄露问题</h1><ol>
+<li>静态集合类像HashMap、Vector等的使用最容易出现内存泄露，这些静态变量的生命周期和应用程序一致，所有的对象Object也不能被释放，因为他们也将一直被Vector等应用着。</li>
+<li><p>各种连接，数据库连接，网络连接，IO连接等没有显示调用close关闭，不被GC回收导致内存泄露。</p>
+</li>
+<li><p>监听器的使用，在释放对象的同时没有相应删除监听器的时候也可能导致内存泄露。</p>
+</li>
+</ol>
 
       
     </div>
@@ -572,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收机制的意义"><span class="nav-number">1.</span> <span class="nav-text">垃圾回收机制的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收机制中的算法"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收机制中的算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用计数算法（Reference-Counting-Collector）"><span class="nav-number">2.1.</span> <span class="nav-text">引用计数算法（Reference Counting Collector）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tracing算法-Tracing-Collector-或-标记-清除算法-mark-and-sweep"><span class="nav-number">2.2.</span> <span class="nav-text">Tracing算法(Tracing Collector) 或 标记-清除算法(mark and sweep)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compacting算法-或-标记-整理算法"><span class="nav-number">2.3.</span> <span class="nav-text">compacting算法 或 标记-整理算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copying算法（Copying-Collector）"><span class="nav-number">2.4.</span> <span class="nav-text">copying算法（Copying Collector）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收机制的意义"><span class="nav-number">1.</span> <span class="nav-text">垃圾回收机制的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收机制中的算法"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收机制中的算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用计数算法（Reference-Counting-Collector）"><span class="nav-number">2.1.</span> <span class="nav-text">引用计数算法（Reference Counting Collector）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tracing算法-Tracing-Collector-或-标记-清除算法-mark-and-sweep"><span class="nav-number">2.2.</span> <span class="nav-text">Tracing算法(Tracing Collector) 或 标记-清除算法(mark and sweep)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compacting算法-或-标记-整理算法"><span class="nav-number">2.3.</span> <span class="nav-text">compacting算法 或 标记-整理算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copying算法（Copying-Collector）"><span class="nav-number">2.4.</span> <span class="nav-text">copying算法（Copying Collector）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generation算法-Generational-Collector"><span class="nav-number">2.5.</span> <span class="nav-text">generation算法(Generational Collector)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#年轻代（Young-Generation）"><span class="nav-number">2.5.1.</span> <span class="nav-text">年轻代（Young Generation）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#年老代（Old-Generation"><span class="nav-number">2.5.2.</span> <span class="nav-text">年老代（Old Generation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久代（Permanent-Generation）"><span class="nav-number">2.5.3.</span> <span class="nav-text">持久代（Permanent Generation）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GC（垃圾收集器）"><span class="nav-number">3.</span> <span class="nav-text">GC（垃圾收集器）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GC的执行机制"><span class="nav-number">4.</span> <span class="nav-text">GC的执行机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java有了GC同样会出现内存泄露问题"><span class="nav-number">5.</span> <span class="nav-text">Java有了GC同样会出现内存泄露问题</span></a></li></ol></div>
             
 
           </div>
