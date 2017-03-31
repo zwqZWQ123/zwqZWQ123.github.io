@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="垃圾回收,GC," />
 
 
 
@@ -89,12 +89,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="缘来是你">
-<meta property="og:url" content="http://yoursite.com/categories/领域驱动设计/index.html">
+<meta name="description" content="在Java语言中，垃圾回收（Garbage Collection,GC）是一个非常重要的概念，它的主要作用是回收程序中不再使用的内存。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾回收（Garbage Collection）">
+<meta property="og:url" content="http://yoursite.com/2017/03/25/Garbage-Collection/index.html">
 <meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="在Java语言中，垃圾回收（Garbage Collection,GC）是一个非常重要的概念，它的主要作用是回收程序中不再使用的内存。">
+<meta property="og:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/REF_COUNT_GC.gif">
+<meta property="og:updated_time" content="2017-03-31T09:05:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缘来是你">
+<meta name="twitter:title" content="垃圾回收（Garbage Collection）">
+<meta name="twitter:description" content="在Java语言中，垃圾回收（Garbage Collection,GC）是一个非常重要的概念，它的主要作用是回收程序中不再使用的内存。">
+<meta name="twitter:image" content="http://yoursite.com/2017/03/25/Garbage-Collection/REF_COUNT_GC.gif">
 
 
 
@@ -122,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/领域驱动设计/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/25/Garbage-Collection/"/>
 
 
 
 
 
-  <title> 分类: 领域驱动设计 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 垃圾回收（Garbage Collection） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -153,7 +159,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left  ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,47 +243,194 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        领域驱动设计
-        <small>分类</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/24/充血模型与贫血模型/" itemprop="url">
-              
-                <span itemprop="name">领域模型、失血、贫血、充血、胀血模型</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-24T15:36:15+08:00"
-              content="2017-03-24" >
-          03-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/25/Garbage-Collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                垃圾回收（Garbage Collection）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-25T13:57:46+08:00">
+                2017-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/25/Garbage-Collection/" class="leancloud_visitors" data-flag-title="垃圾回收（Garbage Collection）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  在Java语言中，垃圾回收（Garbage Collection,GC）是一个非常重要的概念，它的主要作用是回收程序中不再使用的内存。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#一、垃圾回收机制的意义<br>&ensp;&emsp;&emsp;垃圾回收器的存在,一方面把开发人员从释放内存的复杂工作中解脱出来，提高了开发人员的生产效率；另一方面,对开发人员屏蔽了释放内存的方法，可以避免因开发人员错误地操作内存而导致应用程序的崩溃，保证了程序的稳定性。由于有个垃圾回收机制，Java中的对象不再有“作用域”的概念，<strong>只有对象的引用才有“作用域”</strong>。垃圾回收可以有效的防止内存泄露，有效的使用空闲的内存。<br>ps:<strong>内存泄露</strong>是指该内存空间使用完毕之后未回收，在不涉及复杂数据结构的一般情况下，Java 的内存泄露表现为一个内存对象的生命周期超出了程序需要它的时间长度，我们有时也将其称为<strong>“对象游离”</strong>。</p>
+<p>#二、垃圾回收机制中的算法<br>&ensp;&emsp;&emsp;Java语言规范没有明确地说明JVM使用哪种垃圾回收算法，但是任何一种垃圾回收算法一般要做2件基本的事情：<br>（1）发现无用信息对象；<br>（2）回收被无用对象占用的内存空间，使该空间可被程序再次使用。</p>
+<h2 id="1、引用计数算法（Reference-Counting-Collector）"><a href="#1、引用计数算法（Reference-Counting-Collector）" class="headerlink" title="1、引用计数算法（Reference Counting Collector）"></a>1、引用计数算法（Reference Counting Collector）</h2><p><strong>1.1 算法分析</strong><br>&ensp;&emsp;&emsp;<strong>引用计数</strong>是垃圾收集器中的早期策略。在这种方法中，堆中每个对象实例都有一个<strong>引用计数</strong>。当一个对象被创建时，且将该对象实例分配给一个变量，该变量计数设置为1。当任何其它变量被赋值为这个对象的引用时，计数加1（a = b,则b引用的对象实例的计数器+1），但当一个对象实例的某个引用超过了生命周期或者被设置为一个新值时，对象实例的引用计数器减1。任何引用计数器为0的对象实例可以被当作垃圾收集。当一个对象实例被垃圾收集时，它引用的任何对象实例的引用计数器减1。<br><strong>1.2 优缺点</strong><br>优点：<br>&ensp;&emsp;&emsp;引用计数收集器可以很快的执行，交织在程序运行中。对程序需要不被长时间打断的实时环境比较有利。<br>缺点：<br>&ensp;&emsp;&emsp;无法检测出循环引用。如父对象有一个对子对象的引用，子对象反过来引用父对象。这样，他们的引用计数永远不可能为0。<br><strong>1.3 引用计数算法无法解决循环引用问题</strong><br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        MyObject object1 = <span class="keyword">new</span> MyObject();</div><div class="line">        MyObject object2 = <span class="keyword">new</span> MyObject();</div><div class="line">          </div><div class="line">        object1.object = object2;</div><div class="line">        object2.object = object1;</div><div class="line">          </div><div class="line">        object1 = <span class="keyword">null</span>;</div><div class="line">        object2 = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&ensp;&emsp;&emsp;最后面两句将object1和object2赋值为null，也就是说object1和object2指向的对象已经不可能再被访问，但是由于它们互相引用对方，导致它们的引用计数器都不为0，那么垃圾收集器就永远不会回收它们。</p>
+<p>&ensp;&emsp;&emsp;下面的动画模拟的是根据内存对象的引用次数来清理垃圾。闪烁的红色表示正在进行引用计数。引用计数的最大好处在于它可以很快地检测出垃圾，从动画中你会发现，有些红色闪过之后的区域立即变成黑色。<br><img src="/2017/03/25/Garbage-Collection/REF_COUNT_GC.gif" alt="REF_COUNT_GC"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/垃圾回收/" rel="tag"># 垃圾回收</a>
+          
+            <a href="/tags/GC/" rel="tag"># GC</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/24/充血模型与贫血模型/" rel="next" title="领域模型、失血、贫血、充血、胀血模型">
+                <i class="fa fa-chevron-left"></i> 领域模型、失血、贫血、充血、胀血模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -285,6 +438,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -304,8 +461,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/jing.jpg"
@@ -375,6 +541,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、引用计数算法（Reference-Counting-Collector）"><span class="nav-number">1.</span> <span class="nav-text">1、引用计数算法（Reference Counting Collector）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -487,6 +669,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
