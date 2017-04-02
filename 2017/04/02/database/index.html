@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SQL语言,内连接 & 外连接,事务,存储过程," />
+  <meta name="keywords" content="SQL语言,内连接 & 外连接,存储过程,范式," />
 
 
 
@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/02/database/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
-<meta property="og:updated_time" content="2017-04-02T11:56:23.000Z">
+<meta property="og:updated_time" content="2017-04-02T13:20:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库原理（一）">
 <meta name="twitter:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
@@ -360,7 +360,76 @@
       
 
       
-        
+        <h1 id="SQL语言的功能"><a href="#SQL语言的功能" class="headerlink" title="SQL语言的功能"></a>SQL语言的功能</h1><p>&ensp;&emsp;&emsp;<strong>SQL</strong>是结构化查询语言（Structured Query Language）的缩写，其功能包括<strong>数据查询</strong>、<strong>数据操纵</strong>、<strong>数据定义</strong>和<strong>数据控制</strong>4个部分。</p>
+<ul>
+<li><strong>数据查询</strong>是数据库中最常见的操作，通过select语句可以得到所需的信息。</li>
+<li><strong>数据操纵</strong>语句（Data Manipulation Language,DML）主要包括<em>插入数据</em>、<em>修改数据</em>以及<em>删除数据</em>3种语句。</li>
+<li><strong>数据定义</strong>语句(Data Definition Language,DDL)实现数据定义功能，可对数据库用户、基本表、视图、索引进行定义与撤销。</li>
+<li><strong>数据控制</strong>语句（Data Control Language，DCL）用于对数据库进行统一的控制管理，保证数据在多用户共享的情况下能够安全。</li>
+</ul>
+<center><strong>表1 基本SQL语句的使用方式</strong></center>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>关键字</th>
+<th>描述</th>
+<th>语法格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据查询</td>
+<td>select</td>
+<td>选择符合条件的记录</td>
+<td>select * from table where 条件语句</td>
+</tr>
+<tr>
+<td>数据操纵</td>
+<td>insert</td>
+<td>插入一条记录</td>
+<td>insert into table (字段1，字段2…) values (值1，值2…)</td>
+</tr>
+<tr>
+<td>数据操纵</td>
+<td>update</td>
+<td>更新语句</td>
+<td>update table set 字段名=字段值 where 条件表达式</td>
+</tr>
+<tr>
+<td>数据操纵</td>
+<td>delete</td>
+<td>删除记录</td>
+<td>Delete from table where 条件表达式</td>
+</tr>
+<tr>
+<td>数据定义</td>
+<td>create</td>
+<td>数据表的建立</td>
+<td>create table tablename(字段1，字段2…)</td>
+</tr>
+<tr>
+<td>数据定义</td>
+<td>drop</td>
+<td>数据表的删除</td>
+<td>drop table tablename</td>
+</tr>
+<tr>
+<td>数据控制</td>
+<td>grant</td>
+<td>为用户授予系统权限</td>
+<td>grant&lt;系统权限&gt; &#124; &lt;角色&gt;[,&lt;系统权限&gt; &#124; &lt;角色&gt;]…to &lt;用户名&gt; &#124; &lt;角色&gt; &#124; public[,&lt;用户名&gt; &#124; &lt;角色&gt;]…[with admin option]</td>
+</tr>
+<tr>
+<td>数据控制</td>
+<td>revoke</td>
+<td>收回系统权限</td>
+<td>revoke &lt;系统权限&gt; &#124; &lt;角色&gt;[,&lt;系统权限&gt; &#124; &lt;角色&gt; ]… from &lt;用户名&gt; &#124; &lt;角色&gt; &#124; public [,&lt;用户名&gt; &#124; &lt;角色&gt;]…</td>
+</tr>
+</tbody>
+</table>
+
       
     </div>
 
@@ -387,9 +456,9 @@
           
             <a href="/tags/内连接-外连接/" rel="tag"># 内连接 & 外连接</a>
           
-            <a href="/tags/事务/" rel="tag"># 事务</a>
-          
             <a href="/tags/存储过程/" rel="tag"># 存储过程</a>
+          
+            <a href="/tags/范式/" rel="tag"># 范式</a>
           
         </div>
       
@@ -457,8 +526,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/jing.jpg"
@@ -495,7 +573,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -528,6 +606,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言的功能"><span class="nav-number">1.</span> <span class="nav-text">SQL语言的功能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
