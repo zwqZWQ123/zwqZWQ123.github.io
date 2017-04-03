@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SQL语言,内连接 & 外连接,存储过程,范式," />
+  <meta name="keywords" content="SQL语言,内连接 & 外连接,范式,存储过程," />
 
 
 
@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/02/database/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
-<meta property="og:updated_time" content="2017-04-02T13:20:28.000Z">
+<meta property="og:updated_time" content="2017-04-03T03:17:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库原理（一）">
 <meta name="twitter:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
@@ -429,6 +429,521 @@
 </tr>
 </tbody>
 </table>
+<p><strong>引申：delete 与 truncate命令有哪些区别？</strong><br><strong>相同点：</strong> 都可以用来删除一个表中的数据。<br><strong>不同点：</strong></p>
+<ol>
+<li><strong>truncate</strong>是一个数据定义语言（Data Definition Language,DLL）,它会被隐式地提交，一旦执行后将不能回滚。<strong>delete</strong>执行的过程是每次从表中删除一行数据，同时将删除的操作以日志的形式进行保存，以便将来进行回滚操作。</li>
+<li>用<strong>delete</strong>操作后，被删除的数据占用的存储空间还在，还可以恢复。而用<strong>truncate</strong>操作删除数据后，被删除的数据会立即释放占用的存储空间，被删除的数据是不能被恢复的。</li>
+<li><strong>truncate</strong>的执行速度比<strong>delete</strong>快。</li>
+</ol>
+<h1 id="内连接、外连接、交叉连接"><a href="#内连接、外连接、交叉连接" class="headerlink" title="内连接、外连接、交叉连接"></a>内连接、外连接、交叉连接</h1><h2 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h2><p><strong>概念：</strong>根据两个表或多个表的列之间的关系，从这些表中查询数据。<br><strong>目的：</strong>实现多个表查询操作。</p>
+<h2 id="连接类型"><a href="#连接类型" class="headerlink" title="连接类型"></a>连接类型</h2><p>连接分为三种：内连接、外连接、交叉连接。</p>
+<p>举个栗子，做两张表：学生表（T_student）和班级表（T_class）。</p>
+<center> <strong>T_student</strong> </center>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">studentName</th>
+<th style="text-align:left">classId</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+</tr>
+</tbody>
+</table>
+<center> <strong>T_class</strong> </center>
+
+<table>
+<thead>
+<tr>
+<th>classId</th>
+<th>className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td>一班</td>
+</tr>
+<tr>
+<td>12</td>
+<td>二班</td>
+</tr>
+<tr>
+<td>13</td>
+<td>三班</td>
+</tr>
+<tr>
+<td>14</td>
+<td>四班</td>
+</tr>
+</tbody>
+</table>
+<h2 id="连接标准语法格式"><a href="#连接标准语法格式" class="headerlink" title="连接标准语法格式"></a>连接标准语法格式</h2><p>SQL-92标准所定义的FROM子句的连接语法格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FROM  join_table join_type join_table[ON (join_condition)]</div></pre></td></tr></table></figure>
+<p> 其中<strong>join_table</strong>指出参与连接操作的表名，连接可以对同一个表操作，也可以对多表操作，对同一个表操作的连接又称做自连接。<strong>join_type</strong>指出连接类型。<strong>join_condition</strong>指连接条件。</p>
+<h2 id="内连接（INNER-JOIN）"><a href="#内连接（INNER-JOIN）" class="headerlink" title="内连接（INNER JOIN）"></a>内连接（INNER JOIN）</h2><p>&ensp;&emsp;&emsp;使用比较运算符（包括=、&gt;、&lt;、&lt;&gt;、&gt;=、&lt;=、!&gt;和!&lt;）进行表间的比较操作，查询与连接条件相匹配的数据。根据比较运算符不同，内连接分为<strong>等值连接</strong>、<strong>自然连接</strong>和<strong>不等连接</strong>三种。</p>
+<h3 id="等值连接"><a href="#等值连接" class="headerlink" title="等值连接"></a>等值连接</h3><p>概念：在连接条件中使用等于号（=）运算符，其查询结果中列出被连接表中的所有列，<strong>包括其中的重复列</strong>。<br><span style="font-size:18px;"><span style="font-family:System;"><br>    select <em> from T_student s,T_class c where s.classId = c.classId<br>     等于<br>     select </em> from T_student s inner join T_class c on s.classId = c.classId</span></span> </p>
+<p>结果是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">stundentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+</tbody>
+</table>
+<h3 id="不等连接"><a href="#不等连接" class="headerlink" title="不等连接"></a>不等连接</h3><p> 概念：在连接条件中使用除等于号之外运算符<strong>（&gt;、&lt;、&lt;&gt;、&gt;=、&lt;=、!&gt;和!&lt;）</strong><br> <span style="font-size:18px;"><span style="font-family:System;"><br>    select <em> from T_student s inner join T_class c on s.classId <em>*&lt;&gt;</em></em> c.classId</span></span>  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">studentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+</tbody>
+</table>
+<h3 id="自然连接"><a href="#自然连接" class="headerlink" title="自然连接"></a>自然连接</h3><p>概念：连接条件和等值连接相同，但是会<strong>删除连接表中的重复列</strong>。<br>查询语句同等值连接基本相同:<br><span style="font-size:18px;"><span style="font-family:System;"><br>    select s.*,c.className from T_student s inner join T_class c on s.classId = c.classId</span></span> </p>
+<p>与等值连接对比：结果是<strong>少一个一列classId</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">stundentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总结：内连接是只显示满足条件的!</strong></p>
+<h2 id="外连接（OUTER-JOIN）"><a href="#外连接（OUTER-JOIN）" class="headerlink" title="外连接（OUTER JOIN）"></a>外连接（OUTER JOIN）</h2><p>&ensp;&emsp;&emsp;外连接分为<strong>左连接</strong>（LEFT JOIN）或<strong>左外连接</strong>（LEFT OUTER JOIN）、<strong>右连接</strong>（RIGHT JOIN）或<strong>右外连接</strong>（RIGHT OUTER JOIN）、<strong>全连接</strong>（FULL JOIN）或<strong>全外连接</strong>（FULL OUTER JOIN）。我们就简单的叫：左连接、右连接和全连接。</p>
+<h3 id="左连接"><a href="#左连接" class="headerlink" title="左连接"></a>左连接</h3><p> 概念：返回左表中的所有行，<strong>如果左表中行在右表中没有匹配行，则结果中右表中的列返回空值</strong>。<br> <span style="font-size:18px;"><span style="font-family:System;"><br>    select * from  T_student s left join T_class c on s.classId = c.classId</span></span><br>结果是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">stundentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">NULL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总结：左连接显示左表全部行，和右表与左表相同行。</strong></p>
+<h3 id="右连接"><a href="#右连接" class="headerlink" title="右连接"></a>右连接</h3><p>概念：恰与左连接相反，返回右表中的所有行，<strong>如果右表中行在左表中没有匹配行，则结果中左表中的列返回空值</strong>。<br><span style="font-size:18px;"><span style="font-family:System;">  　<br>   select * from  T_student s right join T_class c on s.classId = c.classId</span></span><br>结果是：   </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">stundentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总结：右连接恰与左连接相反，显示右表全部行，和左表与右表相同行。</strong></p>
+<h2 id="全连接"><a href="#全连接" class="headerlink" title="全连接"></a>全连接</h2><p>概念：返回左表和右表中的所有行。<strong>当某行在另一表中没有匹配行，则另一表中的列返回空值</strong><br><span style="font-size:18px;"><span style="font-family:System;"><br>   select * from  T_student s full join T_class c on s.classId = c.classId</span></span><br>结果是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">stundentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">NULL</td>
+</tr>
+<tr>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">NULL</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总结：返回左表和右表中的所有行。</strong></p>
+<h2 id="交叉连接（CROSS-JOIN）：也称迪卡尔积"><a href="#交叉连接（CROSS-JOIN）：也称迪卡尔积" class="headerlink" title="交叉连接（CROSS JOIN）：也称迪卡尔积"></a>交叉连接（CROSS JOIN）：也称迪卡尔积</h2><p>概念：不带where条件子句，它将会返回被连接的两个表的笛卡尔积，返回结果的行数等于两个表行数的乘积（例如：T_student和T_class，返回4*4=16条记录），如果带where，返回或显示的是匹配的行数。</p>
+<h3 id="不带where"><a href="#不带where" class="headerlink" title="不带where"></a>不带where</h3><p><span style="font-size:18px;"><span style="font-family:System;"><br>   select <em>from T_student <strong>cross join</strong> T_class<br>  等于<br>   select </em>from T_student, T_class</span></span><br>结果是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">studentName</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">classId</th>
+<th style="text-align:left">className</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">一班</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">二班</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">三班</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">张三</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">李四</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">王五</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">马六</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">四班</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总结：相当与笛卡尔积，左表和右表组合。</strong></p>
+<h3 id="有where子句"><a href="#有where子句" class="headerlink" title="有where子句"></a>有where子句</h3><p>&ensp;&emsp;&emsp;往往会先生成两个表行数乘积的数据表，然后才根据where条件从中选择。<br><span style="font-size:18px;"><span style="font-family:System;"><br>select <em> from T_student s cross join T_class c where s.classId = c.classId </em></span></span><br>　  (注:cross join后加条件只能用where,不能用on)<br>　<br><em>*总结：查询结果跟等值连接的查询结果是一样。</em></p>
+<p>　  </p>
 
       
     </div>
@@ -456,9 +971,9 @@
           
             <a href="/tags/内连接-外连接/" rel="tag"># 内连接 & 外连接</a>
           
-            <a href="/tags/存储过程/" rel="tag"># 存储过程</a>
-          
             <a href="/tags/范式/" rel="tag"># 范式</a>
+          
+            <a href="/tags/存储过程/" rel="tag"># 存储过程</a>
           
         </div>
       
@@ -573,7 +1088,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -616,7 +1131,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言的功能"><span class="nav-number">1.</span> <span class="nav-text">SQL语言的功能</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言的功能"><span class="nav-number">1.</span> <span class="nav-text">SQL语言的功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内连接、外连接、交叉连接"><span class="nav-number">2.</span> <span class="nav-text">内连接、外连接、交叉连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连接查询"><span class="nav-number">2.1.</span> <span class="nav-text">连接查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接类型"><span class="nav-number">2.2.</span> <span class="nav-text">连接类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接标准语法格式"><span class="nav-number">2.3.</span> <span class="nav-text">连接标准语法格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内连接（INNER-JOIN）"><span class="nav-number">2.4.</span> <span class="nav-text">内连接（INNER JOIN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等值连接"><span class="nav-number">2.4.1.</span> <span class="nav-text">等值连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不等连接"><span class="nav-number">2.4.2.</span> <span class="nav-text">不等连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自然连接"><span class="nav-number">2.4.3.</span> <span class="nav-text">自然连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外连接（OUTER-JOIN）"><span class="nav-number">2.5.</span> <span class="nav-text">外连接（OUTER JOIN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#左连接"><span class="nav-number">2.5.1.</span> <span class="nav-text">左连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右连接"><span class="nav-number">2.5.2.</span> <span class="nav-text">右连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全连接"><span class="nav-number">2.6.</span> <span class="nav-text">全连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉连接（CROSS-JOIN）：也称迪卡尔积"><span class="nav-number">2.7.</span> <span class="nav-text">交叉连接（CROSS JOIN）：也称迪卡尔积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不带where"><span class="nav-number">2.7.1.</span> <span class="nav-text">不带where</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有where子句"><span class="nav-number">2.7.2.</span> <span class="nav-text">有where子句</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
