@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="视图,union,union all,数据库日志文件," />
 
 
 
@@ -89,12 +89,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="缘来是你">
-<meta property="og:url" content="http://yoursite.com/categories/数据库/index.html">
+<meta name="description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库原理（三）">
+<meta property="og:url" content="http://yoursite.com/2017/04/04/database3/index.html">
 <meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
+<meta property="og:updated_time" content="2017-04-04T10:05:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缘来是你">
+<meta name="twitter:title" content="数据库原理（三）">
+<meta name="twitter:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
 
 
 
@@ -122,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/数据库/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/04/database3/"/>
 
 
 
 
 
-  <title> 分类: 数据库 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 数据库原理（三） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -153,7 +157,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left  ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,103 +241,321 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        数据库
-        <small>分类</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/04/database3/" itemprop="url">
-              
-                <span itemprop="name">数据库原理（三）</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-04T17:26:08+08:00"
-              content="2017-04-04" >
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/03/database2/" itemprop="url">
-              
-                <span itemprop="name">数据库原理（二）</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-03T14:10:17+08:00"
-              content="2017-04-03" >
-          04-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/02/database/" itemprop="url">
-              
-                <span itemprop="name">数据库原理（一）</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-02T19:32:38+08:00"
-              content="2017-04-02" >
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/04/database3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据库原理（三）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-04T17:26:08+08:00">
+                2017-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/04/database3/" class="leancloud_visitors" data-flag-title="数据库原理（三）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><p>&ensp;&emsp;&emsp;<strong>视图</strong>是由从数据库的基本表中选取出来的数据组成的逻辑窗口，与基本表不同，它是一个虚表。在数据库中，存放的只是视图的定义，而不是存放视图包含的数据项，这些项目仍然存放在原来的基本表结构中。<br>&ensp;&emsp;&emsp;视图的作用主要有以下几点：</p>
+<ol>
+<li>可以简化数据查询语句；</li>
+<li>可以使用户能从多角度看待同一数据；</li>
+<li>通过引入视图可以提高数据的安全性；</li>
+<li>视图提供一定程度的逻辑独立性。</li>
+</ol>
+<h1 id="union-和-union-all有什么区别"><a href="#union-和-union-all有什么区别" class="headerlink" title="union 和 union all有什么区别"></a>union 和 union all有什么区别</h1><p>&ensp;&emsp;&emsp;<strong>union</strong>在进行表求并集后会去掉重复的元素，所以会对所产生的结果集进行排序运算，删除重复的记录再返回结果。<br>&ensp;&emsp;&emsp;<strong>union all</strong>只是简单地将两个结果集合并后就返回结果。因此，如果返回的两个结果集中有重复的数据，那么返回的结果集就会包含重复的数据。<br>&ensp;&emsp;&emsp;从上面的对比可以看出，在执行查询操作时，<strong>union all要比union快得多</strong>。举个栗子，现在有两个学生表Table1和Table2。</p>
+<center><strong>Table1</strong></center>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">C1</th>
+<th style="text-align:left">C2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+</tr>
+</tbody>
+</table>
+<center><strong>Table2</strong></center>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">C1</th>
+<th style="text-align:left">C2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+<p>select <em> from Table1 union select </em> from Table2的查询结果如下：</p>
+<center><strong>使用union得到的查询结果</strong></center>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">C1</th>
+<th style="text-align:left">C2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+</tbody>
+</table>
+<p>select <em> from Table1 union all select </em> from Table2的查询结果如下：</p>
+<center><strong>使用union all得到的查询结果</strong></center>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">C1</th>
+<th style="text-align:left">C2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+<h1 id="日志文件（Log-File）"><a href="#日志文件（Log-File）" class="headerlink" title="日志文件（Log File）"></a>日志文件（Log File）</h1><p>&ensp;&emsp;&emsp;<strong>日志文件（Log File）</strong>记录所有对数据库数据的修改，主要是保护数据库以防故障发生，以及恢复数据时使用。其特点如下：</p>
+<ol>
+<li>每一个数据库至少包含两个日志文件组。每个日志文件组至少包含两个日志文件成员。</li>
+<li>日志文件组以循环方式进行写操作。</li>
+<li>每一个日志文件成员对应一个物理文件。</li>
+</ol>
+<p>&ensp;&emsp;&emsp;通过<strong>日志文件</strong>来记录数据库事务可以最大限度地保证数据的一致性与安全性，但一旦数据库中日志满了，就只能执行查询等读操作，不能执行更改、备份等操作，原因是任何写操作都要记录日志，也就是说，基本上处于不能使用的状态。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/视图/" rel="tag"># 视图</a>
+          
+            <a href="/tags/union/" rel="tag"># union</a>
+          
+            <a href="/tags/union-all/" rel="tag"># union all</a>
+          
+            <a href="/tags/数据库日志文件/" rel="tag"># 数据库日志文件</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/03/database2/" rel="next" title="数据库原理（二）">
+                <i class="fa fa-chevron-left"></i> 数据库原理（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -341,6 +563,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -360,8 +586,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/jing.jpg"
@@ -431,6 +666,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">1.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#union-和-union-all有什么区别"><span class="nav-number">2.</span> <span class="nav-text">union 和 union all有什么区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志文件（Log-File）"><span class="nav-number">3.</span> <span class="nav-text">日志文件（Log File）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -543,6 +794,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
