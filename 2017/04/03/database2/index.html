@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/03/database2/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
-<meta property="og:updated_time" content="2017-04-04T07:24:34.000Z">
+<meta property="og:updated_time" content="2017-04-04T09:23:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库原理（二）">
 <meta name="twitter:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
@@ -373,7 +373,109 @@
 <li>当执行<strong>ROLLBACK</strong>语句时，自事务启动以来对数据库所做的一切更改都会<strong>被撤销</strong>，并且数据库中内容返回到事务开始之前的状态。</li>
 </ul>
 <p>&ensp;&emsp;&emsp;无论是什么情况，在事务完成时，都能保证回到一致状态。</p>
-<p><strong>引申</strong>：JDBC有哪些实务<strong>隔离级别</strong>？<br>&ensp;&emsp;&emsp;为了解决与“<strong>与多个线程请求相同数据</strong>”相关的问题，事务之间通常会用<strong>锁</strong>相互隔离离开。如今，大多数主流的数据库支持不同类型的锁。因此，JDBC API支持不同类型的事务，它们由<strong>Connection对象</strong>指派或确定。在JDBC中，定义了以下5种事务隔离级别：<br>1)<strong>TRANSACTION_NONE JDB</strong>。<strong>不支持事务</strong>。<br>2)<strong>TRANSACTION_READ_UNCOMMITTED</strong>。未提交读。说明在提交前一个事务可以看到另一事务的变化。这样读<strong>“脏”数据</strong>、<strong>不可重复读</strong>和<strong>虚读</strong>都是允许的。<br>3)<strong>TRANSACTION_READ_COMMIT</strong>。已提交读。说明读取未提交的数据是不允许的。这个级别仍然允许<strong>不可重复读</strong>和<strong>虚读</strong>产生。<br>4)<strong>TRANSACTION_REPEATABLE_READ</strong>。可重复读。说明事务保证能够再次读取相同的数据而不会失败，但<strong>虚读</strong>仍然会出现。<br>5)<strong>TRANSACTION_SERIALIZABLE</strong>。可序列化。是最高的事务级别，它防止读“脏”数据、不可重复读和虚读。<br>（备注：<br>1⃣️读“脏”数据。一个事务读取了另一个事务尚未提交的数据。<br>2⃣️<br>）</p>
+<p><strong>引申</strong>：JDBC有哪些实务<strong>隔离级别</strong>？<br>&ensp;&emsp;&emsp;为了解决与“<strong>与多个线程请求相同数据</strong>”相关的问题，事务之间通常会用<strong>锁</strong>相互隔离离开。如今，大多数主流的数据库支持不同类型的锁。因此，JDBC API支持不同类型的事务，它们由<strong>Connection对象</strong>指派或确定。在JDBC中，定义了以下5种事务隔离级别：<br>1)<strong>TRANSACTION_NONE JDB</strong>。<strong>不支持事务</strong>。<br>2)<strong>TRANSACTION_READ_UNCOMMITTED</strong>。未提交读。说明在提交前一个事务可以看到另一事务的变化。这样读<strong>“脏”数据</strong>、<strong>不可重复读</strong>和<strong>虚读</strong>都是允许的。<br>3)<strong>TRANSACTION_READ_COMMIT</strong>。已提交读。说明读取未提交的数据是不允许的。这个级别仍然允许<strong>不可重复读</strong>和<strong>虚读</strong>产生。<br>4)<strong>TRANSACTION_REPEATABLE_READ</strong>。可重复读。说明事务保证能够再次读取相同的数据而不会失败，但<strong>虚读</strong>仍然会出现。<br>5)<strong>TRANSACTION_SERIALIZABLE</strong>。可序列化。是最高的事务级别，它防止读“脏”数据、不可重复读和虚读。<br>备注：<br>1⃣️<strong>读“脏”数据</strong>。一个事务读取了另一个事务尚未提交的数据。<br>2⃣️<strong>不可重复读</strong>。一个事务的操作导致另一个事务前后两次读取到不同的数据。<br>3⃣️<strong>虚读</strong>。一个事务的操作导致另一个事务前后两次查询的结果数据量不同。</p>
+<h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><p>&ensp;&emsp;&emsp;数据库中，<strong>游标</strong>提供了一种对表中检索出的数据进行操作的灵活手段，它实际上是一种能从包含多条数据记录的结果集中每次提取一条记录的机制。</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><ul>
+<li><strong>隐式游标:</strong>增删改等操作Oracle都会自动创建游标，暂时保存操作结果，也就是能够回滚的操作都会引发游标的创建。</li>
+<li><strong>显示游标：</strong>由开发人员通过程序显式控制,用于从表中取出多行数据,并将多行数据一行一行的单独进行处理。</li>
+</ul>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><ul>
+<li>游标允许应用程序对查询语句select返回的行结果集中的每一行进行相同或不同的操作，而不是一次对整个结果集进行同一种操作。</li>
+<li>提供对基于游标位置而对表中数据进行删除或更新的功能。</li>
+<li>游标还把作为<strong>面向集合的数据库管理系统</strong>和<strong>面向行的程序设计</strong>连接了起来，使两种数据处理方式能够进行“沟通”。</li>
+</ul>
+<h2 id="生命周期及步骤"><a href="#生命周期及步骤" class="headerlink" title="生命周期及步骤"></a>生命周期及步骤</h2><p>&ensp;&emsp;&emsp;<strong>游标的生命周期</strong>包含有五个阶段：<strong>声明游标</strong>、<strong>打开游标</strong>、<strong>读取游标数据</strong>、<strong>关闭游标</strong>、<strong>释放游标</strong>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">步骤</th>
+<th style="text-align:left">关键词</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">在DECLARE中cursor</td>
+<td style="text-align:left">声明游标，创建一个命名的查询语句</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">Open</td>
+<td style="text-align:left">打开游标</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">Fetch</td>
+<td style="text-align:left">取出游标中的一条记录装入变量</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">Close</td>
+<td style="text-align:left">释放游标</td>
+</tr>
+</tbody>
+</table>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>在使用游标的表中，对行提供<strong>删除</strong>和<strong>更新</strong>的功能。</li>
+<li>游标将<strong>面向集合的数据库管理系统</strong>和<strong>面向行的程序设计</strong>连接了起来。</li>
+</ol>
+<h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><p>##什么是存储过程<br>&ensp;&emsp;&emsp;SQL语句在执行时要先编译，然后再被执行。在大型数据库系统中，为了提高效率，将为了完成特定功能的SQL语句集进行编译优化后，存储在数据库服务器中，<strong>用户通过制定存储过程的名字来调用执行</strong>。<br>&ensp;&emsp;&emsp;下面为一个创建存储过程的常用语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">create procedure sp_name @[参数名][类型]</div><div class="line">                          as</div><div class="line">                          begin</div><div class="line">                          ......</div><div class="line">                          end</div></pre></td></tr></table></figure>
+<p>调用存储过程语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">exec sp_name[参数名]</div></pre></td></tr></table></figure>
+<p>删除存储过程语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">drop procedure sp_name</div></pre></td></tr></table></figure>
+<h2 id="存储过程与函数有什么区别与联系"><a href="#存储过程与函数有什么区别与联系" class="headerlink" title="存储过程与函数有什么区别与联系"></a>存储过程与函数有什么区别与联系</h2><p>&ensp;&emsp;&emsp;需要注意的是，存储过程不等于函数，二者虽然本质上没有区别，但还是有如下几个方面的不同：</p>
+<ol>
+<li><strong>存储过程</strong>一般是作为一个独立的部分来执行，而<strong>函数</strong>可以作为查询语句的一部分来调用。由于函数可以返回一个对象，因此它可以在查询语句中位于From关键字的后面。</li>
+<li>一般而言，<strong>存储过程</strong>实现的功能较复杂，而<strong>函数</strong>实现的功能针对性较强。</li>
+<li><strong>函数</strong>需要用括号包住输入的参数，且只能返回一个值或表对象，而<strong>存储过程</strong>可以返回多个参数。</li>
+<li><strong>函数</strong>可以嵌入在SQL中使用，可以在select中调用，<strong>存储过程</strong>则不行。</li>
+<li><strong>函数</strong>不能直接操作实体表，只能操作内建表。</li>
+<li><strong>存储过程</strong>在创建时即在服务器上进行了编译，其执行速度比<strong>函数</strong>快。</li>
+</ol>
+<h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><p>&ensp;&emsp;&emsp;<strong>触发器</strong>是一种特殊类型的<strong>存储过程</strong>，它由事件触发，而不是程序调用或手工启动，当数据库有特殊的操作时，这些操作由数据库中的事件来触发，自动完成这些SQL语句。<strong>使用触发器可以用来保证数据的有效性和完整性，完成比约束更复杂的数据约束</strong>。</p>
+<h2 id="触发器与存储过程的区别"><a href="#触发器与存储过程的区别" class="headerlink" title="触发器与存储过程的区别"></a>触发器与存储过程的区别</h2><table>
+<thead>
+<tr>
+<th>触发器</th>
+<th>存储过程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当某类数据操纵DML语句发生时隐式地调用</td>
+<td>从一个应用过程中显示地调用</td>
+</tr>
+<tr>
+<td>在触发器体内禁止使用COMMIT和ROLLBACK语句</td>
+<td>在过程体内可以使用所有PL／SQL块中都能使用的SQL语句，包括COMMIT和ROLLBACK语句</td>
+</tr>
+<tr>
+<td>不能接受参数输入</td>
+<td>可以接受参数输入</td>
+</tr>
+</tbody>
+</table>
+<h2 id="触发器的分类"><a href="#触发器的分类" class="headerlink" title="触发器的分类"></a>触发器的分类</h2><p>&ensp;&emsp;&emsp;根据SQL语句的不同，触发器可以分为DML触发器和DLL触发器。</p>
+<ul>
+<li><strong>DML触发器</strong>是当数据库服务器发生<strong>数据操纵语言（DML）</strong>事件时执行的存储过程，有<strong>After</strong>和<strong>Instead Of</strong>这两种触发器。<ul>
+<li><strong>After触发器</strong>被激活触发是在<strong>记录改变之后</strong>进行的一种触发器。</li>
+<li><strong>Instead Of触发器</strong>是在<strong>记录变更之前</strong>，去执行触发器本身所定义的操作，而不是执行原来SQL语句里的操作。</li>
+</ul>
+</li>
+<li><strong>DLL触发器</strong>是在响应<strong>数据定义语言（DDL）</strong>事件时执行的存储过程。</li>
+</ul>
+<h2 id="触发器的作用"><a href="#触发器的作用" class="headerlink" title="触发器的作用"></a>触发器的作用</h2><p>触发器的作用主要表现为以下几个方面：</p>
+<ol>
+<li>增加安全性。</li>
+<li>利用<strong>触发器</strong>记录所进行的修改以及相关信息，跟踪用户对数据库的操作，实现审计。</li>
+<li>维护那些通过创建表时的声明约束不可能实现的复杂的完整性约束以及对数据库中特定事件进行监控与响应。</li>
+<li>实现复杂的非标准的数据库相关完整性规则、同步地复制表中的数据。</li>
+<li><strong>触发器</strong>是自动的，它们在对表的数据做了任何修改之后就会被激活，例如可以自动计算数据值，若数据的值达到了一定的要求，则进行特定的处理。以某企业财务管理为例，如果企业的资金出现短缺，并且达到某种程度时，则会发送警告信息。</li>
+</ol>
+<p><strong>引申</strong>：触发器分为<strong>事前触发</strong>和<strong>事后触发</strong>，这两者有什么区别？<strong>语句级触发</strong>和<strong>行级触发</strong>有什么区别？<br>&ensp;&emsp;&emsp;<strong>事前触发</strong>发生在事件发生之前，用于<strong>验证一些条件或进行一些准备工作</strong>；<strong>事后触发</strong>发生在事件之后，做<strong>收尾工作</strong>。<strong>事前触发</strong>可以<strong>获得之前和新的字段值</strong>，而<strong>事后触发</strong>可以<strong>保证事务的完整性</strong>。<strong>语句级</strong>出发可以在语句执行之前或之后执行，而<strong>行级触发</strong>在触发器所影响的每一行触发一次。</p>
 
       
     </div>
@@ -561,7 +663,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">1.</span> <span class="nav-text">事务</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">2.</span> <span class="nav-text">游标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类型"><span class="nav-number">2.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">2.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期及步骤"><span class="nav-number">2.3.</span> <span class="nav-text">生命周期及步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">2.4.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程"><span class="nav-number">3.</span> <span class="nav-text">存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储过程与函数有什么区别与联系"><span class="nav-number">3.1.</span> <span class="nav-text">存储过程与函数有什么区别与联系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器"><span class="nav-number">4.</span> <span class="nav-text">触发器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器与存储过程的区别"><span class="nav-number">4.1.</span> <span class="nav-text">触发器与存储过程的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器的分类"><span class="nav-number">4.2.</span> <span class="nav-text">触发器的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器的作用"><span class="nav-number">4.3.</span> <span class="nav-text">触发器的作用</span></a></li></ol></li></ol></div>
             
 
           </div>
