@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SQL语言,内连接 & 外连接,范式,存储过程," />
+  <meta name="keywords" content="SQL语言,内连接 & 外连接 & 交叉连接,范式," />
 
 
 
@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/02/database/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
-<meta property="og:updated_time" content="2017-04-03T03:17:03.000Z">
+<meta property="og:updated_time" content="2017-04-03T06:09:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库原理（一）">
 <meta name="twitter:description" content="数据库（Data  Base，简称DB）———— 存储在计算机存储介质上的、有一定组织形式的、可共享的、相互关联的数据集合。简单的说即为存储数据的仓库。">
@@ -942,8 +942,15 @@
 </tbody>
 </table>
 <p><strong>总结：相当与笛卡尔积，左表和右表组合。</strong></p>
-<h3 id="有where子句"><a href="#有where子句" class="headerlink" title="有where子句"></a>有where子句</h3><p>&ensp;&emsp;&emsp;往往会先生成两个表行数乘积的数据表，然后才根据where条件从中选择。<br><span style="font-size:18px;"><span style="font-family:System;"><br>select <em> from T_student s cross join T_class c where s.classId = c.classId </em></span></span><br>　  (注:cross join后加条件只能用where,不能用on)<br>　<br><em>*总结：查询结果跟等值连接的查询结果是一样。</em></p>
-<p>　  </p>
+<h3 id="有where子句"><a href="#有where子句" class="headerlink" title="有where子句"></a>有where子句</h3><p>&ensp;&emsp;&emsp;往往会先生成两个表行数乘积的数据表，然后才根据where条件从中选择。<br><span style="font-size:18px;"><span style="font-family:System;"><br>select * from T_student s cross join T_class c where s.classId = c.classId </span></span><br>　  (注:cross join后加条件只能用where,不能用on)  </p>
+<p><strong>总结：查询结果跟等值连接的查询结果是一样</strong></p>
+<h1 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h1><p>&ensp;&emsp;&emsp;在设计与操作维护数据库时，最关键的问题就是要确保数据能够正确地分布到数据库的表中。使用正确的数据结构，不仅有助于对数据库进行相应的存取操作，还可以极大地简化应用程序中的其他内容（查询、窗体、报表、代码等），按照“数据库规范化”对表进行设计，<strong>其目的就是减少数据库中的冗余，以增加数据的一致性</strong>。<br>&ensp;&emsp;&emsp;<strong>范化</strong>是在识别数据库中的数据元素、关系以及定义所需的表和各表中的项目这些初始工作之后的一个细化的过程。常见的范式有<strong>1NF</strong>、<strong>2NF</strong>、<strong>3NF</strong>、<strong>BCNF</strong>以及<strong>4NF</strong>。</p>
+<h2 id="1NF（第一范式）"><a href="#1NF（第一范式）" class="headerlink" title="1NF（第一范式）"></a>1NF（第一范式）</h2><p>第一范式：当关系模式R的所有属性都<strong>不能在分解为更基本的数据单位</strong>时，称R是满足第一范式的，简记为1NF。满足第一范式是关系模式规范化的最低要求，否则，将有很多基本操作在这样的关系模式中实现不了。</p>
+<h2 id="2NF（第二范式）"><a href="#2NF（第二范式）" class="headerlink" title="2NF（第二范式）"></a>2NF（第二范式）</h2><p>第二范式：如果关系模式R满足第一范式，并且<strong>R的所有非主属性都完全依赖于R的每一个候选关键属性</strong>，称R满足第二范式，简记为2NF。</p>
+<h2 id="3NF（第三范式）"><a href="#3NF（第三范式）" class="headerlink" title="3NF（第三范式）"></a>3NF（第三范式）</h2><p>第三范式：设R是一个满足第一范式条件的关系模式，<strong>X是R的任意属性集，如果X非传递依赖于R的任意一个候选关键字</strong>，称R满足第三范式，简记为3NF.</p>
+<h2 id="BCNF（巴斯-科德范式）"><a href="#BCNF（巴斯-科德范式）" class="headerlink" title="BCNF（巴斯-科德范式）"></a>BCNF（巴斯-科德范式）</h2><p>巴斯-科德范式：构建在第三范式的基础上，如果关系模式R是第一范式，且每个属性都不传递依赖于R的候选键，那么称R为BCNF的模式。</p>
+<h2 id="4NF（第四范式）"><a href="#4NF（第四范式）" class="headerlink" title="4NF（第四范式）"></a>4NF（第四范式）</h2><p>第四范式：设R是一个关系模式，D是R上的多值依赖集合。如果D中存在凡多值依赖X-&gt;Y,X必是R的超键，那么称R是第四范式的模式。
+　  </p>
 
       
     </div>
@@ -969,11 +976,9 @@
           
             <a href="/tags/SQL语言/" rel="tag"># SQL语言</a>
           
-            <a href="/tags/内连接-外连接/" rel="tag"># 内连接 & 外连接</a>
+            <a href="/tags/内连接-外连接-交叉连接/" rel="tag"># 内连接 & 外连接 & 交叉连接</a>
           
             <a href="/tags/范式/" rel="tag"># 范式</a>
-          
-            <a href="/tags/存储过程/" rel="tag"># 存储过程</a>
           
         </div>
       
@@ -995,6 +1000,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/03/database2/" rel="prev" title="数据库原理（二）">
+                数据库原理（二） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1066,7 +1075,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1088,7 +1097,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -1131,7 +1140,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言的功能"><span class="nav-number">1.</span> <span class="nav-text">SQL语言的功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内连接、外连接、交叉连接"><span class="nav-number">2.</span> <span class="nav-text">内连接、外连接、交叉连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连接查询"><span class="nav-number">2.1.</span> <span class="nav-text">连接查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接类型"><span class="nav-number">2.2.</span> <span class="nav-text">连接类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接标准语法格式"><span class="nav-number">2.3.</span> <span class="nav-text">连接标准语法格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内连接（INNER-JOIN）"><span class="nav-number">2.4.</span> <span class="nav-text">内连接（INNER JOIN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等值连接"><span class="nav-number">2.4.1.</span> <span class="nav-text">等值连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不等连接"><span class="nav-number">2.4.2.</span> <span class="nav-text">不等连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自然连接"><span class="nav-number">2.4.3.</span> <span class="nav-text">自然连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外连接（OUTER-JOIN）"><span class="nav-number">2.5.</span> <span class="nav-text">外连接（OUTER JOIN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#左连接"><span class="nav-number">2.5.1.</span> <span class="nav-text">左连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右连接"><span class="nav-number">2.5.2.</span> <span class="nav-text">右连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全连接"><span class="nav-number">2.6.</span> <span class="nav-text">全连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉连接（CROSS-JOIN）：也称迪卡尔积"><span class="nav-number">2.7.</span> <span class="nav-text">交叉连接（CROSS JOIN）：也称迪卡尔积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不带where"><span class="nav-number">2.7.1.</span> <span class="nav-text">不带where</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有where子句"><span class="nav-number">2.7.2.</span> <span class="nav-text">有where子句</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言的功能"><span class="nav-number">1.</span> <span class="nav-text">SQL语言的功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内连接、外连接、交叉连接"><span class="nav-number">2.</span> <span class="nav-text">内连接、外连接、交叉连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连接查询"><span class="nav-number">2.1.</span> <span class="nav-text">连接查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接类型"><span class="nav-number">2.2.</span> <span class="nav-text">连接类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接标准语法格式"><span class="nav-number">2.3.</span> <span class="nav-text">连接标准语法格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内连接（INNER-JOIN）"><span class="nav-number">2.4.</span> <span class="nav-text">内连接（INNER JOIN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等值连接"><span class="nav-number">2.4.1.</span> <span class="nav-text">等值连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不等连接"><span class="nav-number">2.4.2.</span> <span class="nav-text">不等连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自然连接"><span class="nav-number">2.4.3.</span> <span class="nav-text">自然连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外连接（OUTER-JOIN）"><span class="nav-number">2.5.</span> <span class="nav-text">外连接（OUTER JOIN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#左连接"><span class="nav-number">2.5.1.</span> <span class="nav-text">左连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右连接"><span class="nav-number">2.5.2.</span> <span class="nav-text">右连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全连接"><span class="nav-number">2.6.</span> <span class="nav-text">全连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉连接（CROSS-JOIN）：也称迪卡尔积"><span class="nav-number">2.7.</span> <span class="nav-text">交叉连接（CROSS JOIN）：也称迪卡尔积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不带where"><span class="nav-number">2.7.1.</span> <span class="nav-text">不带where</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有where子句"><span class="nav-number">2.7.2.</span> <span class="nav-text">有where子句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#范式"><span class="nav-number">3.</span> <span class="nav-text">范式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1NF（第一范式）"><span class="nav-number">3.1.</span> <span class="nav-text">1NF（第一范式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2NF（第二范式）"><span class="nav-number">3.2.</span> <span class="nav-text">2NF（第二范式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3NF（第三范式）"><span class="nav-number">3.3.</span> <span class="nav-text">3NF（第三范式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BCNF（巴斯-科德范式）"><span class="nav-number">3.4.</span> <span class="nav-text">BCNF（巴斯-科德范式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4NF（第四范式）"><span class="nav-number">3.5.</span> <span class="nav-text">4NF（第四范式）</span></a></li></ol></li></ol></div>
             
 
           </div>
