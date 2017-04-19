@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="直接插入排序,希尔排序," />
 
 
 
@@ -89,12 +89,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="缘来是你">
-<meta property="og:url" content="http://yoursite.com/tags/存储过程/index.html">
+<meta name="description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法——直接插入排序、希尔排序">
+<meta property="og:url" content="http://yoursite.com/2017/04/19/sort1/index.html">
 <meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。">
+<meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/sort.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/insertSort.png">
+<meta property="og:updated_time" content="2017-04-19T16:25:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缘来是你">
+<meta name="twitter:title" content="排序算法——直接插入排序、希尔排序">
+<meta name="twitter:description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。">
+<meta name="twitter:image" content="http://yoursite.com/2017/04/19/sort1/sort.png">
 
 
 
@@ -122,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/存储过程/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/19/sort1/"/>
 
 
 
 
 
-  <title> 标签: 存储过程 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 排序算法——直接插入排序、希尔排序 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -153,7 +160,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left  ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,46 +244,199 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        存储过程
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/19/sort1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                排序算法——直接插入排序、希尔排序
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T23:13:00+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/排序算法/" itemprop="url" rel="index">
+                    <span itemprop="name">排序算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/19/sort1/" class="leancloud_visitors" data-flag-title="排序算法——直接插入排序、希尔排序">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h1 id="七大排序算法"><a href="#七大排序算法" class="headerlink" title="七大排序算法"></a>七大排序算法</h1><p><img src="/2017/04/19/sort1/sort.png" alt="sort"></p>
+<h1 id="插入排序——直接插入排序"><a href="#插入排序——直接插入排序" class="headerlink" title="插入排序——直接插入排序"></a>插入排序——直接插入排序</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;对于给定的一组记录，初始时假设第一个记录自成一个有序序列，其余记录为无序序列。接着从第二个记录开始，按照记录的大小一次将当前处理的记录插入到其之前的有序序列中，直到最后一个记录插入到有序序列中为止。<br>直接插入排序示例：<br><img src="/2017/04/19/sort1/insertSort.png" alt="insertSort"><br>&ensp;&emsp;&emsp;如果碰见一个和插入元素相等的，那么插入元素把想插入的元素放在相等元素的后面。所以，相等元素的前后顺序没有改变，从原无序序列出去的顺序就是排好序后的顺序，所以<strong>插入排序是稳定的</strong>。</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span> (a != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; a.length; i++) &#123;</div><div class="line">				<span class="keyword">int</span> temp = a[i],j = i;</div><div class="line">				<span class="keyword">if</span> (a[j-<span class="number">1</span>] &gt; temp) &#123;</div><div class="line">					<span class="keyword">while</span> (j &gt;= <span class="number">1</span> &amp;&amp; a[j-<span class="number">1</span>]&gt;temp) &#123;</div><div class="line">						a[j] = a[j-<span class="number">1</span>];</div><div class="line">						j--;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//第i或第0个元素存放temp</span></div><div class="line">				a[j] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h2><p>时间复杂度：O（n^2 ）.</p>
+<p>其他的插入排序有<strong>二分插入排序</strong>，<strong>2-路插入排序</strong>。</p>
+<h1 id="插入排序——希尔排序"><a href="#插入排序——希尔排序" class="headerlink" title="插入排序——希尔排序"></a>插入排序——希尔排序</h1><p>&ensp;&emsp;&emsp;希尔排序是1959 年由D.L.Shell 提出来的，相对直接排序有较大的改进。希尔排序又叫<strong>缩小增量排序</strong>。</p>
+<h2 id="基本思想-1"><a href="#基本思想-1" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。<br>具体步骤如下：</p>
+<ol>
+<li>选择一个步长序列$t_1 , t_2 ,…,t_k$,满足$t_i &gt; t_j (i&lt;j),t_k = 1$。</li>
+<li></li>
+</ol>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/04/03/database2/" itemprop="url">
-              
-                <span itemprop="name">数据库原理（二）</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-03T14:10:17+08:00"
-              content="2017-04-03" >
-          04-03
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/直接插入排序/" rel="tag"># 直接插入排序</a>
+          
+            <a href="/tags/希尔排序/" rel="tag"># 希尔排序</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/04/design-pattern1/" rel="next" title="23种设计模式分类">
+                <i class="fa fa-chevron-left"></i> 23种设计模式分类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -284,6 +444,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -303,8 +467,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/jing.jpg"
@@ -374,6 +547,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#七大排序算法"><span class="nav-number">1.</span> <span class="nav-text">七大排序算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——直接插入排序"><span class="nav-number">2.</span> <span class="nav-text">插入排序——直接插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">2.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率"><span class="nav-number">2.3.</span> <span class="nav-text">效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——希尔排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序——希尔排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本思想</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -486,6 +675,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
