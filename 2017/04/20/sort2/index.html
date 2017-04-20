@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="直接插入排序,希尔排序," />
+  <meta name="keywords" content="简单选择排序,堆排序," />
 
 
 
@@ -89,20 +89,20 @@
 
 
 
-<meta name="description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。本篇博客讲述排序算法里的插入排序，具体有两种：简单插入排序和希尔排序">
+<meta name="description" content="本篇博客讲述排序算法里的选择排序，具体有两种：简单选择排序和堆排序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="排序算法——直接插入排序、希尔排序">
-<meta property="og:url" content="http://yoursite.com/2017/04/19/sort1/index.html">
+<meta property="og:title" content="排序算法——简单选择排序、堆排序">
+<meta property="og:url" content="http://yoursite.com/2017/04/20/sort2/index.html">
 <meta property="og:site_name" content="缘来是你">
-<meta property="og:description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。本篇博客讲述排序算法里的插入排序，具体有两种：简单插入排序和希尔排序">
-<meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/sort.png">
-<meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/insertSort.png">
-<meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/shellSort.png">
-<meta property="og:updated_time" content="2017-04-20T02:40:44.000Z">
+<meta property="og:description" content="本篇博客讲述排序算法里的选择排序，具体有两种：简单选择排序和堆排序">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/sort2/selectSort.png">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/sort2/heapSort1.gif">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/sort2/heapSort2.gif">
+<meta property="og:updated_time" content="2017-04-20T02:39:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="排序算法——直接插入排序、希尔排序">
-<meta name="twitter:description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。本篇博客讲述排序算法里的插入排序，具体有两种：简单插入排序和希尔排序">
-<meta name="twitter:image" content="http://yoursite.com/2017/04/19/sort1/sort.png">
+<meta name="twitter:title" content="排序算法——简单选择排序、堆排序">
+<meta name="twitter:description" content="本篇博客讲述排序算法里的选择排序，具体有两种：简单选择排序和堆排序">
+<meta name="twitter:image" content="http://yoursite.com/2017/04/20/sort2/selectSort.png">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/19/sort1/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/20/sort2/"/>
 
 
 
 
 
-  <title> 排序算法——直接插入排序、希尔排序 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 排序算法——简单选择排序、堆排序 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/19/sort1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/sort2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gary James">
@@ -276,7 +276,7 @@
             
             
               
-                排序算法——直接插入排序、希尔排序
+                排序算法——简单选择排序、堆排序
               
             
           </h1>
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T23:13:00+08:00">
-                2017-04-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T10:01:05+08:00">
+                2017-04-20
               </time>
             
 
@@ -331,7 +331,7 @@
 
           
           
-             <span id="/2017/04/19/sort1/" class="leancloud_visitors" data-flag-title="排序算法——直接插入排序、希尔排序">
+             <span id="/2017/04/20/sort2/" class="leancloud_visitors" data-flag-title="排序算法——简单选择排序、堆排序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,7 +349,7 @@
 
           
               <div class="post-description">
-                  排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。本篇博客讲述排序算法里的插入排序，具体有两种：简单插入排序和希尔排序
+                  本篇博客讲述排序算法里的选择排序，具体有两种：简单选择排序和堆排序
               </div>
           
 
@@ -364,19 +364,10 @@
       
 
       
-        <h1 id="七大排序算法"><a href="#七大排序算法" class="headerlink" title="七大排序算法"></a>七大排序算法</h1><p><img src="/2017/04/19/sort1/sort.png" alt="sort"></p>
-<h1 id="插入排序——直接插入排序"><a href="#插入排序——直接插入排序" class="headerlink" title="插入排序——直接插入排序"></a>插入排序——直接插入排序</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;对于给定的一组记录，初始时假设第一个记录自成一个有序序列，其余记录为无序序列。接着从第二个记录开始，按照记录的大小一次将当前处理的记录插入到其之前的有序序列中，直到最后一个记录插入到有序序列中为止。<br>直接插入排序示例：<br><img src="/2017/04/19/sort1/insertSort.png" alt="insertSort"><br>&ensp;&emsp;&emsp;如果碰见一个和插入元素相等的，那么插入元素把想插入的元素放在相等元素的后面。所以，相等元素的前后顺序没有改变，从原无序序列出去的顺序就是排好序后的顺序，所以<strong>插入排序是稳定的</strong>。</p>
-<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span> (a != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; a.length; i++) &#123;</div><div class="line">				<span class="keyword">int</span> temp = a[i],j = i;</div><div class="line">				<span class="keyword">if</span> (a[j-<span class="number">1</span>] &gt; temp) &#123;</div><div class="line">					<span class="keyword">while</span> (j &gt;= <span class="number">1</span> &amp;&amp; a[j-<span class="number">1</span>]&gt;temp) &#123;</div><div class="line">						a[j] = a[j-<span class="number">1</span>];</div><div class="line">						j--;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//第i或第0个元素存放temp</span></div><div class="line">				a[j] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<h2 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h2><p>时间复杂度：O（n^2 ）.</p>
-<p>其他的插入排序有<strong>二分插入排序</strong>，<strong>2-路插入排序</strong>。</p>
-<h1 id="插入排序——希尔排序"><a href="#插入排序——希尔排序" class="headerlink" title="插入排序——希尔排序"></a>插入排序——希尔排序</h1><p>&ensp;&emsp;&emsp;希尔排序是1959 年由D.L.Shell 提出来的，相对直接排序有较大的改进。希尔排序又叫<strong>缩小增量排序</strong>。</p>
-<h2 id="基本思想-1"><a href="#基本思想-1" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。<br>具体步骤如下：</p>
-<ol>
-<li>选择一个步长序列$t_1 , t_2 ,…,t_k$,满足$t_i &gt; t_j (i&lt;j),t_k = 1$。</li>
-<li>按步长序列个数k，对待排序序列进行k趟排序。</li>
-<li>每趟排序，根据对应的步长$t_i$，将待排序列分割成$t_i$个子序列，分别对各个子序列进行直接插入排序。<br><strong>注意：</strong>当步长因子为1时，所有元素作为一个序列来处理，其长度为n。<br>&ensp;&emsp;&emsp;这个算法有了插入排序的速度，也可以算是一个改进算法，在插入算法中，如果有一个最小的数在数组的最后面，用插入算法就会重最后一个位置移动到第一个，这样就会浪费很大，使用这个改进的希尔排序可以实现数据元素的大跨度的移动。也就是这个算法的优越之处。<br>希尔排序示例：<br><img src="/2017/04/19/sort1/shellSort.png" alt="shellSort"><br>&ensp;&emsp;&emsp;希尔排序时效分析很难，关键码的比较次数与记录移动次数依赖于增量因子序列d的选取，特定情况下可以准确估算出关键码的比较次数和记录的移动次数。目前还没有人给出选取最好的增量因子序列的方法。增量因子序列可以有各种取法，有取奇数的，也有取质数的，但需要注意：增量因子中除1 外没有公因子，且最后一个增量因子必须为1。<strong>希尔排序方法是一个不稳定的排序方法</strong>。<h2 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(<span class="keyword">int</span> array[])</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> length = array.length;</div><div class="line">		<span class="keyword">int</span> i,j;</div><div class="line">		<span class="keyword">int</span> h;</div><div class="line">		<span class="keyword">int</span> temp;</div><div class="line">		<span class="keyword">for</span>(h=length/<span class="number">2</span>;h&gt;<span class="number">0</span>;h=h/<span class="number">2</span>)&#123; <span class="comment">//求步长（或增量）</span></div><div class="line">			<span class="keyword">for</span> (i=h; i&lt; length; i++) &#123;</div><div class="line">				temp = array[i];</div><div class="line">				<span class="keyword">for</span> (j = i-h; j &gt;= <span class="number">0</span>; j -= h) &#123;</div><div class="line">					<span class="keyword">if</span> (temp &lt; array[j]) &#123;</div><div class="line">						array[j+h] = array[j];</div><div class="line">					&#125;<span class="keyword">else</span>&#123;</div><div class="line">						<span class="keyword">break</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				array[j+h] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
+        <h1 id="选择排序——简单选择排序"><a href="#选择排序——简单选择排序" class="headerlink" title="选择排序——简单选择排序"></a>选择排序——简单选择排序</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;对于给定的一组记录，经过第一轮比较后得到最小的记录，然后将该记录与第一个记录的位置进行交换；接着对不包括第一个记录以外的其他记录进行第二轮比较，得到最小的记录并与第二个记录进行位置交换；重复该过程，直到进行比较的记录只有一个时为止。<br>简单选择排序示例：<br><img src="/2017/04/20/sort2/selectSort.png" alt="selectSort"></p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[]a)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> len = a.length;</div><div class="line">		<span class="keyword">int</span> temp = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> flag = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">			flag = i;</div><div class="line">			temp = a[i];</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; len; j++) &#123;</div><div class="line">				<span class="keyword">if</span> (a[j]&lt;temp) &#123;</div><div class="line">					flag = j;</div><div class="line">					temp = a[j];</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (flag != i) &#123;</div><div class="line">				a[flag] = a[i];</div><div class="line">				a[i] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h2><h1 id="选择排序——堆排序"><a href="#选择排序——堆排序" class="headerlink" title="选择排序——堆排序"></a>选择排序——堆排序</h1><h2 id="基本思想-1"><a href="#基本思想-1" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;堆排序是一种<strong>树形选择排序</strong>，是对直接选择排序的有效改进。合法的最大堆树要满足一个条件就是<strong>每一个结点值都要大于或等于它的孩子结点值</strong>。在一个数组中专业法表示为： arrays[i]&gt;=arrays[2<em>i+1] &amp;&amp; arrays[i]&gt;=arrays[2</em>i+2] ; 最小堆类似，只要改为小于等于即可。<br>&ensp;&emsp;&emsp;堆排序树的构造过程找最大值过程由下图，数组arrays[0….n]为：17,8,45,84,2,94，刚找到最大值后把最大值即94放在数组的最后面arrays[n],然后进入递归把arrays[0…n-1]再进入下面图这个过程，只是把排好序的最大值不放入到这个过程中，就这样把值一个个的冒出来。找到最大值后把这个最大值放到数组的最后面，进入下一个递归。<br><img src="/2017/04/20/sort2/heapSort1.gif" alt="heapSort1"><br>&ensp;&emsp;&emsp;上图已经排好了最大那个值 下面见图排其他的元素：<br><img src="/2017/04/20/sort2/heapSort2.gif" alt="heapSort2"><br>&ensp;&emsp;&emsp;最后两步还有几个过程没画出来，最后两个图好像没有变化，但这里面还要排好几次，原因就是最后第二个图是不满足堆排序树的要调整后再把最大的值放到到后面。再次回到递归里面。</p>
+<h2 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> e)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span>(e &gt; <span class="number">0</span>)&#123;</div><div class="line">			initHeap(array, e);</div><div class="line">			array[<span class="number">0</span>] = array[<span class="number">0</span>] + array[e];</div><div class="line">			array[e] = array[<span class="number">0</span>] - array[e];</div><div class="line">			array[<span class="number">0</span>] = array[<span class="number">0</span>] - array[e];</div><div class="line">			heapSort(array,e-<span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initHeap</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> e)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> m = (e+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">			Boolean flag = buildHeap(array,e,i);</div><div class="line">			<span class="keyword">if</span> (flag) &#123;</div><div class="line">				i = -<span class="number">1</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> e,<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> l_child = <span class="number">2</span>*i + <span class="number">1</span>;</div><div class="line">		<span class="keyword">int</span> r_child = <span class="number">2</span>*i + <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (r_child &gt; e) &#123;</div><div class="line">			<span class="keyword">if</span> (array[i] &lt; array[l_child]) &#123;</div><div class="line">				array[i] = array[i] + array[l_child];</div><div class="line">				array[l_child] = array[i] -array[l_child];</div><div class="line">				array[i] = array[i] - array[l_child];</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (array[i] &lt; array[l_child]) &#123;</div><div class="line">			<span class="keyword">if</span> (array[l_child] &lt; array[r_child]) &#123;<span class="comment">//交换根与右孩子的值</span></div><div class="line">				array[i] = array[i] + array[r_child];</div><div class="line">				array[r_child] = array[i] - array[r_child];</div><div class="line">				array[i] = array[i] - array[r_child];</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125;<span class="keyword">else</span>&#123;<span class="comment">//交换根与左孩子的值</span></div><div class="line">				array[i] = array[i] + array[l_child];</div><div class="line">				array[l_child] = array[i] -array[l_child];</div><div class="line">				array[i] = array[i] - array[l_child];</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>(array[i] &lt; array[r_child])&#123;<span class="comment">//交换根与右孩子的值</span></div><div class="line">				array[i] = array[i] + array[r_child];</div><div class="line">				array[r_child] = array[i] - array[r_child];</div><div class="line">				array[i] = array[i] - array[r_child];</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
 <h2 id="效率-1"><a href="#效率-1" class="headerlink" title="效率"></a>效率</h2>
       
     </div>
@@ -400,9 +391,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/直接插入排序/" rel="tag"># 直接插入排序</a>
+            <a href="/tags/简单选择排序/" rel="tag"># 简单选择排序</a>
           
-            <a href="/tags/希尔排序/" rel="tag"># 希尔排序</a>
+            <a href="/tags/堆排序/" rel="tag"># 堆排序</a>
           
         </div>
       
@@ -415,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/04/design-pattern1/" rel="next" title="23种设计模式分类">
-                <i class="fa fa-chevron-left"></i> 23种设计模式分类
+              <a href="/2017/04/19/sort1/" rel="next" title="排序算法——直接插入排序、希尔排序">
+                <i class="fa fa-chevron-left"></i> 排序算法——直接插入排序、希尔排序
               </a>
             
           </div>
@@ -424,10 +415,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/20/sort2/" rel="prev" title="排序算法——简单选择排序、堆排序">
-                排序算法——简单选择排序、堆排序 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -564,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#七大排序算法"><span class="nav-number">1.</span> <span class="nav-text">七大排序算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——直接插入排序"><span class="nav-number">2.</span> <span class="nav-text">插入排序——直接插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">2.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率"><span class="nav-number">2.3.</span> <span class="nav-text">效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——希尔排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序——希尔排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现-1"><span class="nav-number">3.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率-1"><span class="nav-number">3.3.</span> <span class="nav-text">效率</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#选择排序——简单选择排序"><span class="nav-number">1.</span> <span class="nav-text">选择排序——简单选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">1.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">1.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率"><span class="nav-number">1.3.</span> <span class="nav-text">效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择排序——堆排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序——堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-1"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现-1"><span class="nav-number">2.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率-1"><span class="nav-number">2.3.</span> <span class="nav-text">效率</span></a></li></ol></li></ol></div>
             
 
           </div>
