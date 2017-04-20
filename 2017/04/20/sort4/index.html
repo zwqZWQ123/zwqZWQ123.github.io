@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="归并排序," />
 
 
 
@@ -89,13 +89,18 @@
 
 
 
+<meta name="description" content="本篇博客讲述排序算法里的归并排序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sort4">
+<meta property="og:title" content="排序算法——归并排序">
 <meta property="og:url" content="http://yoursite.com/2017/04/20/sort4/index.html">
 <meta property="og:site_name" content="缘来是你">
-<meta property="og:updated_time" content="2017-04-20T03:15:36.000Z">
+<meta property="og:description" content="本篇博客讲述排序算法里的归并排序">
+<meta property="og:image" content="http://yoursite.com/2017/04/20/sort4/mergeSort.jpg">
+<meta property="og:updated_time" content="2017-04-20T03:40:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sort4">
+<meta name="twitter:title" content="排序算法——归并排序">
+<meta name="twitter:description" content="本篇博客讲述排序算法里的归并排序">
+<meta name="twitter:image" content="http://yoursite.com/2017/04/20/sort4/mergeSort.jpg">
 
 
 
@@ -129,7 +134,7 @@
 
 
 
-  <title> sort4 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 排序算法——归并排序 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +274,7 @@
             
             
               
-                sort4
+                排序算法——归并排序
               
             
           </h1>
@@ -295,6 +300,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/排序算法/" itemprop="url" rel="index">
+                    <span itemprop="name">排序算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -302,7 +329,7 @@
 
           
           
-             <span id="/2017/04/20/sort4/" class="leancloud_visitors" data-flag-title="sort4">
+             <span id="/2017/04/20/sort4/" class="leancloud_visitors" data-flag-title="排序算法——归并排序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -319,6 +346,10 @@
           
 
           
+              <div class="post-description">
+                  本篇博客讲述排序算法里的归并排序
+              </div>
+          
 
         </div>
       </header>
@@ -331,7 +362,9 @@
       
 
       
-        
+        <h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;归并排序是利用递归与分治技术将数据序列划分为越来越小的半子表，再对半子表排序，最后再用递归方法将排序好的半子表合并成为越来越大的有序序列。<br>&ensp;&emsp;&emsp;归并排序算法的原理如下：对于给定的一组记录（假设共有n个记录），首先将每两个相邻的长度为1的子序列进行归并，得到n/2（向上取整）个长度为2或1的有序子序列，再将其两两归并，反复执行此过程，直到得到一个有序序列。<br>&ensp;&emsp;&emsp;因此，归并排序的关键两步：<br>第一步：划分半子表；<br>第二步：合并半子表。<br>归并排序的示例：<br><img src="/2017/04/20/sort4/mergeSort.jpg" alt="mergeSort"></p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> p,<span class="keyword">int</span> q,<span class="keyword">int</span> r)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> i,j,k,n1,n2;</div><div class="line">		n1 = q-p+<span class="number">1</span>;</div><div class="line">		n2 = r-q;</div><div class="line">		<span class="keyword">int</span>[] L = <span class="keyword">new</span> <span class="keyword">int</span>[n1];</div><div class="line">		<span class="keyword">int</span>[] R = <span class="keyword">new</span> <span class="keyword">int</span>[n2];</div><div class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>,k=p;  i&lt; n1; i++,k++) &#123;</div><div class="line">			L[i] = array[k];</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>,k=q+<span class="number">1</span>; i &lt; n2; i++,k++) &#123;</div><div class="line">			R[i] = array[k];</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (i=<span class="number">0</span>,j=<span class="number">0</span>,k=p; i&lt;n1&amp;&amp;j&lt;n2;k++) &#123;</div><div class="line">			<span class="keyword">if</span> (L[i] &gt; R[j]) &#123;</div><div class="line">				array[k] = R[j];</div><div class="line">				j++;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				array[k] = L[i];</div><div class="line">				i++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (i&lt;n1) &#123;</div><div class="line">			<span class="keyword">for</span> (; i &lt; n1; i++,k++) &#123;</div><div class="line">				array[k] = L[i];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (j&lt;n2) &#123;</div><div class="line">			<span class="keyword">for</span> (; j &lt; n2; j++,k++) &#123;</div><div class="line">				array[k] = R[j];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> p,<span class="keyword">int</span> r)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span> (p&lt;r) &#123;</div><div class="line">			<span class="keyword">int</span> q = (p+r)/<span class="number">2</span>;</div><div class="line">			MergeSort(array,p,q);</div><div class="line">			MergeSort(array,q+<span class="number">1</span>,r);</div><div class="line">			Merge(array,p,q,r);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h2><h1 id="七大算法总结"><a href="#七大算法总结" class="headerlink" title="七大算法总结"></a>七大算法总结</h1>
       
     </div>
 
@@ -351,6 +384,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/归并排序/" rel="tag"># 归并排序</a>
+          
+        </div>
       
 
       
@@ -416,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/jing.jpg"
@@ -454,7 +502,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -487,6 +535,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#归并排序"><span class="nav-number">1.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">1.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">1.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率"><span class="nav-number">1.3.</span> <span class="nav-text">效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七大算法总结"><span class="nav-number">2.</span> <span class="nav-text">七大算法总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
