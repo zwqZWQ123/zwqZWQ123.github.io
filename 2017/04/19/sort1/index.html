@@ -76,6 +76,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
 
@@ -97,7 +99,8 @@
 <meta property="og:description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。">
 <meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/sort.png">
 <meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/insertSort.png">
-<meta property="og:updated_time" content="2017-04-19T16:25:37.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/04/19/sort1/shellSort.png">
+<meta property="og:updated_time" content="2017-04-20T01:53:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法——直接插入排序、希尔排序">
 <meta name="twitter:description" content="排序有内部排序和外部排序，内部排序是数据记录在内存中进行排序，而外部排序是因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。七大排序算法就是内部排序。">
@@ -372,9 +375,11 @@
 <h2 id="基本思想-1"><a href="#基本思想-1" class="headerlink" title="基本思想"></a>基本思想</h2><p>&ensp;&emsp;&emsp;先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。<br>具体步骤如下：</p>
 <ol>
 <li>选择一个步长序列$t_1 , t_2 ,…,t_k$,满足$t_i &gt; t_j (i&lt;j),t_k = 1$。</li>
-<li></li>
+<li>按步长序列个数k，对待排序序列进行k趟排序。</li>
+<li>每趟排序，根据对应的步长$t_i$，将待排序列分割成$t_i$个子序列，分别对各个子序列进行直接插入排序。<br><strong>注意：</strong>当步长因子为1时，所有元素作为一个序列来处理，其长度为n。<br>&ensp;&emsp;&emsp;这个算法有了插入排序的速度，也可以算是一个改进算法，在插入算法中，如果有一个最小的数在数组的最后面，用插入算法就会重最后一个位置移动到第一个，这样就会浪费很大，使用这个改进的希尔排序可以实现数据元素的大跨度的移动。也就是这个算法的优越之处。<br>希尔排序示例：<br><img src="/2017/04/19/sort1/shellSort.png" alt="shellSort"><br>&ensp;&emsp;&emsp;希尔排序时效分析很难，关键码的比较次数与记录移动次数依赖于增量因子序列d的选取，特定情况下可以准确估算出关键码的比较次数和记录的移动次数。目前还没有人给出选取最好的增量因子序列的方法。增量因子序列可以有各种取法，有取奇数的，也有取质数的，但需要注意：增量因子中除1 外没有公因子，且最后一个增量因子必须为1。<strong>希尔排序方法是一个不稳定的排序方法</strong>。<h2 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[]a)</span></span>&#123;</div><div class="line">		<span class="keyword">int</span> len = a.length;</div><div class="line">		<span class="keyword">int</span> temp = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> flag = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">			flag = i;</div><div class="line">			temp = a[i];</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; len; j++) &#123;</div><div class="line">				<span class="keyword">if</span> (a[j]&lt;temp) &#123;</div><div class="line">					flag = j;</div><div class="line">					temp = a[j];</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (flag != i) &#123;</div><div class="line">				a[flag] = a[i];</div><div class="line">				a[i] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+</li>
 </ol>
-
+<h2 id="效率-1"><a href="#效率-1" class="headerlink" title="效率"></a>效率</h2>
       
     </div>
 
@@ -557,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#七大排序算法"><span class="nav-number">1.</span> <span class="nav-text">七大排序算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——直接插入排序"><span class="nav-number">2.</span> <span class="nav-text">插入排序——直接插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">2.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率"><span class="nav-number">2.3.</span> <span class="nav-text">效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——希尔排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序——希尔排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本思想</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#七大排序算法"><span class="nav-number">1.</span> <span class="nav-text">七大排序算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——直接插入排序"><span class="nav-number">2.</span> <span class="nav-text">插入排序——直接插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">2.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率"><span class="nav-number">2.3.</span> <span class="nav-text">效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序——希尔排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序——希尔排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现-1"><span class="nav-number">3.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效率-1"><span class="nav-number">3.3.</span> <span class="nav-text">效率</span></a></li></ol></li></ol></div>
             
 
           </div>
