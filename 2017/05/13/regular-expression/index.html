@@ -76,8 +76,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
 
@@ -97,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/13/regular-expression/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。">
-<meta property="og:updated_time" content="2017-05-15T02:38:19.000Z">
+<meta property="og:updated_time" content="2017-05-15T02:56:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式">
 <meta name="twitter:description" content="正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。">
@@ -461,6 +459,10 @@
 <td style="text-align:left">{</td>
 <td style="text-align:left">标记限定符表达式的开始。要匹配 {，请使用 \{</td>
 </tr>
+<tr>
+<td style="text-align:left">&#124;</td>
+<td style="text-align:left">指明两项之间的一个选择。要匹配 &#124;，请使用 \&#124;</td>
+</tr>
 </tbody>
 </table>
 <h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><p>&ensp;&emsp;&emsp;<strong>限定符</strong>用来指定正则表达式的一个给定组件必须要出现多少次才能满足匹配。有 * 或 + 或 ? 或 {n} 或 {n,} 或 {n,m} 共6种。</p>
@@ -578,8 +580,7 @@
 </tr>
 <tr>
 <td style="text-align:left">.</td>
-<td style="text-align:left">匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用像”(.</td>
-<td>\n)”的模式</td>
+<td style="text-align:left">匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用像”(. &#124;  \n)”的模式</td>
 </tr>
 <tr>
 <td style="text-align:left">(pattern)</td>
@@ -587,31 +588,19 @@
 </tr>
 <tr>
 <td style="text-align:left">(?:pattern)</td>
-<td style="text-align:left">匹配 pattern 但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用 “或” 字符 (\</td>
-<td>) 来组合一个模式的各个部分是很有用。例如， ‘industr(?:y\</td>
-<td>ies) 就是一个比 ‘industry\</td>
-<td>industries’ 更简略的表达式</td>
+<td style="text-align:left">匹配 pattern 但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用 “或” 字符 (&#124;) 来组合一个模式的各个部分是很有用。例如， ‘industr(?:y&#124;ies) 就是一个比 ‘industry&#124;industries’ 更简略的表达式</td>
 </tr>
 <tr>
 <td style="text-align:left">(?=pattern)</td>
-<td style="text-align:left">正向预查，在任何匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，’Windows (?=95\</td>
-<td>98\</td>
-<td>NT\</td>
-<td>2000)’ 能匹配 “Windows 2000” 中的 “Windows” ，但不能匹配 “Windows 3.1” 中的 “Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</td>
+<td style="text-align:left">正向预查，在任何匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，’Windows (?=95&#124;98&#124;NT&#124;2000)’ 能匹配 “Windows 2000” 中的 “Windows” ，但不能匹配 “Windows 3.1” 中的 “Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</td>
 </tr>
 <tr>
 <td style="text-align:left">(?!pattern)</td>
-<td style="text-align:left">负向预查，在任何不匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如’Windows (?!95\</td>
-<td>98\</td>
-<td>NT\</td>
-<td>2000)’ 能匹配 “Windows 3.1” 中的 “Windows”，但不能匹配 “Windows 2000” 中的 “Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</td>
+<td style="text-align:left">负向预查，在任何不匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如’Windows (?!95&#124;98&#124;NT&#124;2000)’ 能匹配 “Windows 3.1” 中的 “Windows”，但不能匹配 “Windows 2000” 中的 “Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</td>
 </tr>
 <tr>
-<td style="text-align:left">x\</td>
-<td style="text-align:left">y</td>
-<td>匹配 x 或 y。例如，’z\</td>
-<td>food’ 能匹配 “z” 或 “food”。’(z\</td>
-<td>f)ood’ 则匹配 “zood” 或 “food”</td>
+<td style="text-align:left">x&#124;y</td>
+<td style="text-align:left">匹配 x 或 y。例如，’z&#124;food’ 能匹配 “z” 或 “food”。’(z&#124;f)ood’ 则匹配 “zood” 或 “food”</td>
 </tr>
 <tr>
 <td style="text-align:left">[xyz]</td>
