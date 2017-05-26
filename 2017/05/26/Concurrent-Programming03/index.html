@@ -1,0 +1,902 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="同步类容器,并发类容器,Concurrent集合类,CopyOnWrite集合类,各类并发Queue," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="缘来是你" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="今天进入互联网并发编程知识的学习中级篇，在中级篇第一部分我们将掌握以下方面的内容：（1）同步类容器讲解 （2）并发类容器讲解（3）Concurrent集合类讲解与底层原理实现 （4）CopyOnWrite集合类讲解与底层原理实现（5）各类并发Queue详细讲解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="互联网并发编程中级篇（一）">
+<meta property="og:url" content="http://yoursite.com/2017/05/26/Concurrent-Programming03/index.html">
+<meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="今天进入互联网并发编程知识的学习中级篇，在中级篇第一部分我们将掌握以下方面的内容：（1）同步类容器讲解 （2）并发类容器讲解（3）Concurrent集合类讲解与底层原理实现 （4）CopyOnWrite集合类讲解与底层原理实现（5）各类并发Queue详细讲解">
+<meta property="og:image" content="http://yoursite.com/2017/05/26/Concurrent-Programming03/cp3.png">
+<meta property="og:updated_time" content="2017-05-26T08:38:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="互联网并发编程中级篇（一）">
+<meta name="twitter:description" content="今天进入互联网并发编程知识的学习中级篇，在中级篇第一部分我们将掌握以下方面的内容：（1）同步类容器讲解 （2）并发类容器讲解（3）Concurrent集合类讲解与底层原理实现 （4）CopyOnWrite集合类讲解与底层原理实现（5）各类并发Queue详细讲解">
+<meta name="twitter:image" content="http://yoursite.com/2017/05/26/Concurrent-Programming03/cp3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/26/Concurrent-Programming03/"/>
+
+
+
+
+
+  <title> 互联网并发编程中级篇（一） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">缘来是你</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">晶麒一生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/26/Concurrent-Programming03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing2.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                互联网并发编程中级篇（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-26T15:02:14+08:00">
+                2017-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/并发编程/" itemprop="url" rel="index">
+                    <span itemprop="name">并发编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/26/Concurrent-Programming03/" class="leancloud_visitors" data-flag-title="互联网并发编程中级篇（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  今天进入互联网并发编程知识的学习中级篇，在中级篇第一部分我们将掌握以下方面的内容：（1）同步类容器讲解 （2）并发类容器讲解（3）Concurrent集合类讲解与底层原理实现 （4）CopyOnWrite集合类讲解与底层原理实现（5）各类并发Queue详细讲解
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="同步类容器"><a href="#同步类容器" class="headerlink" title="同步类容器"></a>同步类容器</h1><p>&ensp;&emsp;&emsp;<strong>同步类容器</strong>都是<strong>线程安全</strong>的，<strong>但在某些场景下可能需要加锁来保护复合操作</strong>。复合类操作如：<strong>迭代</strong>（反复访问元素，遍历完容器中所有的元素）、<strong>跳转</strong>（根据指定的顺序找到当前元素的下一个元素）、以及<strong>条件运算</strong>。这些复合操作在多线程并发地修改容器时，可能会表现出意外的行为，最经典的便是<strong>ConcurrentModificationException</strong>，原因是当容器迭代的过程中，被并发的修改了内容，这是由于早期迭代器设计的时候并没有考虑并发修改的问题。<br>&ensp;&emsp;&emsp;同步类容器：如古老的Vector、HashTable。这些容器的同步功能其实都是有JDK的Collections.synchronized<strong>*等工厂方法去创建实现的。其</strong>底层的机制**无非就是用传统的synchronized关键字对每个公用的方法都进行同步，使得每次只能有一个线程访问容器的状态。这很明显不满足我们今天互联网时代高并发的需求，在保证线程安全的同时，也必须要有足够好的性能。</p>
+<p><em>Tickets.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tickets</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="comment">//初始化火车票池并添加火车票:避免线程同步可采用Vector替代ArrayList  HashTable替代HashMap</span></div><div class="line">		</div><div class="line">		<span class="keyword">final</span> Vector&lt;String&gt; tickets = <span class="keyword">new</span> Vector&lt;String&gt;();</div><div class="line">		</div><div class="line">		<span class="comment">//Map&lt;String, String&gt; map = Collections.synchronizedMap(new HashMap&lt;String, String&gt;());</span></div><div class="line"></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i&lt;= <span class="number">1000</span>; i++)&#123;</div><div class="line">			tickets.add(<span class="string">"火车票"</span>+i);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line"><span class="comment">//		for (Iterator iterator = tickets.iterator(); iterator.hasNext();) &#123;</span></div><div class="line"><span class="comment">//			String string = (String) iterator.next();</span></div><div class="line"><span class="comment">//			tickets.remove(20);</span></div><div class="line"><span class="comment">//		&#125;</span></div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=<span class="number">10</span>; i ++)&#123;</div><div class="line">			<span class="keyword">new</span> Thread(<span class="string">"线程"</span>+i)&#123;</div><div class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">					<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">						<span class="keyword">if</span>(tickets.isEmpty()) <span class="keyword">break</span>;</div><div class="line">						System.out.println(Thread.currentThread().getName() + <span class="string">"---"</span> + tickets.remove(<span class="number">0</span>));</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;.start();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="并发类容器"><a href="#并发类容器" class="headerlink" title="并发类容器"></a>并发类容器</h1><p>&ensp;&emsp;&emsp;jdk5.0以后提供了多种并发类容器来替代同步类容器从而改善性能。<strong>同步类容器都是串行化的。他们虽然实现了线程安全，但是严重降低了并发性，在多线程环境时，严重降低了应用程序的吞吐量</strong>。<br>&ensp;&emsp;&emsp;<strong>并发类容器</strong>是专门针对并发设计的,使用<strong>ConcurrentHashMap来代替给予散列的传统的HashTable</strong>，而且在ConcurrentHashMap中，添加了一些常见复合操作的支持。以及使用了<strong>CopyOnWriteArrayList代替Vector</strong>，<strong>并发的CopyOnWriteArraySet</strong>,以及<strong>并发的Queue</strong>，<strong><em>ConcurrentLinkedQueue</em></strong>和<strong><em>LinkedBlockingQueue</em></strong>,前者是高性能队列，后者是以阻塞形式的队列，具体实现的Queue还有很多，例如ArrayBlockingQueue、PriorityBlockingQueue、SynchronousQueue等。</p>
+<h2 id="ConcurrentMap"><a href="#ConcurrentMap" class="headerlink" title="ConcurrentMap"></a>ConcurrentMap</h2><ul>
+<li>ConcurrentHashMap</li>
+<li>ConcurrentSkipListMap(支持并发排序功能，弥补ConcurrentHashMap)</li>
+</ul>
+<p>&ensp;&emsp;&emsp;<strong>ConcurrentHashMap</strong>内部使用<strong>段（Segment）</strong>来表示这些不同的部分，每个段其实就是一个小的<strong>HashTable</strong>,它们有自己的锁。只要多个修改操作发生在不同的段上，它们就可以并发进行。把一个整体分成了16个段（Segment）。也就是<strong>最高支持16个线程的并发修改操作</strong>。这也是在多线程场景时<strong>减小锁的粒度从而降低锁竞争</strong>的一种方案。并且代码中大多共享变量使用volatile关键字声明，目的是第一时间获取修改的内容，性能非常好。</p>
+<p><em>UseConcurrentMap.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UseConcurrentMap</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		ConcurrentHashMap&lt;String, Object&gt; chm = <span class="keyword">new</span> ConcurrentHashMap&lt;String, Object&gt;();</div><div class="line">		chm.put(<span class="string">"k1"</span>, <span class="string">"v1"</span>);</div><div class="line">		chm.put(<span class="string">"k2"</span>, <span class="string">"v2"</span>);</div><div class="line">		chm.put(<span class="string">"k3"</span>, <span class="string">"v3"</span>);</div><div class="line">		chm.putIfAbsent(<span class="string">"k4"</span>, <span class="string">"vvvv"</span>);</div><div class="line">		<span class="comment">//System.out.println(chm.get("k2"));</span></div><div class="line">		<span class="comment">//System.out.println(chm.size());</span></div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(Map.Entry&lt;String, Object&gt; me : chm.entrySet())&#123;</div><div class="line">			System.out.println(<span class="string">"key:"</span> + me.getKey() + <span class="string">",value:"</span> + me.getValue());</div><div class="line">		&#125;	</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Copy-On-Write容器"><a href="#Copy-On-Write容器" class="headerlink" title="Copy-On-Write容器"></a>Copy-On-Write容器</h2><p>&ensp;&emsp;&emsp;Copy-On-Write简称COW，是一种用于程序设计中的优化策略。<br>&ensp;&emsp;&emsp;JDK里的COW容器有两种：<br>&ensp;&emsp;&emsp;<strong>CopyOnWriteArrayList</strong>和<strong>CopyOnWriteArraySet</strong>，COW容器非常有用，可以在非常多的并发场景中使用到。（使用场景：读多写少）<br>&ensp;&emsp;&emsp;什么是CopyOnWrite容器？<br>&ensp;&emsp;&emsp;<strong>CopyOnWrite容器</strong>即<strong>写时复制</strong>的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行Copy,复制出一个新的容器，然后向新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的<strong>好处</strong>是我们可以对CopyOnWrite容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以CopyOnWrite容器也是一种读写分离的思想，读和写不同的容器。</p>
+<p><em>UseCopyOnWrite.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UseCopyOnWrite</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		CopyOnWriteArrayList&lt;String&gt; cwal = <span class="keyword">new</span> CopyOnWriteArrayList&lt;String&gt;();</div><div class="line">		CopyOnWriteArraySet&lt;String&gt; cwas = <span class="keyword">new</span> CopyOnWriteArraySet&lt;String&gt;();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="并发Queue"><a href="#并发Queue" class="headerlink" title="并发Queue"></a>并发Queue</h1><p>&ensp;&emsp;&emsp;在并发队列上JDK提供了两套实现，一个是以<strong>ConcurrentLinkedQueue</strong>为代表的<strong>高性能队列</strong>，一个是以<strong>BlockingQueue接口</strong>为代表的<strong>阻塞队列</strong> ，无论哪种都继承自Queue。<br><img src="/2017/05/26/Concurrent-Programming03/cp3.png" alt="cp3"></p>
+<h2 id="ConcurrentLinkedQueue"><a href="#ConcurrentLinkedQueue" class="headerlink" title="ConcurrentLinkedQueue"></a>ConcurrentLinkedQueue</h2><p>&ensp;&emsp;&emsp;<strong>ConcurrentLinkedQueue</strong>是一个适用于高并发场景下的队列，通常<strong>无锁</strong>的方式，实现了高并发状态下的高性能，通常<strong>ConcurrentLinkedQueue性能好于BlockingQueue</strong>。它是一个<strong>基于链接节点的无界线程安全队列</strong>。该队列的元素遵循先进先出的原则。头是最先加入的，尾是最近加入的，该队列<strong>不允许null元素</strong>。<br>&ensp;&emsp;&emsp;ConcurrentLinkedQueue重要方法：</p>
+<ul>
+<li>add()和offer()都是加入元素的方法（在ConcurrentLinkedQueue中，这两个方法没有任何区别）</li>
+<li>poll()和peek()都是取头元素节点，区别在于前者会删除元素，后者不会。</li>
+</ul>
+<h2 id="BlockingQueue接口"><a href="#BlockingQueue接口" class="headerlink" title="BlockingQueue接口"></a>BlockingQueue接口</h2><p><strong>ArrayBlockingQueue：</strong>基于数组的阻塞队列实现，在ArrayBlockingQueue内部，维护了一个定长数组，以便缓存队列中的数据对象，其内部没有实现读写分离，也就意味着生产和消费不能完全并行，长度是需要定义的，可以制定先进先出或者先进后出，也叫有界队列，在很多场合非常适合使用。</p>
+<p><strong>LinkedBlockingQueue：</strong>基于链表的阻塞队列，同ArrayBlockingQueue类似，其内部也维持着一个数据缓冲队列（该队列由一个链表构成），LinkedBlockingQueue之所以能够高效的处理并发数据，是因为其内部实现采用分离锁（读写分离两个锁），从而实现生产者和消费者操作的完全<br>并行运行。他是一个无界队列。</p>
+<p><strong>SynchronousQueue：</strong>一种没有缓冲的队列，生产者产生的数据直接会被消费者获取并消费。（不允许添加元素）</p>
+<p><strong>PriorityBlockingQueue：</strong>基于优先级的阻塞队列（优先级的判断通过构造函数传入的Compator对象来决定，也就是说传入队列的对象必须实现Comparable接口），在实现PriorityBlockingQueue时，内部控制线程同步的锁采用的是公平锁，他也是一个无界的队列。</p>
+<p><strong>DelayQueue：</strong>带有延迟时间的Queue,其中的元素只有当其制定的延迟时间到了，才能够从队列中获取到该元素。DelayQueue中的元素必须实现Delayed接口,DelayQueue是一个没有大小限制的队列，应用场景很多，比如对缓存超时的数据进行移除、任务超时处理、空闲连接的关闭等等。</p>
+<p><em>UseQueue.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UseQueue</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		</div><div class="line">		<span class="comment">//高性能无阻塞无界队列：ConcurrentLinkedQueue</span></div><div class="line">		<span class="comment">/**</span></div><div class="line">		ConcurrentLinkedQueue&lt;String&gt; q = new ConcurrentLinkedQueue&lt;String&gt;();</div><div class="line">		q.offer("a");</div><div class="line">		q.offer("b");</div><div class="line">		q.offer("c");</div><div class="line">		q.offer("d");</div><div class="line">		q.add("e");</div><div class="line">		</div><div class="line">		System.out.println(q.poll());	//a 从头部取出元素，并从队列里删除</div><div class="line">		System.out.println(q.size());	//4</div><div class="line">		System.out.println(q.peek());	//b</div><div class="line">		System.out.println(q.size());	//4</div><div class="line">		*/</div><div class="line">		<span class="comment">//阻塞队列</span></div><div class="line">		<span class="comment">/**</span></div><div class="line">		ArrayBlockingQueue&lt;String&gt; array = new ArrayBlockingQueue&lt;String&gt;(5);</div><div class="line">		array.put("a");</div><div class="line">		array.put("b");</div><div class="line">		array.add("c");</div><div class="line">		array.add("d");</div><div class="line">		array.add("e");</div><div class="line">		array.add("f");</div><div class="line">		//System.out.println(array.offer("a", 3, TimeUnit.SECONDS));</div><div class="line">		*/</div><div class="line">		</div><div class="line">		</div><div class="line">		<span class="comment">/**</span></div><div class="line">		LinkedBlockingQueue&lt;String&gt; q = new LinkedBlockingQueue&lt;String&gt;();</div><div class="line">		q.offer("a");</div><div class="line">		q.offer("b");</div><div class="line">		q.offer("c");</div><div class="line">		q.offer("d");</div><div class="line">		q.offer("e");</div><div class="line">		q.add("f");</div><div class="line">		//System.out.println(q.size());</div><div class="line">		</div><div class="line">//		for (Iterator iterator = q.iterator(); iterator.hasNext();) &#123;</div><div class="line">//			String string = (String) iterator.next();</div><div class="line">//			System.out.println(string);</div><div class="line">//		&#125;</div><div class="line">		</div><div class="line">		List&lt;String&gt; list = new ArrayList&lt;String&gt;();</div><div class="line">		System.out.println(q.drainTo(list, 3));</div><div class="line">		System.out.println(list.size());</div><div class="line">		for (String string : list) &#123;</div><div class="line">			System.out.println(string);</div><div class="line">		&#125;</div><div class="line">		*/</div><div class="line">		</div><div class="line">		</div><div class="line">		<span class="keyword">final</span> SynchronousQueue&lt;String&gt; q = <span class="keyword">new</span> SynchronousQueue&lt;String&gt;();</div><div class="line">		Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				<span class="keyword">try</span> &#123;</div><div class="line">					System.out.println(q.take());</div><div class="line">				&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		t1.start();</div><div class="line">		Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				q.add(<span class="string">"asdasd"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		t2.start();		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>Task.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Task</span>&gt;</span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> id ;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Task task)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.id &gt; task.id ? <span class="number">1</span> : (<span class="keyword">this</span>.id &lt; task.id ? -<span class="number">1</span> : <span class="number">0</span>);  </div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.id + <span class="string">","</span> + <span class="keyword">this</span>.name;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>UsePriorityBlockingQueue.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UsePriorityBlockingQueue</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		PriorityBlockingQueue&lt;Task&gt; q = <span class="keyword">new</span> PriorityBlockingQueue&lt;Task&gt;();</div><div class="line">		</div><div class="line">		Task t1 = <span class="keyword">new</span> Task();</div><div class="line">		t1.setId(<span class="number">3</span>);</div><div class="line">		t1.setName(<span class="string">"id为3"</span>);</div><div class="line">		Task t2 = <span class="keyword">new</span> Task();</div><div class="line">		t2.setId(<span class="number">4</span>);</div><div class="line">		t2.setName(<span class="string">"id为4"</span>);</div><div class="line">		Task t3 = <span class="keyword">new</span> Task();</div><div class="line">		t3.setId(<span class="number">1</span>);</div><div class="line">		t3.setName(<span class="string">"id为1"</span>);</div><div class="line">		</div><div class="line">		<span class="comment">//return this.id &gt; task.id ? 1 : 0;</span></div><div class="line">		q.add(t1);	<span class="comment">//3</span></div><div class="line">		q.add(t2);	<span class="comment">//4</span></div><div class="line">		q.add(t3);  <span class="comment">//1</span></div><div class="line">		</div><div class="line">		<span class="comment">// 1 3 4</span></div><div class="line">		System.out.println(<span class="string">"容器："</span> + q);</div><div class="line">		System.out.println(q.take().getId());</div><div class="line">		System.out.println(<span class="string">"容器："</span> + q);</div><div class="line"><span class="comment">//		System.out.println(q.take().getId());</span></div><div class="line"><span class="comment">//		System.out.println(q.take().getId());</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>TimeUinitTest.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeUinitTest</span> </span>&#123;</div><div class="line">     <span class="keyword">private</span> TimeUnit timeUnit = TimeUnit.DAYS;</div><div class="line"> </div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] TimeUinitTest)</span> </span>&#123;</div><div class="line">    	 TimeUinitTest tut = <span class="keyword">new</span> TimeUinitTest();</div><div class="line">    	 tut.outInfo();</div><div class="line">     &#125;</div><div class="line"> </div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">outInfo</span><span class="params">()</span> </span>&#123;</div><div class="line">         System.out.println(timeUnit.name());</div><div class="line">         System.out.println(timeUnit.toDays(<span class="number">1</span>));</div><div class="line">         System.out.println(timeUnit.toHours(<span class="number">1</span>));</div><div class="line">         System.out.println(timeUnit.toMinutes(<span class="number">1</span>));</div><div class="line">         System.out.println(timeUnit.toSeconds(<span class="number">1</span>));</div><div class="line">         System.out.println(timeUnit.toMillis(<span class="number">1</span>));</div><div class="line">         System.out.println(timeUnit.toMicros(<span class="number">1</span>));</div><div class="line">         System.out.println(timeUnit.toNanos(<span class="number">1</span>));</div><div class="line">         System.out.println((timeUnit.convert(<span class="number">1</span>, TimeUnit.DAYS)) + timeUnit.name());</div><div class="line">         System.out.println((timeUnit.convert(<span class="number">24</span>, TimeUnit.HOURS)) + timeUnit.name());</div><div class="line">         System.out.println((timeUnit.convert(<span class="number">1440</span>, TimeUnit.MINUTES)) + timeUnit.name());</div><div class="line">         System.out.println(<span class="string">"-------------------"</span>);</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><em>WangBa.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WangBa</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;  </div><div class="line">    </div><div class="line">    <span class="keyword">private</span> DelayQueue&lt;Wangmin&gt; queue = <span class="keyword">new</span> DelayQueue&lt;Wangmin&gt;();  </div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> yinye =<span class="keyword">true</span>;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shangji</span><span class="params">(String name,String id,<span class="keyword">int</span> money)</span></span>&#123;  </div><div class="line">        Wangmin man = <span class="keyword">new</span> Wangmin(name, id, <span class="number">1000</span> * money + System.currentTimeMillis());  </div><div class="line">        System.out.println(<span class="string">"网名"</span>+man.getName()+<span class="string">" 身份证"</span>+man.getId()+<span class="string">"交钱"</span>+money+<span class="string">"块,开始上机..."</span>);  </div><div class="line">        <span class="keyword">this</span>.queue.add(man);  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xiaji</span><span class="params">(Wangmin man)</span></span>&#123;  </div><div class="line">        System.out.println(<span class="string">"网名"</span>+man.getName()+<span class="string">" 身份证"</span>+man.getId()+<span class="string">"时间到下机..."</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">while</span>(yinye)&#123;  </div><div class="line">            <span class="keyword">try</span> &#123;  </div><div class="line">                Wangmin man = queue.take();  </div><div class="line">                xiaji(man);  </div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;  </div><div class="line">        <span class="keyword">try</span>&#123;  </div><div class="line">            System.out.println(<span class="string">"网吧开始营业"</span>);  </div><div class="line">            WangBa siyu = <span class="keyword">new</span> WangBa();  </div><div class="line">            Thread shangwang = <span class="keyword">new</span> Thread(siyu);  </div><div class="line">            shangwang.start();  </div><div class="line">              </div><div class="line">            siyu.shangji(<span class="string">"路人甲"</span>, <span class="string">"123"</span>, <span class="number">1</span>);  </div><div class="line">            siyu.shangji(<span class="string">"路人乙"</span>, <span class="string">"234"</span>, <span class="number">10</span>);  </div><div class="line">            siyu.shangji(<span class="string">"路人丙"</span>, <span class="string">"345"</span>, <span class="number">5</span>);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">catch</span>(Exception e)&#123;  </div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>Wangmin.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Wangmin</span> <span class="keyword">implements</span> <span class="title">Delayed</span> </span>&#123;  </div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String name;  </div><div class="line">    <span class="comment">//身份证  </span></div><div class="line">    <span class="keyword">private</span> String id;  </div><div class="line">    <span class="comment">//截止时间  </span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> endTime;  </div><div class="line">    <span class="comment">//定义时间工具类</span></div><div class="line">    <span class="keyword">private</span> TimeUnit timeUnit = TimeUnit.SECONDS;</div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Wangmin</span><span class="params">(String name,String id,<span class="keyword">long</span> endTime)</span></span>&#123;  </div><div class="line">        <span class="keyword">this</span>.name=name;  </div><div class="line">        <span class="keyword">this</span>.id=id;  </div><div class="line">        <span class="keyword">this</span>.endTime = endTime;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span></span>&#123;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.id;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 用来判断是否到了截止时间 </div><div class="line">     */  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getDelay</span><span class="params">(TimeUnit unit)</span> </span>&#123; </div><div class="line">        <span class="comment">//return unit.convert(endTime, TimeUnit.MILLISECONDS) - unit.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);</span></div><div class="line">    	<span class="keyword">return</span> endTime - System.currentTimeMillis();</div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 相互批较排序用 </div><div class="line">     */  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Delayed delayed)</span> </span>&#123;  </div><div class="line">    	Wangmin w = (Wangmin)delayed;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getDelay(<span class="keyword">this</span>.timeUnit) - w.getDelay(<span class="keyword">this</span>.timeUnit) &gt; <span class="number">0</span> ? <span class="number">1</span>:<span class="number">0</span>;  </div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/同步类容器/" rel="tag"># 同步类容器</a>
+          
+            <a href="/tags/并发类容器/" rel="tag"># 并发类容器</a>
+          
+            <a href="/tags/Concurrent集合类/" rel="tag"># Concurrent集合类</a>
+          
+            <a href="/tags/CopyOnWrite集合类/" rel="tag"># CopyOnWrite集合类</a>
+          
+            <a href="/tags/各类并发Queue/" rel="tag"># 各类并发Queue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/26/Concurrent-Programming02/" rel="next" title="互联网并发编程基础篇（二）">
+                <i class="fa fa-chevron-left"></i> 互联网并发编程基础篇（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jing2.jpeg"
+               alt="Gary James" />
+          <p class="site-author-name" itemprop="name">Gary James</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+        <!--<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=493911&auto=1&height=32">
+        </iframe>-->
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#同步类容器"><span class="nav-number">1.</span> <span class="nav-text">同步类容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发类容器"><span class="nav-number">2.</span> <span class="nav-text">并发类容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentMap"><span class="nav-number">2.1.</span> <span class="nav-text">ConcurrentMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-On-Write容器"><span class="nav-number">2.2.</span> <span class="nav-text">Copy-On-Write容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发Queue"><span class="nav-number">3.</span> <span class="nav-text">并发Queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentLinkedQueue"><span class="nav-number">3.1.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BlockingQueue接口"><span class="nav-number">3.2.</span> <span class="nav-text">BlockingQueue接口</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary James</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G3u02V24plXvJabTXNGeCp8c-gzGzoHsz", "afLGXXMlPmhXqbmIPBk0DlCq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
