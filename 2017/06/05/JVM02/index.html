@@ -1,0 +1,903 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="垃圾回收算法,垃圾回收器,Tomcat性能影响实验,性能监控工具," />
+
+
+
+
+
+  <link rel="alternate" href="/／atom.xml" title="缘来是你" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="今天继续Java虚拟机知识的学习，该内容共分为两部分学习，在第二部分中我们将介绍以下内容：（1）垃圾回收概念和算法、及对象的分代转换 （2）垃圾回收器 （3）Tomcat性能影响实验 （4）性能监控工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java虚拟机（二）">
+<meta property="og:url" content="http://yoursite.com/2017/06/05/JVM02/index.html">
+<meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="今天继续Java虚拟机知识的学习，该内容共分为两部分学习，在第二部分中我们将介绍以下内容：（1）垃圾回收概念和算法、及对象的分代转换 （2）垃圾回收器 （3）Tomcat性能影响实验 （4）性能监控工具">
+<meta property="og:image" content="http://yoursite.com/2017/06/05/JVM02/JVM01.png">
+<meta property="og:updated_time" content="2017-06-05T14:08:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java虚拟机（二）">
+<meta name="twitter:description" content="今天继续Java虚拟机知识的学习，该内容共分为两部分学习，在第二部分中我们将介绍以下内容：（1）垃圾回收概念和算法、及对象的分代转换 （2）垃圾回收器 （3）Tomcat性能影响实验 （4）性能监控工具">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/05/JVM02/JVM01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/05/JVM02/"/>
+
+
+
+
+
+  <title> Java虚拟机（二） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">缘来是你</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">晶麒一生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/05/JVM02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing2.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java虚拟机（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T18:09:05+08:00">
+                2017-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/05/JVM02/" class="leancloud_visitors" data-flag-title="Java虚拟机（二）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  今天继续Java虚拟机知识的学习，该内容共分为两部分学习，在第二部分中我们将介绍以下内容：（1）垃圾回收概念和算法、及对象的分代转换 （2）垃圾回收器 （3）Tomcat性能影响实验 （4）性能监控工具
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="垃圾回收概念和算法及对象的分代转换"><a href="#垃圾回收概念和算法及对象的分代转换" class="headerlink" title="垃圾回收概念和算法及对象的分代转换"></a>垃圾回收概念和算法及对象的分代转换</h1><p>&ensp;&emsp;&emsp;谈到<strong>垃圾回收</strong>（Garbage Collection，简称GC），需要先澄清什么是垃圾，类比日常生活中的垃圾，我们会把他们丢入垃圾桶，然后倒掉。GC中的垃圾，特指存于内存中、不会再被使用的对象，而回收就是相当于把垃圾“倒掉”。垃圾回收有很多种算法：如<strong>引用计数法</strong>、<strong>标记压缩法</strong>、<strong>复制算法</strong>、<strong>分代</strong>、<strong>分区</strong>的思想。</p>
+<h2 id="垃圾收集算法（一）"><a href="#垃圾收集算法（一）" class="headerlink" title="垃圾收集算法（一）"></a>垃圾收集算法（一）</h2><p><strong>引用计数法：</strong>这是个比较古老而经典的垃圾收集算法，其核心就是在对象被其他所引用时计数器加1，而当引用失效时则减1，但是这种方式有<strong>非常严重的问题</strong>：<strong>无法处理循环引用的情况、还有就是每次进行加减操作比较浪费系统性能</strong>。</p>
+<p><strong>标记清除法：</strong>就是分为标记和清除两个阶段进行处理内存中的对象，当然这种方式也有非常大的弊端，就是<strong>空间碎片问题</strong>，垃圾回收后的空间不是连续的，不连续的内存空间的工作效率要低于连续的内存空间。</p>
+<p><strong>复制算法：</strong>其核心思想就是将内存空间分为两块，每次只使用其中一块，在垃圾回收时，将正在使用的内存中的存留对象复制到未被使用的内存块中去，之后去清除之前正在使用的内存块中所有的对象，反复去交换两个内存的角色，完成垃圾收集。（<strong>java中新生代的from和to空间就是使用这个算法</strong>）</p>
+<p><strong>标记压缩法：</strong>标记压缩法在标记清除法基础之上做了优化，把存活的对象压缩到内存一端，而后进行垃圾清理。（<strong>java中老年代使用的就是标记压缩法</strong>）</p>
+<p>考虑一个问题：<strong>为什么新生代和老年代使用不同的算法</strong>？<br>答案：因为新生代GC进行频繁，里面对象不稳定，老年代里的对象稳定，默认为永久存活在内存中，GC次数就不频繁，一次回收个数不多。</p>
+<h2 id="垃圾收集算法（二）"><a href="#垃圾收集算法（二）" class="headerlink" title="垃圾收集算法（二）"></a>垃圾收集算法（二）</h2><p><strong>分代算法：</strong>就是根据对象的特点把内存分为N块，而后根据每个内存的特点使用不同的算法。<br>&ensp;&emsp;&emsp;<strong>对于新生代和老年代来说，新生代回收频率很高，但是每次回收耗时都很短，而老年代回收频率较低，但耗时会相对较长，所以应该尽量减少老年代的GC。</strong></p>
+<p><strong>分区算法：</strong>其主要就是将整个内存分为N多个小的独立空间，每个小空间都可以独立使用，这样细粒度的控制一次回收几个小空间和哪些个小空间，而不是对整个空间进行GC，从而提升性能，并<strong>减少GC的停顿时间</strong>。（jdk1.7后开始，但还没有普及）</p>
+<h2 id="垃圾回收时的停顿现象"><a href="#垃圾回收时的停顿现象" class="headerlink" title="垃圾回收时的停顿现象"></a>垃圾回收时的停顿现象</h2><p>&ensp;&emsp;&emsp;垃圾回收器的任务是识别和回收垃圾对象进行内存清理，为了让垃圾回收器可以高效的执行，大部分情况下，会要求系统进入一个停顿的状态。<strong>停顿的目的是终止所有应用线程，只有这样系统才不会有新的垃圾产生，同时停顿保证了系统状态在某一个瞬间的一致性，也有益于更好地标记垃圾对象</strong>。因此在垃圾回收时，都会产生应用程序的停顿。</p>
+<h2 id="对象如何进入老年代"><a href="#对象如何进入老年代" class="headerlink" title="对象如何进入老年代"></a>对象如何进入老年代</h2><p>&ensp;&emsp;&emsp;一般而言对象首次创建会被放置在新生代的eden区，如果没有GC介入，则对象不会离开eden区，那么eden区的对象如何进入老年代呢？一般来讲，只要对象的年龄达到一定的大小，就会自动离开年轻代进入老年代，对象年龄是由对象经历数次GC决定的，在新生代每次GC之后如果对象没有被回收则年龄加1。<strong>虚拟机提供了一个参数来控制新生代对象的最大年龄，当超过这个年龄范围就会晋升老年代。</strong><br><strong>-XX:MaxTenuringThreshold,默认情况下为15。</strong></p>
+<p><em>Test05.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test05</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="comment">//初始的对象在eden区</span></div><div class="line">		<span class="comment">//参数：-Xmx64M -Xms64M -XX:+PrintGCDetails</span></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">5</span>; i++)&#123;</div><div class="line">			<span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</div><div class="line">		&#125;</div><div class="line">		</div><div class="line"></div><div class="line">		<span class="comment">//测试进入老年代的对象</span></div><div class="line">		<span class="comment">//</span></div><div class="line">		<span class="comment">//参数：-Xmx1024M -Xms1024M -XX:+UseSerialGC -XX:MaxTenuringThreshold=15 -XX:+PrintGCDetails </span></div><div class="line">		<span class="comment">//-XX:+PrintHeapAtGC</span></div><div class="line"><span class="comment">//		Map&lt;Integer, byte[]&gt; m = new HashMap&lt;Integer, byte[]&gt;();</span></div><div class="line"><span class="comment">//		for(int i =0; i &lt;5 ; i++) &#123;</span></div><div class="line"><span class="comment">//			byte[] b = new byte[1024*1024];</span></div><div class="line"><span class="comment">//			m.put(i, b);</span></div><div class="line"><span class="comment">//		&#125;</span></div><div class="line"><span class="comment">//		</span></div><div class="line"><span class="comment">//		for(int k = 0; k&lt;20; k++) &#123;</span></div><div class="line"><span class="comment">//			for(int j = 0; j&lt;300; j++)&#123;</span></div><div class="line"><span class="comment">//				byte[] b = new byte[1024*1024]; </span></div><div class="line"><span class="comment">//			&#125;</span></div><div class="line"><span class="comment">//		&#125;</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：<br>&ensp;&emsp;&emsp;根据设置<strong>MaxTenuringThreshold参数</strong>，可以指定新生代对象经过多少次回收后进入老年代。<br>&ensp;&emsp;&emsp;另外，<strong>大对象</strong>（新生代eden区无法装入时，也会直接进入老年代）。JVM里有个参数可以设置对象的大小超过在指定的大小之后，直接晋升老年代。<br><strong>-XX:PretenureSizeThreshold</strong></p>
+<p><em>Test06.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test06</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		</div><div class="line">		<span class="comment">//参数：-Xmx30M -Xms30M -XX:+UseSerialGC -XX:+PrintGCDetails -XX:PretenureSizeThreshold=1000</span></div><div class="line">		<span class="comment">//这种现象原因为：虚拟机对于体积不大的对象 会优先把数据分配到TLAB区域中，因此就失去了在老年代分配的机会</span></div><div class="line">		<span class="comment">//参数：-Xmx30M -Xms30M -XX:+UseSerialGC -XX:+PrintGCDetails -XX:PretenureSizeThreshold=1000 -XX:-UseTLAB</span></div><div class="line">		Map&lt;Integer, <span class="keyword">byte</span>[]&gt; m = <span class="keyword">new</span> HashMap&lt;Integer, <span class="keyword">byte</span>[]&gt;();</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">5</span>*<span class="number">1024</span>; i++)&#123;</div><div class="line">			<span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">			m.put(i, b);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：<br>&ensp;&emsp;&emsp;使用<strong>PretenureSizeThreshold</strong>可以进行指定进入老年代的对象大小，但是要注意<strong>TLAB区域优先分配空间</strong>。</p>
+<h2 id="TLAB"><a href="#TLAB" class="headerlink" title="TLAB"></a>TLAB</h2><p>&ensp;&emsp;&emsp;<strong>TLAB全称是Thread Local Allocation Buffer</strong>即<strong>线程本地分配缓存</strong>，从名字上看是一个线程专用的内存分配区域，是为了加速对象分配而生的。每一个线程都会产生一个TLAB，该线程独享的工作区域，<strong>java虚拟机使用这种TLAB区来避免多线程冲突问题</strong>，提高了对象分配的效率。TLAB空间一般不会太大，当大对象无法在TLAB分配时，则会直接分配到堆上。<br><strong>-XX:+UseTLAB</strong> 使用TLAB<br><strong>-XX:+TLABSize</strong> 设置TLAB大小（jdk1.7后可以自动调整，不要轻易修改）<br><strong>-XX:TLABRefillWasteFraction</strong>设置维护进入TLAB空间的单个对象大小，他是一个比例值，默认为64，即如果对象大于整个空间的1/64,则在堆创建对象。<br><strong>-XX:+PrintTLAB</strong> 查看TLAB信息<br><strong>-XX:ResizeTLAB</strong> 自调整TLABRefillWasteFraction阈值</p>
+<p><em>Test07.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test07</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">alloc</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span>];</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		</div><div class="line">		<span class="comment">//TLAB分配</span></div><div class="line">		<span class="comment">//参数：-XX:+UseTLAB -XX:+PrintTLAB -XX:+PrintGC -XX:TLABSize=102400 -XX:-ResizeTLAB -XX:TLABRefillWasteFraction=100 -XX:-DoEscapeAnalysis -server</span></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10000000</span>;i++)&#123;</div><div class="line">			alloc();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="对象创建流程图"><a href="#对象创建流程图" class="headerlink" title="对象创建流程图"></a>对象创建流程图</h2><p>&ensp;&emsp;&emsp;一个对象创建在什么位置，我们的jvm会有一个比较细节的流程，根据数据的大小，参数的设置，决定如何创建分配，以及其位置。</p>
+<p><img src="/2017/06/05/JVM02/JVM01.png" alt="JVM01"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/垃圾回收算法/" rel="tag"># 垃圾回收算法</a>
+          
+            <a href="/tags/垃圾回收器/" rel="tag"># 垃圾回收器</a>
+          
+            <a href="/tags/Tomcat性能影响实验/" rel="tag"># Tomcat性能影响实验</a>
+          
+            <a href="/tags/性能监控工具/" rel="tag"># 性能监控工具</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/04/JVM01/" rel="next" title="Java虚拟机（一）">
+                <i class="fa fa-chevron-left"></i> Java虚拟机（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jing2.jpeg"
+               alt="Gary James" />
+          <p class="site-author-name" itemprop="name">Gary James</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">72</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/／atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+        <!--<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=493911&auto=1&height=32">
+        </iframe>-->
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收概念和算法及对象的分代转换"><span class="nav-number">1.</span> <span class="nav-text">垃圾回收概念和算法及对象的分代转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法（一）"><span class="nav-number">1.1.</span> <span class="nav-text">垃圾收集算法（一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法（二）"><span class="nav-number">1.2.</span> <span class="nav-text">垃圾收集算法（二）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收时的停顿现象"><span class="nav-number">1.3.</span> <span class="nav-text">垃圾回收时的停顿现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象如何进入老年代"><span class="nav-number">1.4.</span> <span class="nav-text">对象如何进入老年代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLAB"><span class="nav-number">1.5.</span> <span class="nav-text">TLAB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象创建流程图"><span class="nav-number">1.6.</span> <span class="nav-text">对象创建流程图</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary James</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G3u02V24plXvJabTXNGeCp8c-gzGzoHsz", "afLGXXMlPmhXqbmIPBk0DlCq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
