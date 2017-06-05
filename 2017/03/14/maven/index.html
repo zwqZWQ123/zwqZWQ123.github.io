@@ -128,7 +128,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle15.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/14/maven/bundle16.png">
 <meta property="og:image" content="http://yoursite.com/2017/03/14/maven/war.jpg">
-<meta property="og:updated_time" content="2017-06-05T07:33:30.000Z">
+<meta property="og:updated_time" content="2017-06-05T07:35:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目管理和构建——Maven">
 <meta name="twitter:description" content="从简介、安装配置、eclipse搭建、Nexus详细介绍等四个方面来简单了解Maven">
@@ -420,14 +420,14 @@
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>安装maven超级简单，总共分四步：</p>
 <ol>
 <li>下载 Maven ，其实就是一个压缩包，解压一下<br><img src="/2017/03/14/maven/install_maven1.jpeg" alt="install_maven1"></li>
-<li>配置一下环境变量,有两个环境变量可以配置：</li>
-</ol>
+<li><p>配置一下环境变量,有两个环境变量可以配置：</p>
 <ul>
 <li>MAVEN_HOME = D:\maven\apache-maven-3.2.3</li>
 <li>MAVEN_OPTS = -Xms128m -Xmx512m(可选)</li>
 </ul>
-<ol>
-<li>在path变量末尾加入“%MAVEN_HOME%\bin;”,以上M2_HOME 是必须要配置的，如果想让 Maven 跑得更快点，可以根据自己的情况来设置 MAVEN_OPTS。<br><img src="/2017/03/14/maven/install_maven2.jpeg" alt="install_maven2"></li>
+</li>
+<li><p>在path变量末尾加入“%MAVEN_HOME%\bin;”,以上M2_HOME 是必须要配置的，如果想让 Maven 跑得更快点，可以根据自己的情况来设置 MAVEN_OPTS。<br><img src="/2017/03/14/maven/install_maven2.jpeg" alt="install_maven2"></p>
+</li>
 <li>最后，验证是否安装成功<br>现在我们打开 cmd，输入：<br>mvn -v<br>我想您一定会看到一些信息，如下图所示：<br><img src="/2017/03/14/maven/install_maven3.jpeg" alt="install_maven3"><br>恭喜您<strong>Maven</strong>安装成功！<br>在使用<strong>Maven</strong>之前，我们必须要了解一下 Maven 到底是怎样管理 jar 包的，这就是 Maven 仓库要干的活了。<h2 id="修改本地仓库的地址"><a href="#修改本地仓库的地址" class="headerlink" title="修改本地仓库的地址"></a>修改本地仓库的地址</h2>使用<strong>Maven</strong>给我们带来的最直接的好处，就是统一管理jar包，那么这些jar包存放在哪里呢？它们就在您的本地仓库中，默认地址位于<em>C:\Users\用户名.m2</em>目录下（当然也可以修改这个默认地址），下面我们就修改一下这个默认地址。</li>
 </ol>
 <ul>
