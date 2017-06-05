@@ -1,0 +1,932 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java虚拟机,堆、栈、方法区,虚拟机参数," />
+
+
+
+
+
+  <link rel="alternate" href="/／atom.xml" title="缘来是你" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="今天进入Java虚拟机知识的学习，该内容共分为两部分学习，在第一部分中我们将介绍以下内容：（1）java虚拟机概述和基本概念 （2）堆、栈、方法区 （3）了解虚拟机参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java虚拟机（一）">
+<meta property="og:url" content="http://yoursite.com/2017/06/04/JVM01/index.html">
+<meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="今天进入Java虚拟机知识的学习，该内容共分为两部分学习，在第一部分中我们将介绍以下内容：（1）java虚拟机概述和基本概念 （2）堆、栈、方法区 （3）了解虚拟机参数">
+<meta property="og:image" content="http://yoursite.com/2017/06/04/JVM01/JVM01.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/04/JVM01/JVM02.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/04/JVM01/JVM03.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/04/JVM01/JVM04.png">
+<meta property="og:updated_time" content="2017-06-05T06:43:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java虚拟机（一）">
+<meta name="twitter:description" content="今天进入Java虚拟机知识的学习，该内容共分为两部分学习，在第一部分中我们将介绍以下内容：（1）java虚拟机概述和基本概念 （2）堆、栈、方法区 （3）了解虚拟机参数">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/04/JVM01/JVM01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/04/JVM01/"/>
+
+
+
+
+
+  <title> Java虚拟机（一） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">缘来是你</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">晶麒一生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/04/JVM01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jing2.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java虚拟机（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-04T19:20:29+08:00">
+                2017-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/04/JVM01/" class="leancloud_visitors" data-flag-title="Java虚拟机（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  今天进入Java虚拟机知识的学习，该内容共分为两部分学习，在第一部分中我们将介绍以下内容：（1）java虚拟机概述和基本概念 （2）堆、栈、方法区 （3）了解虚拟机参数
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="java虚拟机概述和基本概念"><a href="#java虚拟机概述和基本概念" class="headerlink" title="java虚拟机概述和基本概念"></a>java虚拟机概述和基本概念</h1><h2 id="java虚拟机的原理"><a href="#java虚拟机的原理" class="headerlink" title="java虚拟机的原理"></a>java虚拟机的原理</h2><p>&ensp;&emsp;&emsp;所谓<strong>虚拟机</strong>，就是一台虚拟的机器。它是一款软件，用来执行一系列虚拟计算指令，大体上虚拟机可以分为<strong>系统虚拟机</strong>和<strong>程序虚拟机</strong>，大名鼎鼎的<strong>Visual Box</strong>、<strong>VMare</strong>就属于<strong>系统虚拟机</strong>，他们完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台。<strong>程序虚拟机</strong>典型代表就是<strong>Java虚拟机</strong>，它专门为执行单个计算机程序而设计，在java虚拟机中执行的指令我们称为<strong>java字节码指令</strong>。无论是系统虚拟机还是程序虚拟机，在上面运行的软件都被限制于虚拟机提供的资源中。Java发展至今，出现过很多虚拟机，最初<strong>Sun</strong>使用的一款叫<strong>Classic</strong>的java虚拟机，到现在引用最广泛的是<strong>HotSpot虚拟机</strong>，除了Sun以外，还有<strong>BEA的JRockit</strong>，目前JRockit和HotSpot都被Oracle收入旗下，大有整合的趋势。</p>
+<h2 id="认识java虚拟机的基本结构"><a href="#认识java虚拟机的基本结构" class="headerlink" title="认识java虚拟机的基本结构"></a>认识java虚拟机的基本结构</h2><p><img src="/2017/06/04/JVM01/JVM01.png" alt="JVM01"></p>
+<h2 id="基本概念说明"><a href="#基本概念说明" class="headerlink" title="基本概念说明"></a>基本概念说明</h2><ol>
+<li><strong>类加载子系统：</strong>负责从文件系统或者网络中加载Class信息，加载的信息存放在一块称之为<strong>方法区的内存空间</strong>。</li>
+<li><strong>方法区：</strong>就是存放<strong>类信息</strong>、<strong>常量信息</strong>、<strong>常量池信息</strong>、包括<strong>字符串字面量</strong>和<strong>数字常量</strong>等。</li>
+<li><strong>java堆：</strong>在<em>java虚拟机启动的时候</em>建立java堆，它是java程序最主要的内存工作区域，几乎所有的<strong>对象实例</strong>都存放到java堆中，<strong>堆空间是所有线程共享的</strong>。</li>
+<li><strong>直接内存：</strong>java的NIO库允许java程序使用直接内存，从而提高性能，<strong>通常直接内存速度会优于java堆</strong>。<strong>读写频繁</strong>的场合可能会考虑使用。</li>
+<li><strong>java栈：**</strong>每个虚拟机线程都有一个私有的栈<strong>，一个线程的java栈在线程创建的时候被创建，java栈中保存着</strong>局部变量<strong>、</strong>方法参数<strong>、同时</strong>java的方法调用<strong>、</strong>返回值**等。</li>
+<li><strong>本地方法栈：</strong>和java栈非常类似，最大不同为<strong>本地方法栈用于本地方法调用</strong>。java虚拟机允许java直接调用本地方法（通常使用C编写）。</li>
+<li><strong>垃圾收集系统：</strong>java的核心，也是必不可少的，java有一套自己进行垃圾清理的机制，开发人员无需手工清理。</li>
+<li><strong>PC（Program Counter）寄存器</strong>：也是每个线程私有的空间，java虚拟机会为每个线程创建PC寄存器，在任意时刻，一个java线程总是在执行一个方法，这个方法被称为当前方法，如果当前方法不是本地方法，PC寄存器就会执行当前正在被执行的指令，如果是本地方法，则PC寄存器值为undefined,寄存器存放如<strong>当前执行环境指针</strong>、<strong>程序计数器</strong>、<strong>操作栈指针</strong>、<strong>计算的变量指针</strong>等信息。</li>
+<li><strong>执行引擎：</strong>虚拟机最核心的组件就是执行引擎了，它负责执行虚拟机的字节码（.Class文件）。一般先进行编译成机器码后执行。</li>
+</ol>
+<h1 id="堆、栈、方法区"><a href="#堆、栈、方法区" class="headerlink" title="堆、栈、方法区"></a>堆、栈、方法区</h1><h2 id="堆、栈、方法区概念和联系"><a href="#堆、栈、方法区概念和联系" class="headerlink" title="堆、栈、方法区概念和联系"></a>堆、栈、方法区概念和联系</h2><ul>
+<li><strong>堆</strong>解决的是数据存储的问题，即数据怎么放、放在哪儿。</li>
+<li><strong>栈</strong>解决程序的运行问题，即程序如何运行，或者说如何处理数据。</li>
+<li><strong>方法区</strong>则是辅助堆栈的快永久区（Perm），解决堆栈信息的产生，是先决条件。</li>
+</ul>
+<p>&ensp;&emsp;&emsp;我们创建一个新的对象，User：那么User类的一些信息（<strong>类信息、静态信息都存在于方法区中</strong>）；而<strong>User类被实例化出来之后，被存储到java堆中的一块内存空间</strong>；当我们去使用的时候，都是使用User对象的引用，形如<strong>User user=new User()</strong>，<strong>这里的user就是存放在java栈中</strong>的，即User真实对象的一个引用。</p>
+<p><img src="/2017/06/04/JVM01/JVM02.png" alt="JVM02"></p>
+<h2 id="辨清java堆"><a href="#辨清java堆" class="headerlink" title="辨清java堆"></a>辨清java堆</h2><p>&ensp;&emsp;&emsp;<strong>java堆</strong>是和java应用程序关系最密切的内存空间，几乎所有的对象都存放在其中，并且java堆完全是自动化管理的，通过垃圾回收机制，垃圾对象会自动管理，不需要显示地释放。<br>&ensp;&emsp;&emsp;根据垃圾回收机制不同，Java堆有可能拥有不同的结构。<strong>最为常见的就是将整个java堆分为新生代和老年代</strong>。其中新生代存放新生的对象或者年龄不大的对象，老年代则存放老年对象。<br>&ensp;&emsp;&emsp;<strong>新生代</strong>分为<strong>eden区</strong>、<strong>s0区</strong>、<strong>s1区</strong>，<strong>s0和s1也被称为from和to区域</strong>，他们是两块大小相等并且可以互换角色的空间（复制算法）。<br>&ensp;&emsp;&emsp;绝大多数情况下，对象首先分配在eden区，在一次新生代回收后，如果对象还存活，则会进入s0或者s1区（s0和s1不能同时使用），之后每经过一次新生代回收，如果对象存活则它的年龄就加1，当对象达到一定的年龄后，则进入老年代。</p>
+<p><img src="/2017/06/04/JVM01/JVM03.png" alt="JVM03"></p>
+<h2 id="java栈"><a href="#java栈" class="headerlink" title="java栈"></a>java栈</h2><p>&ensp;&emsp;&emsp;java栈是一块线程私有的内存空间，一个栈，一般由三部分组成：<strong>局部变量表</strong>、<strong>操作数栈</strong>和<strong>帧数据区</strong>。</p>
+<ul>
+<li><strong>局部变量表：</strong>用于<strong>报错函数的参数</strong>及<strong>局部变量</strong>。</li>
+<li><strong>操作数栈：</strong>主要<strong>保存计算过程的中间结果</strong>，同时作为计算过程中变量临时的存储空间。</li>
+<li><strong>帧数据区：</strong>除了局部变量表和操作数栈以外，栈还需要一些数据来支持<strong>常量池的解析</strong>，这里帧数据区保存着访问常量池的指针，方便程序访问常量池，另外，当函数返回或者出现异常时，虚拟机必须有一个<strong>异常处理表</strong>，方便发送异常的时候找到异常的代码，因此异常处理表也是帧数据区的一部分。</li>
+</ul>
+<p><img src="/2017/06/04/JVM01/JVM04.png" alt="JVM04"></p>
+<h2 id="java方法区"><a href="#java方法区" class="headerlink" title="java方法区"></a>java方法区</h2><p>&ensp;&emsp;&emsp;<strong>java方法区</strong>和堆一样，方法区是一块所有线程共享的内存区域，它保存系统的类信息，比如类的<strong>字段、方法、常量池</strong>等。方法区的大小决定了系统可以保存多少个类，如果系统定义太多的类，导致方法区溢出。虚拟机同样会抛出内存溢出错误。方法区可以理解为<strong>永久区（Perm）</strong>。</p>
+<h1 id="虚拟机参数"><a href="#虚拟机参数" class="headerlink" title="虚拟机参数"></a>虚拟机参数</h1><p>&ensp;&emsp;&emsp;在虚拟机运行的过程中，如果可以跟踪系统的运行状态，那么对于问题的故障排查会有一定的帮助，为此，虚拟机提供了一些跟踪系统状态的参数，使用给定的参数执行java虚拟机，就可以在系统运行时打印相关日志，用于分析实际问题。我们进行虚拟机参数配置，其实<strong>主要就是围绕着堆、栈、方法区进行配置</strong>。</p>
+<h2 id="堆分配参数（一）"><a href="#堆分配参数（一）" class="headerlink" title="堆分配参数（一）"></a>堆分配参数（一）</h2><p><strong>-XX:+PrintGC</strong>使用这个参数，虚拟机启动后，只要遇到GC就会打印日志。<br><strong>-XX:+UseSerialGC</strong>配置串行回收器<br><strong>-XX:+PrintGCDetails</strong>可以查看详细信息，包括各个区的情况<br><strong>-Xms:</strong>设置java程序启动时初始化堆大小<br><strong>-Xmx:</strong>设置java程序能获得的最大堆大小<br><strong>-Xmx20m -Xms5m -XX:+PrintCommandLineFlags:</strong>可以将隐式或者显示传给虚拟机的参数输出</p>
+<p><em>Test01.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test01</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">		<span class="comment">//-Xms5m -Xmx20m -XX:+PrintGCDetails -XX:+UseSerialGC -XX:+PrintCommandLineFlags</span></div><div class="line">		</div><div class="line">		<span class="comment">//查看GC信息</span></div><div class="line">		System.out.println(<span class="string">"max memory:"</span> + Runtime.getRuntime().maxMemory());</div><div class="line">		System.out.println(<span class="string">"free memory:"</span> + Runtime.getRuntime().freeMemory());</div><div class="line">		System.out.println(<span class="string">"total memory:"</span> + Runtime.getRuntime().totalMemory());</div><div class="line">		</div><div class="line">		<span class="keyword">byte</span>[] b1 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1</span>*<span class="number">1024</span>*<span class="number">1024</span>];</div><div class="line">		System.out.println(<span class="string">"分配了1M"</span>);</div><div class="line">		System.out.println(<span class="string">"max memory:"</span> + Runtime.getRuntime().maxMemory());</div><div class="line">		System.out.println(<span class="string">"free memory:"</span> + Runtime.getRuntime().freeMemory());</div><div class="line">		System.out.println(<span class="string">"total memory:"</span> + Runtime.getRuntime().totalMemory());</div><div class="line">		</div><div class="line">		<span class="keyword">byte</span>[] b2 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>*<span class="number">1024</span>*<span class="number">1024</span>];</div><div class="line">		System.out.println(<span class="string">"分配了4M"</span>);</div><div class="line">		System.out.println(<span class="string">"max memory:"</span> + Runtime.getRuntime().maxMemory());</div><div class="line">		System.out.println(<span class="string">"free memory:"</span> + Runtime.getRuntime().freeMemory());</div><div class="line">		System.out.println(<span class="string">"total memory:"</span> + Runtime.getRuntime().totalMemory());</div><div class="line">		</div><div class="line">	&#125;	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 总结：<br>&ensp;&emsp;&emsp;<strong>在实际工作中，我们可以直接将初始的堆大小与最大堆大小设置相等，这样的好处是可以减少程序运行时的垃圾回收次数，从而提高性能。</strong></p>
+<h2 id="堆分配参数（二）"><a href="#堆分配参数（二）" class="headerlink" title="堆分配参数（二）"></a>堆分配参数（二）</h2><p><strong><em>新生代的配置</em></strong><br><strong>-Xmn:</strong>可以设置<strong>新生代</strong>的大小，设置一个比较大的新生代会减少老年代的大小，这个参数对系统性能以及GC行为有很大的影响，<strong>新生代大小一般会设置整个堆空间的1/3到1/4左右</strong>。<br><strong>-XX:SurvivorRatio:</strong>用来设置<strong>新生代中eden空间和from/to空间的比例</strong>。含义：-XX:SurvivorRatio=eden/from=eden/to</p>
+<p><em>Test02.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		</div><div class="line">		<span class="comment">//第一次配置</span></div><div class="line">		<span class="comment">//-Xms20m -Xmx20m -Xmn1m -XX:SurvivorRatio=2 -XX:+PrintGCDetails -XX:+UseSerialGC</span></div><div class="line">		</div><div class="line">		<span class="comment">//第二次配置</span></div><div class="line">		<span class="comment">//-Xms20m -Xmx20m -Xmn7m -XX:SurvivorRatio=2 -XX:+PrintGCDetails -XX:+UseSerialGC</span></div><div class="line">		</div><div class="line">		<span class="comment">//第三次配置</span></div><div class="line">		<span class="comment">//-XX:NewRatio=老年代/新生代</span></div><div class="line">		<span class="comment">//-Xms20m -Xmx20m -XX:SurvivorRatio=2 -XX:+PrintGCDetails -XX:+UseSerialGC</span></div><div class="line">		</div><div class="line">		<span class="keyword">byte</span>[] b = <span class="keyword">null</span>;</div><div class="line">		<span class="comment">//连续向系统申请10MB空间</span></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt;<span class="number">10</span>; i ++)&#123;</div><div class="line">			b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1</span>*<span class="number">1024</span>*<span class="number">1024</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：<br>&ensp;&emsp;&emsp;不同的堆分布情况，对系统执行会产生一定的影响，在实际工作中，应该根据系统的特点作出合理的配置，基本策略：<strong>尽可能将对象预留在新生代，减少老年代的GC次数</strong>。<br>&ensp;&emsp;&emsp;除了可以设置新生代的绝对大小（-Xmn），还可以使用<strong>（-XX:NewRatio）设置新生代和老年代的比例</strong>：-XX:NewRatio=老年代／新生代</p>
+<h2 id="堆溢出处理"><a href="#堆溢出处理" class="headerlink" title="堆溢出处理"></a>堆溢出处理</h2><p>&ensp;&emsp;&emsp;在java程序的运行过程中，如果堆空间不足，则会抛出内存溢出的错误（Out of Memory）OOM，一旦这类问题发生在生产环境，可能引起严重的业务中断，java虚拟机提供了<strong>-XX:+HeapDumpOnOutOfMemoryError</strong>,使用该参数可以在内存溢出时导出整个堆信息，与之配合使用的还有参数，<strong>-XX:HeapDumpPath</strong>,可以设置导出堆的存放路径。<br>内存分析工具：Memory Analyzer 1.5.0<br>地址：<a href="http://download.eclipse.org/mat/1.5/update-site/" target="_blank" rel="external">http://download.eclipse.org/mat/1.5/update-site/</a></p>
+<p><em>Test03.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test03</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		</div><div class="line">		<span class="comment">//-Xms1m -Xmx1m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=d:/Test03.dump</span></div><div class="line">		<span class="comment">//堆内存溢出</span></div><div class="line">		Vector v = <span class="keyword">new</span> Vector();</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">5</span>; i ++)&#123;</div><div class="line">			v.add(<span class="keyword">new</span> Byte[<span class="number">1</span>*<span class="number">1024</span>*<span class="number">1024</span>]);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="栈配置"><a href="#栈配置" class="headerlink" title="栈配置"></a>栈配置</h2><p>&ensp;&emsp;&emsp;java虚拟机提供了参数<strong>-Xss</strong>来指定线程的最大栈空间，整个参数也直接决定了函数可调用的最大深度。</p>
+<p><em>Test04.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test04</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="comment">//-Xss1m  </span></div><div class="line">	<span class="comment">//-Xss5m</span></div><div class="line">	</div><div class="line">	<span class="comment">//栈调用深度</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">recursion</span><span class="params">()</span></span>&#123;</div><div class="line">		count++;</div><div class="line">		recursion();</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			recursion();</div><div class="line">		&#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">			System.out.println(<span class="string">"调用最大深入："</span> + count);</div><div class="line">			t.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p>&ensp;&emsp;&emsp;和java堆一样，方法区是一块所有线程共享的内存区域，它用于保存系统的类信息，方法区（永久区）可以保存多少信息可以对其进行配置，在默认情况下<strong>，-XX:MaxPermSize为64MB</strong>，如果系统运行时生产大量的类，就需要设置一个相对合适的方法区，以免出现永久区内存溢出的问题。<br>-XX:PermSize=64M -XX:MaxPermSize=64M</p>
+<h2 id="直接内存配置"><a href="#直接内存配置" class="headerlink" title="直接内存配置"></a>直接内存配置</h2><p>&ensp;&emsp;&emsp;直接内存也是java程序中非常重要的组成部分，特别是广泛用在NIO中，直接内存跳过了java堆，使java程序可以直接访问原生堆空间，因此在一定程度上加快了内存空间的访问速度。但是说直接内存一定就可以提高内存访问速度也不见得，具体情况具体分析。<br>&ensp;&emsp;&emsp;相关配置参数：<strong>-XX：MaxDirectMemorySize</strong>，如果不设置默认值为最大堆空间，即-Xmx。直接内存使用达到上限时，就会触发垃圾回收，如果不能有效的释放空间，也会引起系统的OOM。</p>
+<h2 id="Client和Server虚拟机工作模式（适用jdk早期版本-不使用jdk1-7以后版本）"><a href="#Client和Server虚拟机工作模式（适用jdk早期版本-不使用jdk1-7以后版本）" class="headerlink" title="Client和Server虚拟机工作模式（适用jdk早期版本,不使用jdk1.7以后版本）"></a>Client和Server虚拟机工作模式（适用jdk早期版本,不使用jdk1.7以后版本）</h2><p>&ensp;&emsp;&emsp;目前java虚拟机支持Client和Server两种运行模式，使用参数-client可以制定使用Client模式，使用-server即使用Server模式。可以直接在命令行查看当前计算机系统自动选择的运行模式。java -version 即可。<br>&ensp;&emsp;&emsp;二者区别：<strong>Client模式相对Server启动较快，如果不追求系统的长时间使用性能仅仅是测试，可以使用Client模式。而Server模式则启动比较慢，原因是会对其进行复杂的系统性能信息收集和使用更复杂的算法对程序进行优化，一般我们的生产环境都会使用Server模式，长期运行其性能要远远快于Client模式。</strong></p>
+<p>JVM不错的博客：<br><a href="http://www.cnblogs.com/redcreen/archive/2011/05/04/2037057.html" target="_blank" rel="external">http://www.cnblogs.com/redcreen/archive/2011/05/04/2037057.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java虚拟机/" rel="tag"># java虚拟机</a>
+          
+            <a href="/tags/堆、栈、方法区/" rel="tag"># 堆、栈、方法区</a>
+          
+            <a href="/tags/虚拟机参数/" rel="tag"># 虚拟机参数</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/29/Concurrent-Programming07/" rel="next" title="互联网并发编程高级篇（三）">
+                <i class="fa fa-chevron-left"></i> 互联网并发编程高级篇（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/jing2.jpeg"
+               alt="Gary James" />
+          <p class="site-author-name" itemprop="name">Gary James</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/／atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+        <!--<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=493911&auto=1&height=32">
+        </iframe>-->
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java虚拟机概述和基本概念"><span class="nav-number">1.</span> <span class="nav-text">java虚拟机概述和基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java虚拟机的原理"><span class="nav-number">1.1.</span> <span class="nav-text">java虚拟机的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认识java虚拟机的基本结构"><span class="nav-number">1.2.</span> <span class="nav-text">认识java虚拟机的基本结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念说明"><span class="nav-number">1.3.</span> <span class="nav-text">基本概念说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆、栈、方法区"><span class="nav-number">2.</span> <span class="nav-text">堆、栈、方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆、栈、方法区概念和联系"><span class="nav-number">2.1.</span> <span class="nav-text">堆、栈、方法区概念和联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辨清java堆"><span class="nav-number">2.2.</span> <span class="nav-text">辨清java堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java栈"><span class="nav-number">2.3.</span> <span class="nav-text">java栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java方法区"><span class="nav-number">2.4.</span> <span class="nav-text">java方法区</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟机参数"><span class="nav-number">3.</span> <span class="nav-text">虚拟机参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆分配参数（一）"><span class="nav-number">3.1.</span> <span class="nav-text">堆分配参数（一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆分配参数（二）"><span class="nav-number">3.2.</span> <span class="nav-text">堆分配参数（二）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆溢出处理"><span class="nav-number">3.3.</span> <span class="nav-text">堆溢出处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈配置"><span class="nav-number">3.4.</span> <span class="nav-text">栈配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">3.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存配置"><span class="nav-number">3.6.</span> <span class="nav-text">直接内存配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client和Server虚拟机工作模式（适用jdk早期版本-不使用jdk1-7以后版本）"><span class="nav-number">3.7.</span> <span class="nav-text">Client和Server虚拟机工作模式（适用jdk早期版本,不使用jdk1.7以后版本）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary James</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G3u02V24plXvJabTXNGeCp8c-gzGzoHsz", "afLGXXMlPmhXqbmIPBk0DlCq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="今天进入互联网并发编程知识的学习中级篇，在中级篇第一部分我们将掌握以下方面的内容：（1）同步类容器讲解 （2）并发类容器讲解（3）Concurrent集合类讲解与底层原理实现 （4）CopyOnWrite集合类讲解与底层原理实现（5）各类并发Queue详细讲解">
 <meta property="og:image" content="http://yoursite.com/2017/05/26/Concurrent-Programming03/cp3.png">
-<meta property="og:updated_time" content="2017-05-30T02:50:49.000Z">
+<meta property="og:updated_time" content="2017-05-31T07:15:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="互联网并发编程中级篇（一）">
 <meta name="twitter:description" content="今天进入互联网并发编程知识的学习中级篇，在中级篇第一部分我们将掌握以下方面的内容：（1）同步类容器讲解 （2）并发类容器讲解（3）Concurrent集合类讲解与底层原理实现 （4）CopyOnWrite集合类讲解与底层原理实现（5）各类并发Queue详细讲解">
@@ -392,7 +392,7 @@
       
 
       
-        <h1 id="同步类容器"><a href="#同步类容器" class="headerlink" title="同步类容器"></a>同步类容器</h1><p>&ensp;&emsp;&emsp;<strong>同步类容器</strong>都是<strong>线程安全</strong>的，<strong>但在某些场景下可能需要加锁来保护复合操作</strong>。复合类操作如：<strong>迭代</strong>（反复访问元素，遍历完容器中所有的元素）、<strong>跳转</strong>（根据指定的顺序找到当前元素的下一个元素）、以及<strong>条件运算</strong>。这些复合操作在多线程并发地修改容器时，可能会表现出意外的行为，最经典的便是<strong>ConcurrentModificationException</strong>，原因是当容器迭代的过程中，被并发的修改了内容，这是由于早期迭代器设计的时候并没有考虑并发修改的问题。<br>&ensp;&emsp;&emsp;同步类容器：如古老的Vector、HashTable。这些容器的同步功能其实都是有JDK的Collections.synchronized/<em>*</em>等工厂方法去创建实现的。其底层的机制无非就是用传统的synchronized关键字对每个公用的方法都进行同步，使得每次只能有一个线程访问容器的状态。这很明显不满足我们今天互联网时代高并发的需求，在保证线程安全的同时，也必须要有足够好的性能。</p>
+        <h1 id="同步类容器"><a href="#同步类容器" class="headerlink" title="同步类容器"></a>同步类容器</h1><p>&ensp;&emsp;&emsp;<strong>同步类容器</strong>都是<strong>线程安全</strong>的，<strong>但在某些场景下可能需要加锁来保护复合操作</strong>。复合类操作如：<strong>迭代</strong>（反复访问元素，遍历完容器中所有的元素）、<strong>跳转</strong>（根据指定的顺序找到当前元素的下一个元素）、以及<strong>条件运算</strong>。这些复合操作在多线程并发地修改容器时，可能会表现出意外的行为，最经典的便是<strong>ConcurrentModificationException</strong>，原因是当容器迭代的过程中，被并发的修改了内容，这是由于早期迭代器设计的时候并没有考虑并发修改的问题。<br>&ensp;&emsp;&emsp;同步类容器：如古老的Vector、HashTable。这些容器的同步功能其实都是有JDK的Collections.synchronized<em>*</em>等工厂方法去创建实现的。其底层的机制无非就是用传统的synchronized关键字对每个公用的方法都进行同步，使得每次只能有一个线程访问容器的状态。这很明显不满足我们今天互联网时代高并发的需求，在保证线程安全的同时，也必须要有足够好的性能。</p>
 <p><em>Tickets.java</em></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tickets</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="comment">//初始化火车票池并添加火车票:避免线程同步可采用Vector替代ArrayList  HashTable替代HashMap</span></div><div class="line">		</div><div class="line">		<span class="keyword">final</span> Vector&lt;String&gt; tickets = <span class="keyword">new</span> Vector&lt;String&gt;();</div><div class="line">		</div><div class="line">		<span class="comment">//Map&lt;String, String&gt; map = Collections.synchronizedMap(new HashMap&lt;String, String&gt;());</span></div><div class="line"></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i&lt;= <span class="number">1000</span>; i++)&#123;</div><div class="line">			tickets.add(<span class="string">"火车票"</span>+i);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line"><span class="comment">//		for (Iterator iterator = tickets.iterator(); iterator.hasNext();) &#123;</span></div><div class="line"><span class="comment">//			String string = (String) iterator.next();</span></div><div class="line"><span class="comment">//			tickets.remove(20);</span></div><div class="line"><span class="comment">//		&#125;</span></div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=<span class="number">10</span>; i ++)&#123;</div><div class="line">			<span class="keyword">new</span> Thread(<span class="string">"线程"</span>+i)&#123;</div><div class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">					<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">						<span class="keyword">if</span>(tickets.isEmpty()) <span class="keyword">break</span>;</div><div class="line">						System.out.println(Thread.currentThread().getName() + <span class="string">"---"</span> + tickets.remove(<span class="number">0</span>));</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;.start();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="并发类容器"><a href="#并发类容器" class="headerlink" title="并发类容器"></a>并发类容器</h1><p>&ensp;&emsp;&emsp;jdk5.0以后提供了多种并发类容器来替代同步类容器从而改善性能。<strong>同步类容器都是串行化的。他们虽然实现了线程安全，但是严重降低了并发性，在多线程环境时，严重降低了应用程序的吞吐量</strong>。<br>&ensp;&emsp;&emsp;<strong>并发类容器</strong>是专门针对并发设计的,使用<strong>ConcurrentHashMap来代替给予散列的传统的HashTable</strong>，而且在ConcurrentHashMap中，添加了一些常见复合操作的支持。以及使用了<strong>CopyOnWriteArrayList代替Vector</strong>，<strong>并发的CopyOnWriteArraySet</strong>,以及<strong>并发的Queue</strong>，<strong><em>ConcurrentLinkedQueue</em></strong>和<strong><em>LinkedBlockingQueue</em></strong>,前者是高性能队列，后者是以阻塞形式的队列，具体实现的Queue还有很多，例如ArrayBlockingQueue、PriorityBlockingQueue、SynchronousQueue等。</p>
@@ -557,7 +557,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -579,7 +579,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">68</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
