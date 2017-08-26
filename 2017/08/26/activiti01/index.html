@@ -1,0 +1,1060 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Activiti," />
+
+
+
+
+
+  <link rel="alternate" href="/／atom.xml" title="缘来是你" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="由于公司实习项目的需求，使用Activiti流程引擎进行开发。空闲时间，开始总结自己从初始到运用Activiti的过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activiti流程引擎开发（一）">
+<meta property="og:url" content="http://yoursite.com/2017/08/26/activiti01/index.html">
+<meta property="og:site_name" content="缘来是你">
+<meta property="og:description" content="由于公司实习项目的需求，使用Activiti流程引擎进行开发。空闲时间，开始总结自己从初始到运用Activiti的过程">
+<meta property="og:image" content="http://yoursite.com/2017/08/26/activiti01/serviceAPI.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/08/26/activiti01/activiti-explorer.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/26/activiti01/database.png">
+<meta property="og:updated_time" content="2017-08-26T09:53:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Activiti流程引擎开发（一）">
+<meta name="twitter:description" content="由于公司实习项目的需求，使用Activiti流程引擎进行开发。空闲时间，开始总结自己从初始到运用Activiti的过程">
+<meta name="twitter:image" content="http://yoursite.com/2017/08/26/activiti01/serviceAPI.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/26/activiti01/"/>
+
+
+
+
+
+  <title> Activiti流程引擎开发（一） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">缘来是你</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">晶麒一生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/26/activiti01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary James">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="缘来是你">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Activiti流程引擎开发（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-26T16:28:33+08:00">
+                2017-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Activiti/" itemprop="url" rel="index">
+                    <span itemprop="name">Activiti</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/26/activiti01/" class="leancloud_visitors" data-flag-title="Activiti流程引擎开发（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  由于公司实习项目的需求，使用Activiti流程引擎进行开发。空闲时间，开始总结自己从初始到运用Activiti的过程
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Activiti——新一代的开源BPM引擎"><a href="#Activiti——新一代的开源BPM引擎" class="headerlink" title="Activiti——新一代的开源BPM引擎"></a>Activiti——新一代的开源BPM引擎</h1><h2 id="工作流与工作流引擎"><a href="#工作流与工作流引擎" class="headerlink" title="工作流与工作流引擎"></a>工作流与工作流引擎</h2><p>&ensp;&emsp;&emsp;<strong>工作流（workflow）</strong>就是工作流程的计算模型，即将工作流程中的工作如何前后组织在一起的逻辑和规则在计算机中以恰当的模型进行表示并对其实施计算。它主要解决的是“使在多个参与者之间按照某种预定义的规则传递文档、信息或任务的过程自动进行，从而实现某个预期的业务目标，或者促使此目标的实现”。<br>&ensp;&emsp;&emsp;所谓<strong>工作流引擎</strong>是指workflow作为应用系统的一部分，并为之提供对各应用系统有决定作用的根据角色、分工和条件的不同决定信息传递路由、内容等级等核心解决方案。<br>&ensp;&emsp;&emsp;例如开发一个系统最关键的部分不是系统的界面，也不是和数据库之间的信息交换，而是<strong>如何根据业务逻辑开发出符合实际需要的程序逻辑并确保其稳定性、易维护性和弹性</strong>。<br>&ensp;&emsp;&emsp;比如你的系统中有一个任务流程，一般情况下这个任务的代码逻辑、流程你都要自己来编写。实现它是没有问题的。但是谁能保证逻辑编写的毫无纰漏？经过无数次的测试与改进，这个流程没有任何漏洞也是可以实现的，但是明显就会拖慢整个项目的进度。<br>&ensp;&emsp;&emsp;<strong>工作流引擎解决的就是这个问题：如果应用程序缺乏强大的逻辑层，势必变得容易出错（信息的路由错误、死循环等等）。</strong></p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><ol>
+<li><strong>Activiti</strong> 其核心是 <strong>BPMN 2.0</strong> 的流程引擎。BPMN 是目前被各 BPM 厂商广泛接受的 BPM 标准，全称为 Business Process Model and Notation，由 OMG 组织进行维护，2011 年 1 月份发布了其 2.0 的正式版。BPMN 2.0 对比于第一个版本，其最重要的变化在于其定义了流程的元模型和执行语义，即它自己解决了存储、交换和执行的问题。这代表着 BPMN 2.0 流程定义模型不仅仅可以在任何兼容 BPMN 2.0 的引擎中执行，而且也可以在图形编辑器间交换。作为一个标准，BPMN 2.0 统一了工作流社区。</li>
+<li><strong>Activiti</strong> 是由 jBPM 的创建者 <strong>Tom Baeyens</strong> 离开 JBoss 之后建立的项目，构建在开发 jBPM 版本 1 到 4 时积累的多年经验的基础之上，旨在创建下一代的 BPM 解决方案。同时 <strong>Activiti</strong> 选择了 Apache 许可，一方面是希望 <strong>Activiti</strong> 能有更长久的生命力，因为它不受任何个人或是公司的控制而是属于整个社区，另一方面更是希望这个宽松的许可能够让 <strong>Activiti</strong> BPM 引擎和 BPMN2.0 被更广泛的采纳、使用和商业化。</li>
+<li>对于 Java 开发者来说，<strong>Activiti</strong> 的首席架构师 Tom Baeyens 曾提到，<strong>Activiti</strong> 的首个目标就是要获得开发者的青睐。首先它在使用时极为方便，只是个 jar 文件，使用时仅需要将其放在类路径中，当然，<strong>Activiti</strong> 也可以作为独立服务器的方式使用；同时 <strong>Activiti</strong> 提供了很多 BPM 高级工具，其中还包括开发了协作工具，使得开发人员、业务人员和运维人员能够更好的协同工作。</li>
+</ol>
+<h2 id="Activiti基本架构和服务组件"><a href="#Activiti基本架构和服务组件" class="headerlink" title="Activiti基本架构和服务组件"></a>Activiti基本架构和服务组件</h2><p>&ensp;&emsp;&emsp;<strong>Activiti</strong> 流程引擎重点关注在系统开发的易用性和轻量性上。每一项 BPM 业务功能 <strong>Activiti</strong> 流程引擎都以服务的形式提供给开发人员。通过使用这些服务，开发人员能够构建出功能丰富、轻便且高效的 BPM 应用程序。<br><img src="/2017/08/26/activiti01/serviceAPI.jpg" alt="serviceAPI"></p>
+<p></p><p align="center">图 1.Activiti 系统服务结构图<br></p><br>&ensp;&emsp;&emsp;图 1 是 Activiti 引擎的系统服务结构图，该图显示了引擎提供的所有功能组件，以下为各个服务的功能简介：<p></p>
+<ul>
+<li><strong>RepositoryService</strong>： Activiti 中每一个不同版本的业务流程的定义都需要使用一些定义文件，部署文件和支持数据 ( 例如 BPMN2.0 XML 文件，表单定义文件，流程定义图像文件等 )，这些文件都存储在 Activiti 内建的 Repository 中。Repository Service 提供了对 repository 的存取服务。</li>
+<li><strong>RuntimeService</strong>：在 Activiti 中，每当一个流程定义被启动一次之后，都会生成一个相应的流程对象实例。Runtime Service 提供了启动流程、查询流程实例、设置获取流程实例变量等功能。此外它还提供了对流程部署，流程定义和流程实例的存取服务。</li>
+<li><strong>TaskService</strong>：在 Activiti 中业务流程定义中的每一个执行节点被称为一个 Task，对流程中的数据存取，状态变更等操作均需要在 Task 中完成。Task Service 提供了对用户 Task 和 Form 相关的操作。它提供了运行时任务查询、领取、完成、删除以及变量设置等功能。</li>
+<li><strong>IdentityService</strong>：Activiti 中内置了用户以及组管理的功能，必须使用这些用户和组的信息才能获取到相应的 Task。Identity Service 提供了对 Activiti 系统中的用户和组的管理功能。</li>
+<li><strong>ManagementService</strong>：Management Service 提供了对 Activiti 流程引擎的管理和维护功能，这些功能不在工作流驱动的应用程序中使用，主要用于 Activiti 系统的日常维护。</li>
+<li><strong>HistoryService</strong>: History Service 用于获取正在运行或已经完成的流程实例的信息，与 Runtime Service 中获取的流程信息不同，历史信息包含已经持久化存储的永久信息，并已经被针对查询优化。</li>
+<li><strong>FormService</strong>: Activiti 中的流程和状态 Task 均可以关联业务相关的数据。通过使用 Form Service 可以存取启动和完成任务所需的表单数据并且根据需要来渲染表单。</li>
+</ul>
+<p>##环境配置<br>activiti5软件环境：</p>
+<ol>
+<li>JDK1.6或者更高版本</li>
+<li>支持的数据库有：h2,MySQL,Oracle,postgres,mssql,db2等</li>
+<li>支持activiti运行的jar包</li>
+<li>开发环境为Eclipse3.7或者以上版本，myeclipse为8.6版本</li>
+</ol>
+<p>Activiti资源下载：<a href="https://www.activiti.org/download-links" target="_blank" rel="external">https://www.activiti.org/download-links
+</a><br>最新版本发布日期：</p>
+<ul>
+<li>activiti-6.0.0.zip    26 May 2017</li>
+<li>activiti-5.22.0.zip     9 Dec 2016</li>
+</ul>
+<h1 id="一分钟Demo"><a href="#一分钟Demo" class="headerlink" title="一分钟Demo"></a>一分钟Demo</h1><ol>
+<li>把解压activiti5.22.0.jar中的war/activiti-explorer.war放在tomcat的webapps的目录下</li>
+<li>启动tomcat</li>
+<li>浏览器打开 <a href="http://localhost:8080/activiti-explorer" target="_blank" rel="external">http://localhost:8080/activiti-explorer</a> 。用kermit/kermit登陆 </li>
+</ol>
+<p><img src="/2017/08/26/activiti01/activiti-explorer.png" alt="activiti-explorer"><br>&ensp;&emsp;&emsp;该<strong>Activiti</strong>浏览器应用默认使用了 <strong>h2内存数据库</strong>。此<strong>Activiti Explorer demo</strong>安装是一种展示了Activiti容易和迅速开发的能力和功能的方式，但不意味着是唯一的方式。<br>&ensp;&emsp;&emsp;<strong>Activiti</strong>主要的目的是在你自己的应用中使强大的BPM和工作流能力有效。</p>
+<h2 id="了解文档目录"><a href="#了解文档目录" class="headerlink" title="了解文档目录"></a>了解文档目录</h2><p>activiti-5.22.0文件夹中的目录结构：</p>
+<ul>
+<li><strong>database</strong>：里面存放的是Activiti使用到的数据库信息的sql文件，它支持的数据库类型如下图，使用时只需执行你自己的数据库类型的文件即可。如：你的数据库是MySQL，那么就执行activiti.mysql.create.*.sql即可。</li>
+<li><strong>docs</strong>：毫无疑问，api文档是也。</li>
+<li><strong>libs</strong>：使用Activiti所需要的所有的jar包和源文件。</li>
+<li><strong>wars</strong>：官方给我们提供的示例Demo，通过使用Demo可以更加快速的了解Activiti。</li>
+</ul>
+<h1 id="Activiti数据库设计"><a href="#Activiti数据库设计" class="headerlink" title="Activiti数据库设计"></a>Activiti数据库设计</h1><p>&ensp;&emsp;&emsp;学习Activiti主要是学习自带的23张数据表，下面是分类。<br><img src="/2017/08/26/activiti01/database.png" alt="database"><br>&ensp;&emsp;&emsp;Activiti的表都以ACT_开头。第二部分是表示表的用途。用途也和服务的API对应。</p>
+<ul>
+<li><p><strong>ACT<em>RE</em>*</strong>:’RE’表示repository。这个前缀的表包含了流程定义和流程静态资源（图片，规则等等）。</p>
+</li>
+<li><p><strong>ACT<em>RU</em>*</strong>:’RU’表示runtime。这些运行时的表，包含流程实例，任务，变量，异步任务等运行中的数据。Activiti只在流程实例执行过程中保存这些数据，在流程结束时就会删除这些记录。这样运行时表可以一直很小速度很快。</p>
+</li>
+<li><p><strong>ACT<em>ID</em>*</strong>:’ID’表示identity。这些表包含身份信息，比如用户、组等等。</p>
+</li>
+<li><p><strong>ACT<em>HI</em>*</strong>:’HI’表示history。这些表包含历史数据，比如历史流程实例，变量，任务等等。</p>
+</li>
+<li><p><strong>ACT<em>GE</em>*</strong>:’GE’表示general。通用数据，用于不同场景下。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">表明</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">act_ge_bytearray</td>
+<td style="text-align:left">二进制数据表</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">act_ge_property</td>
+<td style="text-align:left">属性数据表存储整个流程引擎级别的数据，初始化表结构时，会默认插入三条记录</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">act_hi_actinst</td>
+<td style="text-align:left">历史节点表</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">act_hi_attachment</td>
+<td style="text-align:left">历史附件表</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left">act_hi_comment</td>
+<td style="text-align:left">历史意见表</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left">act_hi_identitylink</td>
+<td style="text-align:left">历史流程人员表</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left">act_hi_detail</td>
+<td style="text-align:left">历史详情表，提供历史变量的查询</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left">act_hi_procinst</td>
+<td style="text-align:left">历史流程实例表</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">act_hi_taskinst</td>
+<td style="text-align:left">历史任务实例表</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left">act_hi_varinst</td>
+<td style="text-align:left">历史变量表</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left">act_id_group</td>
+<td style="text-align:left">用户组信息表</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left">act_id_info</td>
+<td style="text-align:left">用户扩展信息表</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">act_id_membership</td>
+<td style="text-align:left">用户与用户组对应信息表</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left">act_id_user</td>
+<td style="text-align:left">用户信息表</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">act_re_deployment</td>
+<td style="text-align:left">部署信息表</td>
+</tr>
+<tr>
+<td style="text-align:left">16</td>
+<td style="text-align:left">act_re_model</td>
+<td style="text-align:left">流程设计模型部署表</td>
+</tr>
+<tr>
+<td style="text-align:left">17</td>
+<td style="text-align:left">act_re_procdef</td>
+<td style="text-align:left">流程定义数据表</td>
+</tr>
+<tr>
+<td style="text-align:left">18</td>
+<td style="text-align:left">act_ru_event_subscr</td>
+<td style="text-align:left">throwEvent、catchEvent时间监听信息表</td>
+</tr>
+<tr>
+<td style="text-align:left">19</td>
+<td style="text-align:left">act_ru_execution</td>
+<td style="text-align:left">运行时流程执行实例表</td>
+</tr>
+<tr>
+<td style="text-align:left">20</td>
+<td style="text-align:left">act_ru_identitylink</td>
+<td style="text-align:left">运行时流程人员表，主要存储任务节点与参与者的相关信息</td>
+</tr>
+<tr>
+<td style="text-align:left">21</td>
+<td style="text-align:left">act_ru_job</td>
+<td style="text-align:left">运行时定时任务数据表</td>
+</tr>
+<tr>
+<td style="text-align:left">22</td>
+<td style="text-align:left">act_ru_task</td>
+<td style="text-align:left">运行时任务节点表</td>
+</tr>
+<tr>
+<td style="text-align:left">23</td>
+<td style="text-align:left">act_ru_variable</td>
+<td style="text-align:left">运行时流程变量数据表</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Activiti/" rel="tag"># Activiti</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/05/JVM02/" rel="next" title="Java虚拟机（二）">
+                <i class="fa fa-chevron-left"></i> Java虚拟机（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.jpg"
+               alt="Gary James" />
+          <p class="site-author-name" itemprop="name">Gary James</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">73</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/／atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+        <!--<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=493911&auto=1&height=32">
+        </iframe>-->
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activiti——新一代的开源BPM引擎"><span class="nav-number">1.</span> <span class="nav-text">Activiti——新一代的开源BPM引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作流与工作流引擎"><span class="nav-number">1.1.</span> <span class="nav-text">工作流与工作流引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.2.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activiti基本架构和服务组件"><span class="nav-number">1.3.</span> <span class="nav-text">Activiti基本架构和服务组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一分钟Demo"><span class="nav-number">2.</span> <span class="nav-text">一分钟Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解文档目录"><span class="nav-number">2.1.</span> <span class="nav-text">了解文档目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Activiti数据库设计"><span class="nav-number">3.</span> <span class="nav-text">Activiti数据库设计</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary James</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("G3u02V24plXvJabTXNGeCp8c-gzGzoHsz", "afLGXXMlPmhXqbmIPBk0DlCq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
