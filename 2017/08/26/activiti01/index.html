@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/08/26/activiti01/serviceAPI.jpg">
 <meta property="og:image" content="http://yoursite.com/2017/08/26/activiti01/activiti-explorer.png">
 <meta property="og:image" content="http://yoursite.com/2017/08/26/activiti01/database.png">
-<meta property="og:updated_time" content="2017-08-26T09:53:13.000Z">
+<meta property="og:updated_time" content="2017-08-27T07:16:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activiti流程引擎开发（一）">
 <meta name="twitter:description" content="由于公司实习项目的需求，使用Activiti流程引擎进行开发。空闲时间，开始总结自己从初始到运用Activiti的过程">
@@ -439,15 +439,15 @@
 </ul>
 <h1 id="Activiti数据库设计"><a href="#Activiti数据库设计" class="headerlink" title="Activiti数据库设计"></a>Activiti数据库设计</h1><p>&ensp;&emsp;&emsp;学习Activiti主要是学习自带的23张数据表，下面是分类。<br><img src="/2017/08/26/activiti01/database.png" alt="database"><br>&ensp;&emsp;&emsp;Activiti的表都以ACT_开头。第二部分是表示表的用途。用途也和服务的API对应。</p>
 <ul>
-<li><p><strong>ACT<em>RE</em>*</strong>:’RE’表示repository。这个前缀的表包含了流程定义和流程静态资源（图片，规则等等）。</p>
+<li><p><strong>ACT_RE_*</strong>:’RE’表示repository。这个前缀的表包含了流程定义和流程静态资源（图片，规则等等）。</p>
 </li>
-<li><p><strong>ACT<em>RU</em>*</strong>:’RU’表示runtime。这些运行时的表，包含流程实例，任务，变量，异步任务等运行中的数据。Activiti只在流程实例执行过程中保存这些数据，在流程结束时就会删除这些记录。这样运行时表可以一直很小速度很快。</p>
+<li><p><strong>ACT_RU_*</strong>:’RU’表示runtime。这些运行时的表，包含流程实例，任务，变量，异步任务等运行中的数据。Activiti只在流程实例执行过程中保存这些数据，在流程结束时就会删除这些记录。这样运行时表可以一直很小速度很快。</p>
 </li>
-<li><p><strong>ACT<em>ID</em>*</strong>:’ID’表示identity。这些表包含身份信息，比如用户、组等等。</p>
+<li><p><strong>ACT_ID_*</strong>:’ID’表示identity。这些表包含身份信息，比如用户、组等等。</p>
 </li>
-<li><p><strong>ACT<em>HI</em>*</strong>:’HI’表示history。这些表包含历史数据，比如历史流程实例，变量，任务等等。</p>
+<li><p><strong>ACT_HI_*</strong>:’HI’表示history。这些表包含历史数据，比如历史流程实例，变量，任务等等。</p>
 </li>
-<li><p><strong>ACT<em>GE</em>*</strong>:’GE’表示general。通用数据，用于不同场景下。</p>
+<li><p><strong>ACT_GE_*</strong>:’GE’表示general。通用数据，用于不同场景下。</p>
 </li>
 </ul>
 <table>
@@ -622,6 +622,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/08/27/activiti02/" rel="prev" title="activiti02">
+                activiti02 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -692,7 +696,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
