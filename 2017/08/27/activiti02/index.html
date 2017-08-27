@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="晶麒一生" />
+  <meta name="keywords" content="Activiti," />
 
 
 
@@ -89,13 +89,22 @@
 
 
 
+<meta name="description" content="今天继续Activiti开发总结，将介绍BPMN基本知识、两种Activiti流程设计工具">
 <meta property="og:type" content="article">
-<meta property="og:title" content="activiti02">
+<meta property="og:title" content="Activiti流程引擎开发（二）">
 <meta property="og:url" content="http://yoursite.com/2017/08/27/activiti02/index.html">
 <meta property="og:site_name" content="缘来是你">
-<meta property="og:updated_time" content="2017-08-27T07:11:49.000Z">
+<meta property="og:description" content="今天继续Activiti开发总结，将介绍BPMN基本知识、两种Activiti流程设计工具">
+<meta property="og:image" content="http://yoursite.com/2017/08/27/activiti02/am01.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/27/activiti02/am02.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/27/activiti02/am03.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/27/activiti02/am04.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/27/activiti02/ad01.png">
+<meta property="og:updated_time" content="2017-08-27T15:09:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="activiti02">
+<meta name="twitter:title" content="Activiti流程引擎开发（二）">
+<meta name="twitter:description" content="今天继续Activiti开发总结，将介绍BPMN基本知识、两种Activiti流程设计工具">
+<meta name="twitter:image" content="http://yoursite.com/2017/08/27/activiti02/am01.png">
 
 
 
@@ -129,7 +138,7 @@
 
 
 
-  <title> activiti02 | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Activiti流程引擎开发（二） | 缘来是你 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -299,7 +308,7 @@
             
             
               
-                activiti02
+                Activiti流程引擎开发（二）
               
             
           </h1>
@@ -325,6 +334,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Activiti/" itemprop="url" rel="index">
+                    <span itemprop="name">Activiti</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -332,7 +363,7 @@
 
           
           
-             <span id="/2017/08/27/activiti02/" class="leancloud_visitors" data-flag-title="activiti02">
+             <span id="/2017/08/27/activiti02/" class="leancloud_visitors" data-flag-title="Activiti流程引擎开发（二）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,6 +380,10 @@
           
 
           
+              <div class="post-description">
+                  今天继续Activiti开发总结，将介绍BPMN基本知识、两种Activiti流程设计工具
+              </div>
+          
 
         </div>
       </header>
@@ -361,7 +396,102 @@
       
 
       
-        
+        <h1 id="BPMN的基本概念"><a href="#BPMN的基本概念" class="headerlink" title="BPMN的基本概念"></a>BPMN的基本概念</h1><p>&ensp;&emsp;&emsp;<strong>Business Process Modeling Notation</strong>,简称BPMN，译为<strong>业务流程建模标注</strong>。BPMN定义了业务流程图，其基于流程图技术，同时对创建业务流程操作的图形化模型进行了裁减。业务流程的模型就是图形化对象的图网，包括活动（也可以说工作）和定义操作顺序的流控制。<br>&ensp;&emsp;&emsp;BPMN2.0规范的分类划分为以下几个部分：</p>
+<ul>
+<li><strong>启动与结束事件（Event）</strong></li>
+<li><strong>顺序流（Sequence Flow）</strong></li>
+<li><strong>任务（Task）</strong>：用户任务（UserTask）、系统任务（ServiceTask）</li>
+<li><strong>网关（Gateway）</strong>：排他网关（ExclusiveGateway）、包容网关（InclusiveGateway）、并行网关（ParallelGateway）</li>
+<li><strong>子流程（Subprocess）</strong></li>
+<li><strong>边界事件（Boundary Event）</strong></li>
+<li><strong>中间事件（Intermediate Event）</strong></li>
+<li><strong>监听器（Listener）</strong>:任务监听器（TaskListener）</li>
+</ul>
+<h2 id="启动事件"><a href="#启动事件" class="headerlink" title="启动事件"></a>启动事件</h2><p>&ensp;&emsp;&emsp;<strong>启动事件</strong>分为三种类型：</p>
+<ul>
+<li>空启动事件</li>
+<li>定时启动事件</li>
+<li>异常启动事件</li>
+</ul>
+<h2 id="结束事件"><a href="#结束事件" class="headerlink" title="结束事件"></a>结束事件</h2><p>&ensp;&emsp;&emsp;<strong>结束事件</strong>可以分为以下三种类型：</p>
+<ul>
+<li>空结束事件</li>
+<li>异常结束事件</li>
+<li>终止结束事件</li>
+<li>取消结束事件</li>
+</ul>
+<h2 id="顺序流"><a href="#顺序流" class="headerlink" title="顺序流"></a>顺序流</h2><p>&ensp;&emsp;&emsp;<strong>顺序流</strong>可以细分为两种：</p>
+<ul>
+<li>标准顺序流</li>
+<li>条件顺序流</li>
+</ul>
+<h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><p>&ensp;&emsp;&emsp;根据业务需求的不同分为以下类型：</p>
+<ul>
+<li><strong>用户任务</strong></li>
+<li>脚本任务</li>
+<li>WebService任务</li>
+<li>业务规则任务</li>
+<li>邮件任务</li>
+<li>Mule任务</li>
+<li>Camel任务</li>
+<li>手动任务</li>
+<li><strong>Java service任务</strong></li>
+<li>Shell任务</li>
+</ul>
+<h2 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h2><p>&ensp;&emsp;&emsp;<strong>网关</strong>（Gateway）用于控制流程走向（在BPMN2.0规范中称为“执行令牌”）。根据功能不同可以划分为以下4种网关：</p>
+<ul>
+<li><strong>排他网关</strong>（ExclusiveGateway）</li>
+<li>并行网关（ParallelGateway）</li>
+<li>包容网关（InclusiveGateway）</li>
+<li>事件网关</li>
+</ul>
+<h2 id="子流程与调用活动"><a href="#子流程与调用活动" class="headerlink" title="子流程与调用活动"></a>子流程与调用活动</h2><h2 id="边界与中间事件"><a href="#边界与中间事件" class="headerlink" title="边界与中间事件"></a>边界与中间事件</h2><p>&ensp;&emsp;&emsp;除了提到的启动和结束事件之外，中间事件提供的特殊功能可以用来处理流程执行过程中抛出、捕获的事件，具体包括<strong>边界事件</strong>、<strong>中间捕获事件</strong>、<strong>中间抛出事件</strong>。</p>
+<h3 id="边界事件"><a href="#边界事件" class="headerlink" title="边界事件"></a>边界事件</h3><p>&ensp;&emsp;&emsp;<strong>边界事件</strong>分为以下几种：</p>
+<ul>
+<li>定时器边界事件</li>
+<li>异常边界事件</li>
+<li>信号边界事件</li>
+<li>取消边界事件</li>
+<li>补偿边界事件</li>
+</ul>
+<h3 id="中间捕获事件"><a href="#中间捕获事件" class="headerlink" title="中间捕获事件"></a>中间捕获事件</h3><p>&ensp;&emsp;&emsp;<strong>中间捕获事件</strong>是流程中的“拦路虎”，根据事件的不同类型需要使用不同的方式才能继续执行后续的输出流的活动。例如执行完一个任务1天后执行下一个活动，或者一个指定的信号、消息被接收到之后再执行后续输出流的活动。分为以下三种：</p>
+<ul>
+<li>定时器中间捕获事件</li>
+<li>信号中间捕获事件</li>
+<li>消息中间捕获事件</li>
+</ul>
+<h3 id="中间抛出事件"><a href="#中间抛出事件" class="headerlink" title="中间抛出事件"></a>中间抛出事件</h3><p>&ensp;&emsp;&emsp;<strong>中间抛出事件</strong>和<strong>中间捕获事件</strong>是两个相互依赖的关系，<strong>中间捕获事件</strong>需要有时间抛出才能被触发，而<strong>中间抛出事件</strong>需要有对应的捕获事件接受才有意义。分为以下两种：</p>
+<ul>
+<li>空中间抛出事件</li>
+<li>信号中间抛出事件</li>
+</ul>
+<h2 id="监听器"><a href="#监听器" class="headerlink" title="监听器"></a>监听器</h2><p>&ensp;&emsp;&emsp;<strong>监听器</strong>分为两类：<strong>执行监听器</strong>和<strong>任务监听器</strong>。</p>
+<h3 id="执行监听器"><a href="#执行监听器" class="headerlink" title="执行监听器"></a>执行监听器</h3><p>&ensp;&emsp;&emsp;<strong>执行监听器</strong>允许在执行流程过程中执行Java代码（实现了监听器接口）或表达式。<br>&ensp;&emsp;&emsp;执行监听器可以捕获的事件如下：</p>
+<ul>
+<li>流程实例启动、结束</li>
+<li>输出流捕获</li>
+<li>活动启动、结束</li>
+<li>路由开始、结束</li>
+<li>中间事件开始、结束</li>
+<li>触发开始事件、触发结束事件</li>
+</ul>
+<h3 id="任务监听器"><a href="#任务监听器" class="headerlink" title="任务监听器"></a>任务监听器</h3><p>&ensp;&emsp;&emsp;相对于<strong>执行监听器</strong>的使用范围来说，<strong>任务监听器</strong>的使用范围要小很多，因为它只能应用于用户任务，用来坚挺3种事件。</p>
+<ul>
+<li><strong>create</strong>:在任务被创建且所有的任务属性设置完成之后才触发。</li>
+<li><strong>assignment</strong>:在任务被分配给某个办理人之后触发。有一点需要注意，assignment事件总是在create事件触发之前被触发，因为任务的办理人是一个属性，而create事件需要逐一处理任务的办理人、候选人、候选组属性。</li>
+<li><strong>complete</strong>:在配置了监听器的上一个任务完成时任务数据被删除之前（Activiti的数据分为运行时和历史两种类别，当运行时数据处理完毕后将会被清理）触发。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </li>
+</ul>
+<h1 id="流程设计工具"><a href="#流程设计工具" class="headerlink" title="流程设计工具"></a>流程设计工具</h1><p>&ensp;&emsp;&emsp;Activiti针对不同的平台提供了不同架构的流程设计器：</p>
+<ul>
+<li>基于B/S架构的流程设计器<strong>Activiti Modeler</strong>（可以通过浏览器在线设计流程）</li>
+<li>基于Eclipse插件的流程设计器<strong>Activiti Designer</strong></li>
+</ul>
+<h2 id="Activiti-Modeler"><a href="#Activiti-Modeler" class="headerlink" title="Activiti Modeler"></a>Activiti Modeler</h2><p>&ensp;&emsp;&emsp;在Activiti Explorer中使用Activiti Modeler</p>
+<p><img src="/2017/08/27/activiti02/am01.png" alt="am01"><br><img src="/2017/08/27/activiti02/am02.png" alt="am02"><br><img src="/2017/08/27/activiti02/am03.png" alt="am03"><br><img src="/2017/08/27/activiti02/am04.png" alt="am04"></p>
+<h2 id="Activiti-Designer"><a href="#Activiti-Designer" class="headerlink" title="Activiti Designer"></a>Activiti Designer</h2><p>&ensp;&emsp;&emsp;基于Eclipse插件的流程设计器Activiti Designer</p>
+<p><img src="/2017/08/27/activiti02/ad01.png" alt="ad01">    </p>
+<p>&ensp;&emsp;&emsp;两个设计器侧重面不同，<strong>Activiti Modeler</strong>偏向于业务层面，而<strong>Activiti Designer</strong>则更侧重于开发层。</p>
+
       
     </div>
 
@@ -381,6 +511,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Activiti/" rel="tag"># Activiti</a>
+          
+        </div>
       
 
       
@@ -446,8 +582,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/me.jpg"
@@ -517,6 +662,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BPMN的基本概念"><span class="nav-number">1.</span> <span class="nav-text">BPMN的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动事件"><span class="nav-number">1.1.</span> <span class="nav-text">启动事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束事件"><span class="nav-number">1.2.</span> <span class="nav-text">结束事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序流"><span class="nav-number">1.3.</span> <span class="nav-text">顺序流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务"><span class="nav-number">1.4.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网关"><span class="nav-number">1.5.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子流程与调用活动"><span class="nav-number">1.6.</span> <span class="nav-text">子流程与调用活动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边界与中间事件"><span class="nav-number">1.7.</span> <span class="nav-text">边界与中间事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#边界事件"><span class="nav-number">1.7.1.</span> <span class="nav-text">边界事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中间捕获事件"><span class="nav-number">1.7.2.</span> <span class="nav-text">中间捕获事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中间抛出事件"><span class="nav-number">1.7.3.</span> <span class="nav-text">中间抛出事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监听器"><span class="nav-number">1.8.</span> <span class="nav-text">监听器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行监听器"><span class="nav-number">1.8.1.</span> <span class="nav-text">执行监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任务监听器"><span class="nav-number">1.8.2.</span> <span class="nav-text">任务监听器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流程设计工具"><span class="nav-number">2.</span> <span class="nav-text">流程设计工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activiti-Modeler"><span class="nav-number">2.1.</span> <span class="nav-text">Activiti Modeler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activiti-Designer"><span class="nav-number">2.2.</span> <span class="nav-text">Activiti Designer</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
