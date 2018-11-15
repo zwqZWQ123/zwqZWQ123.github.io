@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/04/design-pattern1/index.html">
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
-<meta property="og:updated_time" content="2017-04-04T12:32:39.000Z">
+<meta property="og:updated_time" content="2018-11-15T02:30:31.044Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="23种设计模式分类">
 <meta name="twitter:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
@@ -417,6 +417,24 @@
 </tr>
 </tbody>
 </table>
+<h2 id="工程类型"><a href="#工程类型" class="headerlink" title="工程类型"></a>工程类型</h2><ul>
+<li>应用软件<ul>
+<li>关注应用的内部复用性、可维护性和可扩充性</li>
+<li>设计模式通过减少依赖提高内部复用性，通过对系统分层和限制对平台依赖性使得应用更具可维护性，通过对类和对象的扩展提供可扩充性，耦合度的降低也会增强可扩充性</li>
+</ul>
+</li>
+<li>工具箱<ul>
+<li>关注代码复用，避免假设和依赖能提高工具箱的灵活性，适用性和效率</li>
+</ul>
+</li>
+<li>框架<ul>
+<li>框架是构成一类特定软件可复用设计的一组相互协作的类</li>
+<li>框架规定了应用的体系结构，定义了整体结构，类和对象的分割，各部分的主要职责，类和对象怎么协作，以及控制流</li>
+<li>框架最主要的贡献在于它所定义的体系结构，应用对框架接口的变化是极其敏感的，使得松耦合更加重要</li>
+<li>框架应尽可能的灵活、可扩充</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -512,8 +530,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/me.jpg"
@@ -584,6 +611,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工程类型"><span class="nav-number">1.</span> <span class="nav-text">工程类型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -599,8 +642,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
