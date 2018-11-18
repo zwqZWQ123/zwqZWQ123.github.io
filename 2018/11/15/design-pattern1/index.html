@@ -98,7 +98,8 @@
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/简单工厂.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/工厂模式.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/抽象工厂.jpg">
-<meta property="og:updated_time" content="2018-11-18T08:58:41.280Z">
+<meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/迭代器.png">
+<meta property="og:updated_time" content="2018-11-18T11:14:55.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="23种设计模式分类">
 <meta name="twitter:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
@@ -547,6 +548,23 @@
 </li>
 </ul>
 <p>&emsp;&emsp;所以，只有对应产品族的情况下，才需要使用抽象工厂模式。</p>
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">迭代器模式提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。</div></pre></td></tr></table></figure>
+<h4 id="涉及角色"><a href="#涉及角色" class="headerlink" title="涉及角色"></a>涉及角色</h4><ul>
+<li>迭代器角色（Iterator）:定义遍历元素所需要的方法，一般来说会有这么三个方法：取得下一个元素的方法next()，判断是否遍历结束的方法hasNext()，移出当前对象的方法remove()</li>
+<li>具体迭代器角色（Concrete Iterator）：实现迭代器接口中定义的方法，完成集合的迭代</li>
+<li>容器角色(Aggregate):  一般是一个接口，提供一个iterator()方法，例如java中的Collection接口，List接口，Set接口等</li>
+<li>具体容器角色（ConcreteAggregate）：就是抽象容器的具体实现类，比如List接口的有序列表实现ArrayList，List接口的链表实现LinkList，Set接口的哈希列表的实现HashSet等</li>
+</ul>
+<p><img src="/2018/11/15/design-pattern1/迭代器.png" alt="迭代器"></p>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>简化了遍历方式，对于对象集合的遍历，还是比较麻烦的，对于数组或者有序列表，我们尚可以通过游标来取得，但用户需要在对集合了解很清楚的前提下，自行遍历对象，但是对于hash表来说，用户遍历起来就比较麻烦了。而引入了迭代器方法后，用户用起来就简单的多了。</li>
+<li>可以提供多种遍历方式，比如说对有序列表，我们可以根据需要提供正序遍历，倒序遍历两种迭代器，用户用起来只需要得到我们实现好的迭代器，就可以方便的对集合进行遍历了。</li>
+<li>封装性良好，用户只需要得到迭代器就可以遍历，而对于遍历算法则不用去关心。</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>对于比较简单的遍历（像数组或者有序列表），使用迭代器方式遍历较为繁琐，大家可能都有感觉，像ArrayList，我们宁可愿意使用for循环和get方法来遍历集合。</li>
+</ul>
+<p>&emsp;&emsp;迭代器模式是与集合共生共死的，一般来说，我们只要实现一个集合，就需要同时提供这个集合的迭代器，就像java中的Collection，List、Set、Map等，这些集合都有自己的迭代器。假如我们要实现一个这样的新的容器，当然也需要引入迭代器模式，给我们的容器实现一个迭代器。</p>
 
       
     </div>
@@ -592,6 +610,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/18/design-pattern2/" rel="prev" title="Spring中的设计模式">
+                Spring中的设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -663,7 +685,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -728,7 +750,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工程类型"><span class="nav-number">1.</span> <span class="nav-text">工程类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象设计"><span class="nav-number">2.</span> <span class="nav-text">面向对象设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式分类"><span class="nav-number">3.</span> <span class="nav-text">设计模式分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#桥接模式"><span class="nav-number">3.1.</span> <span class="nav-text">桥接模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">3.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-number">3.1.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模版模式和策略模式"><span class="nav-number">3.2.</span> <span class="nav-text">模版模式和策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模版模式"><span class="nav-number">3.2.1.</span> <span class="nav-text">模版模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#策略模式"><span class="nav-number">3.2.2.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两者之间的区别"><span class="nav-number">3.2.3.</span> <span class="nav-text">两者之间的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三者之间的区别（外加工厂模式）"><span class="nav-number">3.2.4.</span> <span class="nav-text">三者之间的区别（外加工厂模式）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式和抽象工厂模式"><span class="nav-number">3.3.</span> <span class="nav-text">工厂模式和抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">3.3.1.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工厂模式"><span class="nav-number">3.3.2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">3.3.3.</span> <span class="nav-text">抽象工厂模式</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工程类型"><span class="nav-number">1.</span> <span class="nav-text">工程类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象设计"><span class="nav-number">2.</span> <span class="nav-text">面向对象设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式分类"><span class="nav-number">3.</span> <span class="nav-text">设计模式分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#桥接模式"><span class="nav-number">3.1.</span> <span class="nav-text">桥接模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">3.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-number">3.1.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模版模式和策略模式"><span class="nav-number">3.2.</span> <span class="nav-text">模版模式和策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模版模式"><span class="nav-number">3.2.1.</span> <span class="nav-text">模版模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#策略模式"><span class="nav-number">3.2.2.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两者之间的区别"><span class="nav-number">3.2.3.</span> <span class="nav-text">两者之间的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三者之间的区别（外加工厂模式）"><span class="nav-number">3.2.4.</span> <span class="nav-text">三者之间的区别（外加工厂模式）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式和抽象工厂模式"><span class="nav-number">3.3.</span> <span class="nav-text">工厂模式和抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">3.3.1.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工厂模式"><span class="nav-number">3.3.2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">3.3.3.</span> <span class="nav-text">抽象工厂模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器模式"><span class="nav-number">3.4.</span> <span class="nav-text">迭代器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#涉及角色"><span class="nav-number">3.4.1.</span> <span class="nav-text">涉及角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点-1"><span class="nav-number">3.4.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点-1"><span class="nav-number">3.4.3.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
