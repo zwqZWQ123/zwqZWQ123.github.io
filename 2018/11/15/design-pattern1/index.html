@@ -97,7 +97,8 @@
 <meta property="og:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/简单工厂.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/工厂模式.jpg">
-<meta property="og:updated_time" content="2018-11-18T08:48:11.210Z">
+<meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/抽象工厂.jpg">
+<meta property="og:updated_time" content="2018-11-18T08:58:41.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="23种设计模式分类">
 <meta name="twitter:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
@@ -475,7 +476,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">桥接模式（Bridge)是一种结构型设计模式。Bridge模式基于类的最小设计原则，通过使用封装、聚合及继承等行为让不同的类承担不同的职责。它的主要特点是把抽象(Abstraction)与行为实现(Implementation)分离开来，从而可以保持各部分的独立性以及应对他们的功能扩展。</div></pre></td></tr></table></figure>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
 <li>实现了抽象和实现部分的分离<br><br>&emsp;&emsp;桥接模式分离了抽象部分和实现部分，从而极大的提供了系统的灵活性，让抽象部分和实现部分独立开来，分别定义接口，这有助于系统进行分层设计，从而产生更好的结构化系统。对于系统的高层部分，只需要知道抽象部分和实现部分的接口就可以了。</li>
 <li>更好的可扩展性<br><br>&emsp;&emsp;由于桥接模式把抽象部分和实现部分分离了，从而分别定义接口，这就使得抽象部分和实现部分可以分别独立扩展，而不会相互影响，大大的提供了系统的可扩展性。</li>
 <li>可动态的切换实现<br><br>&emsp;&emsp;由于桥接模式实现了抽象和实现的分离，所以在实现桥接模式时，就可以实现动态的选择和使用具体的实现。</li>
@@ -533,6 +535,18 @@
 </ul>
 <p>&emsp;&emsp;对于缺点（2），我们可以借用抽象工厂来实现。</p>
 <h4 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">抽象工厂模式提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。</div></pre></td></tr></table></figure>
+<p><img src="/2018/11/15/design-pattern1/抽象工厂.jpg" alt="抽象工厂"></p>
+<ul>
+<li>优点：<ul>
+<li>只针对产品族</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>只针对产品族</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;所以，只有对应产品族的情况下，才需要使用抽象工厂模式。</p>
 
       
     </div>
