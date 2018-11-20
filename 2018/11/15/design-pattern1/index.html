@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/工厂模式.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/抽象工厂.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/迭代器.png">
-<meta property="og:updated_time" content="2018-11-18T14:13:03.977Z">
+<meta property="og:updated_time" content="2018-11-20T08:13:43.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="23种设计模式分类">
 <meta name="twitter:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
@@ -414,13 +414,13 @@
 <tr>
 <td style="text-align:left">类</td>
 <td style="text-align:left">Factory Method（工厂方法）</td>
-<td style="text-align:left">Adapter_Class（适配器类）</td>
+<td style="text-align:left">Adapter（适配器）</td>
 <td style="text-align:left">Interpreter（解释器）<br>Template Method（模板方法）</td>
 </tr>
 <tr>
 <td style="text-align:left">对象</td>
 <td style="text-align:left">Abstract Factory（抽象工厂）<br>Builder（生成器）<br>Prototype（原型）<br>Singleton（单例）</td>
-<td style="text-align:left">Adapter_Object（适配器对象）<br>Bridge（桥接）<br>Composite（组合）<br>Decorator（装饰）<br>Facade（外观）<br>Flyweight（享元）<br>Proxy（代理）</td>
+<td style="text-align:left">Bridge（桥接）<br>Composite（组合）<br>Decorator（装饰）<br>Facade（外观）<br>Flyweight（享元）<br>Proxy（代理）</td>
 <td style="text-align:left">Chain of Responsibility（职责链）<br>Command（命令）<br>Iterator（迭代器）<br>Mediator（中介者）<br>Memento（备忘录）<br>Observer（观察者）<br>State（状态）<br>Strategy（策略）<br>Visitor（访问者模式）</td>
 </tr>
 </tbody>
@@ -482,6 +482,13 @@
 </ul>
 <h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">桥接模式（Bridge)是一种结构型设计模式。Bridge模式基于类的最小设计原则，通过使用封装、聚合及继承等行为让不同的类承担不同的职责。它的主要特点是把抽象(Abstraction)与行为实现(Implementation)分离开来，从而可以保持各部分的独立性以及应对他们的功能扩展。</div></pre></td></tr></table></figure>
 <p><img src="/2018/11/15/design-pattern1/桥接模式.png" alt="桥接模式"></p>
+<ul>
+<li>Client调用端：Bridge模式的调用者</li>
+<li>抽象类（Abstraction）:抽象类接口维护对行为实现（implementation）的引用。它的角色就是桥接类。</li>
+<li>Refined Abstraction:Abstraction的子类。</li>
+<li>Implementor:行为实现类接口（Abstraction接口定义了基于Implementor接口的更高层次的操作）</li>
+<li>ConcreteImplementor:Implementor的子类</li>
+</ul>
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
 <li>实现了抽象和实现部分的分离<br><br>&emsp;&emsp;桥接模式分离了抽象部分和实现部分，从而极大的提供了系统的灵活性，让抽象部分和实现部分独立开来，分别定义接口，这有助于系统进行分层设计，从而产生更好的结构化系统。对于系统的高层部分，只需要知道抽象部分和实现部分的接口就可以了。</li>
 <li>更好的可扩展性<br><br>&emsp;&emsp;由于桥接模式把抽象部分和实现部分分离了，从而分别定义接口，这就使得抽象部分和实现部分可以分别独立扩展，而不会相互影响，大大的提供了系统的可扩展性。</li>
