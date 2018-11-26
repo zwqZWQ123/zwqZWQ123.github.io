@@ -96,14 +96,13 @@
 <meta property="og:site_name" content="缘来是你">
 <meta property="og:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/桥接模式.png">
-<meta property="og:image" content="https://www.cnblogs.com/lixiuyu/p/5923160.html">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/模版模式.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/策略模式.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/简单工厂.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/工厂模式.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/抽象工厂.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/design-pattern1/迭代器.png">
-<meta property="og:updated_time" content="2018-11-26T00:58:34.732Z">
+<meta property="og:updated_time" content="2018-11-26T01:16:40.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="23种设计模式分类">
 <meta name="twitter:description" content="设计模式（Design Pattern）是一套被反复使用、为多数人知晓、经过分类编目的、代码设计经验的总结。使用设计模式的目的是为了代码重用，避免程序大量修改，同时使代码更易于理解，并且保证代码可靠性。显然，设计模式不管是对自己还是对他人还是对系统都是有益的，设计模式使得代码编制真正实现工程化，设计模式可以说是软件工程的“基石”。">
@@ -507,7 +506,7 @@
 <li>虽然在系统中使用继承是没有问题的，但是由于抽象化角色和具体化角色需要独立变化，设计要求需要独立管理这两者。</li>
 <li>对于那些不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统，桥接模式尤为适用</li>
 </ol>
-<p>引用自：<img src="https://www.cnblogs.com/lixiuyu/p/5923160.html" alt="https://www.cnblogs.com/lixiuyu/p/5923160.html"></p>
+<p>引用自：<a href="https://www.cnblogs.com/lixiuyu/p/5923160.html" target="_blank" rel="external">https://www.cnblogs.com/lixiuyu/p/5923160.html</a></p>
 <h3 id="模版模式和策略模式"><a href="#模版模式和策略模式" class="headerlink" title="模版模式和策略模式"></a>模版模式和策略模式</h3><h4 id="模版模式"><a href="#模版模式" class="headerlink" title="模版模式"></a>模版模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">模版模式在一个方法中定义一个算法的骨架，而将一些步骤延迟到子类中。模版方法使得子类可以在不改变算法结构的情况下，重新定义算法中的某些步骤。</div></pre></td></tr></table></figure>
 <p><img src="/2018/11/15/design-pattern1/模版模式.png" alt="模版模式"></p>
 <p>&emsp;&emsp;<strong>模板模式</strong>展示了经典重用的一种形式，通用算法被放在基类中，通过继承在不同的子类中实现该通用算法。我们通过定义通用类<code>BubbleSorter</code>，把冒泡排序的算法骨架放在基类，然后实现不同的子类分别对int数组、double数组、List集合进行排序。但这样是有代价的，因为继承是非常强的关系，派生类不可避免地与基类绑定在一起了。但如果我现在需要用快速排序而不是冒泡排序来进行排序，但快速排序却没有办法重用<code>setArray</code>、<code>getLength</code>、<code>needSwap</code>和<code>swap</code>方法了。不过，<strong>策略模式</strong>提供了另一种可选的方案。</p>
